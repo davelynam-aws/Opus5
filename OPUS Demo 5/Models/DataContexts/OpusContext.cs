@@ -13,7 +13,7 @@ namespace OPUS_Demo_5.Models.DataContexts
         {
         }
        
-        //s
+        //ss
         public DbSet<Quote> Quotes { get; set; }
 
 
