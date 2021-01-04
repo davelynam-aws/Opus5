@@ -1,0 +1,36 @@
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\bin\Debug\netcoreapp2.1\appsettings.Development.json
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\bin\Debug\netcoreapp2.1\appsettings.json
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\bin\Debug\netcoreapp2.1\Properties\launchSettings.json
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\bin\Debug\netcoreapp2.1\OPUS Demo 5.deps.json
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\bin\Debug\netcoreapp2.1\OPUS Demo 5.runtimeconfig.json
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\bin\Debug\netcoreapp2.1\OPUS Demo 5.runtimeconfig.dev.json
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\bin\Debug\netcoreapp2.1\OPUS Demo 5.dll
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\bin\Debug\netcoreapp2.1\OPUS Demo 5.pdb
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\bin\Debug\netcoreapp2.1\OPUS Demo 5.Views.dll
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\bin\Debug\netcoreapp2.1\OPUS Demo 5.Views.pdb
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\OPUS Demo 5.csprojAssemblyReference.cache
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\OPUS Demo 5.AssemblyInfoInputs.cache
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\OPUS Demo 5.AssemblyInfo.cs
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\OPUS Demo 5.csproj.CoreCompileInputs.cache
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\OPUS Demo 5.RazorAssemblyInfo.cache
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\OPUS Demo 5.RazorAssemblyInfo.cs
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\OPUS Demo 5.TagHelpers.input.cache
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\OPUS Demo 5.TagHelpers.output.cache
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\OPUS Demo 5.RazorCoreGenerate.cache
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\Razor\Views\Home\About.cshtml.g.cs
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\Razor\Views\Home\Contact.cshtml.g.cs
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\Razor\Views\Home\Index.cshtml.g.cs
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\Razor\Views\Home\Privacy.cshtml.g.cs
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\Razor\Views\Shared\Error.cshtml.g.cs
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_CookieConsentPartial.cshtml.g.cs
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_Layout.cshtml.g.cs
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\Razor\Views\_ViewImports.cshtml.g.cs
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\Razor\Views\_ViewStart.cshtml.g.cs
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\OPUS Demo 5.RazorTargetAssemblyInfo.cache
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\OPUS Demo 5.RazorTargetAssemblyInfo.cs
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\OPUS Demo 5.Views.pdb
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\OPUS Demo 5.dll
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\OPUS Demo 5.pdb
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\OPUS Demo 5.genruntimeconfig.cache
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\OPUS Demo 5.csproj.CopyComplete
