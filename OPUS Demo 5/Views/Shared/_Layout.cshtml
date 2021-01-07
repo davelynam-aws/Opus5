@@ -1,5 +1,5 @@
-﻿@inject GlobalVariables globalVariables
-
+﻿
+@using Microsoft.AspNetCore.Http
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,25 +41,20 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
 
-                    @*@{ string logUser = "empty";}
 
-                   @logUser = @globalVariables.loggedInUser;*@
+                    @*Set current user name in header using session for demo.*@
+                    @{var user = @Context.Session.GetString("LoggedInUser"); }
 
-
-
-                    @if (globalVariables.loggedInUser != "None")
+                        @if (user != null)
                     {
-                        <li><a asp-area="" asp-controller="Home" asp-action="Index">@globalVariables.loggedInUser</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Index">@user</a></li>
+
                     }
                     else
                     {
                         <li><a asp-area="" asp-controller="Account" asp-action="Login">Login</a></li>
                     }
-                </ul>
-                @*<ul class="nav navbar-nav">
-                        <partial name="_LoginPartial" />
-                    </ul>*@
-                <ul>
+
                 </ul>
 
             </div>

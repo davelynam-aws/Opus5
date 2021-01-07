@@ -8,6 +8,7 @@ using Microsoft.Extensions.Options;
 using OPUS_Demo_5.Models;
 using OPUS_Demo_5.Models.UserIdentity;
 using OPUS_Demo_5.Models.DataContexts;
+using Microsoft.AspNetCore.Http;
 
 namespace OPUS_Demo_5.Controllers
 {
@@ -26,7 +27,7 @@ namespace OPUS_Demo_5.Controllers
 
         public IActionResult Index()
         {
-
+            
 
 
             return RedirectToAction("Login");
@@ -50,9 +51,9 @@ namespace OPUS_Demo_5.Controllers
 
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public IActionResult Login(DemoUserIdentity loginUser, GlobalVariables globalVariables)
+        public IActionResult Login(DemoUserIdentity loginUser)
         {
-           
+           // Just for DEMO purposes. Mock user login.
 
             var results = _db.UserIdentities.Where(u => u.Email == loginUser.Email).Where(u => u.DemoPassword == loginUser.PasswordHash);
 
@@ -60,7 +61,11 @@ namespace OPUS_Demo_5.Controllers
             {
                 foreach(var result in results)
                 {
-                    globalVariables.loggedInUser = result.FullName;
+                    HttpContext.Session.SetString("LoggedInUser", result.FullName);
+                    HttpContext.Session.SetString("Id", result.Id);
+                    HttpContext.Session.SetString("BranchCompanyId", result.BranchCompanyId);
+                    HttpContext.Session.SetString("Email", result.Email);
+                  
                     break;
                 }
             }

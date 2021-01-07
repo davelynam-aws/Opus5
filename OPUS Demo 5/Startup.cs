@@ -14,6 +14,7 @@ using Microsoft.Extensions.Options;
 using OPUS_Demo_5.Models;
 using OPUS_Demo_5.Models.DataContexts;
 using OPUS_Demo_5.Models.UserIdentity;
+using Microsoft.AspNetCore.Session;
 
 namespace OPUS_Demo_5
 {
@@ -25,8 +26,6 @@ namespace OPUS_Demo_5
         }
 
         public IConfiguration Configuration { get; }
-
-
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -42,18 +41,12 @@ namespace OPUS_Demo_5
             {
                 cfg.UseSqlServer(Configuration.GetConnectionString("OpusConnection"));
             });
-
-
-            Action<GlobalVariables> globalVariables = (opt =>
-            {
-                opt.loggedInUser = "None";
-            });
-
-            services.Configure(globalVariables);
-            services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<GlobalVariables>>().Value);
-      
-
+        
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            // Add session for tracking current user variables.
+            services.AddDistributedMemoryCache();
+            services.AddSession();
         }
 
 
@@ -73,6 +66,11 @@ namespace OPUS_Demo_5
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+
+            // Use session for current user variables.
+            app.UseSession();
+
+            
 
             app.UseMvc(routes =>
             {
