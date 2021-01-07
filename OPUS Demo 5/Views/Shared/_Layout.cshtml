@@ -1,5 +1,4 @@
-﻿@using Microsoft.Extensions.Configuration
-@inject IConfiguration Configuration
+﻿
 
 <!DOCTYPE html>
 <html>
@@ -42,7 +41,7 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
 
-                    @{string loggedInUser = "empty"; }
+                    @*@{string loggedInUser = "empty"; }
 
                     @loggedInUser = @Configuration["GlobalVariables:LoggedInUser"]
 
@@ -53,7 +52,7 @@
                     else
                     {
                         <li><a asp-area="" asp-controller="Home" asp-action="Contact">Login</a></li>
-                    }
+                    }*@
                 </ul>
                 @*<ul class="nav navbar-nav">
                         <partial name="_LoginPartial" />

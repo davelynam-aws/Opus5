@@ -27,13 +27,13 @@ namespace OPUS_Demo_5.Controllers
 
         //Get this working from a view and _layout
         // Get.
-        public IActionResult LogIn(GlobalVariables options)
+        public IActionResult LogIn(/*GlobalVariables options*/)
         {
-            _mduDb = options.loggedInUser;
+            //_mduDb = options.loggedInUser;
 
-            options.loggedInUser = "new value";
+            //options.loggedInUser = "new value";
 
-            _mduDb = options.loggedInUser;
+            //_mduDb = options.loggedInUser;
 
 
             return View();

@@ -44,20 +44,7 @@ namespace OPUS_Demo_5
             });
 
 
-            //Bodge for account login
-            Action<GlobalVariables> globalVariables = (opt =>
-            {
-                opt.loggedInUser = Configuration["ConnectionStrings:mduConnection"];
-
-            });
-
-       
-
-
-
-
-            //services.Configure(mduOptions);
-            services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<GlobalVariables>>().Value);
+      
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
