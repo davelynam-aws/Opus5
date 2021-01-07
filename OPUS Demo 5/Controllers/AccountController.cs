@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using OPUS_Demo_5.Models;
 using OPUS_Demo_5.Models.UserIdentity;
+using OPUS_Demo_5.Models.DataContexts;
 
 namespace OPUS_Demo_5.Controllers
 {
@@ -13,8 +15,14 @@ namespace OPUS_Demo_5.Controllers
 
     public class AccountController : Controller
     {
+        private OpusContext _db;
 
-        private static string _mduDb;
+        public AccountController(OpusContext db)
+        {
+            _db = db;
+        }
+
+        private static string loggedInUser;
 
         public IActionResult Index()
         {
@@ -27,16 +35,44 @@ namespace OPUS_Demo_5.Controllers
 
         //Get this working from a view and _layout
         // Get.
-        public IActionResult LogIn(/*GlobalVariables options*/)
+        public IActionResult LogIn()
         {
-            //_mduDb = options.loggedInUser;
+            //loggedInUser = options.loggedInUser;
 
             //options.loggedInUser = "new value";
 
-            //_mduDb = options.loggedInUser;
+            //loggedInUser = options.loggedInUser;
+
 
 
             return View();
+        }
+
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public IActionResult Login(DemoUserIdentity loginUser, GlobalVariables globalVariables)
+        {
+           
+
+            var results = _db.UserIdentities.Where(u => u.Email == loginUser.Email).Where(u => u.DemoPassword == loginUser.PasswordHash);
+
+            if (results != null)
+            {
+                foreach(var result in results)
+                {
+                    globalVariables.loggedInUser = result.FullName;
+                    break;
+                }
+            }
+
+
+            //if (ModelState.IsValid)
+            //{
+            //    return RedirectToAction("Index", "Home");
+            //}
+
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

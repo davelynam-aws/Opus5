@@ -44,6 +44,13 @@ namespace OPUS_Demo_5
             });
 
 
+            Action<GlobalVariables> globalVariables = (opt =>
+            {
+                opt.loggedInUser = "None";
+            });
+
+            services.Configure(globalVariables);
+            services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<GlobalVariables>>().Value);
       
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

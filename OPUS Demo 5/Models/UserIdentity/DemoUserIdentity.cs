@@ -13,17 +13,29 @@ namespace OPUS_Demo_5.Models.UserIdentity
         [Key]
         [Column("Id")]
         public string Id { get; set; }
+
         [Column("Email")]
         public string Email { get; set; }
+
         [Column("PasswordHash")]
         [Display(Name ="Password")]
+        [Required]
+        [DataType(DataType.Password)]
         public string PasswordHash { get; set; }
+
+        [Required]
         [Column("UserName")]
         public string UserName { get; set; }
+
         [Column("FullName")]
         public string FullName { get; set; }
+
         [Column("BranchCompanyId")]
         public string BranchCompanyId { get; set; }
+
+        [Column("DemoPassword")]
+        public string DemoPassword { get; set; }
+
 
     }
 }
