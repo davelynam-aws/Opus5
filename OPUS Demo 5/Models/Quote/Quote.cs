@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ namespace OPUS_Demo_5.Models
     [Table("Quote.Quote")]
     public class Quote
     {
+        [Key]
         [Column("Id")]
         public string Id { get; set; }
         [Column("CustomerId")]
@@ -32,23 +34,23 @@ namespace OPUS_Demo_5.Models
         [Column("ApprovedByUserId")]
         public string ApprovedByUserId { get; set; }
         [Column("ApprovedDateTime")]
-        public string ApprovedDateTime { get; set; }
+        public DateTime? ApprovedDateTime { get; set; }
         [Column("DeliveryMethod")]
         public string DeliveryMethod { get; set; }
         [Column("IsGlassRequired")]
-        public bool IsGlassRequired { get; set; }
+        public bool? IsGlassRequired { get; set; }
         [Column("IsCancelled")]
         public bool IsCancelled { get; set; }
         [Column("CancelledByUserId")]
         public string CancelledByUserId { get; set; }
         [Column("CancelledDateTime")]
-        public DateTime CancelledDateTime { get; set; }
+        public DateTime? CancelledDateTime { get; set; }
         [Column("InvoiceAmountNet")]
-        public decimal InvoiceAmountNet { get; set; }
+        public decimal? InvoiceAmountNet { get; set; }
         [Column("InvoiceAmountVat")]
-        public decimal InvoiceAmountVat { get; set; }
+        public decimal? InvoiceAmountVat { get; set; }
         [Column("DepositAmount")]
-        public decimal DepositAmount { get; set; }
+        public decimal? DepositAmount { get; set; }
         [Column("IsTaxExempt")]
         public bool IsTaxExempt { get; set; }
         [Column("DeliveryAddress")]

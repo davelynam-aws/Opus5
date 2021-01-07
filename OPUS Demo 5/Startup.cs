@@ -10,7 +10,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using OPUS_Demo_5.Models;
 using OPUS_Demo_5.Models.DataContexts;
+using OPUS_Demo_5.Models.UserIdentity;
 
 namespace OPUS_Demo_5
 {
@@ -22,6 +25,8 @@ namespace OPUS_Demo_5
         }
 
         public IConfiguration Configuration { get; }
+
+
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -39,8 +44,24 @@ namespace OPUS_Demo_5
             });
 
 
+            //Bodge for account login
+            Action<GlobalVariables> globalVariables = (opt =>
+            {
+                opt.loggedInUser = Configuration["ConnectionStrings:mduConnection"];
+
+            });
+
+       
+
+
+
+
+            //services.Configure(mduOptions);
+            services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<GlobalVariables>>().Value);
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

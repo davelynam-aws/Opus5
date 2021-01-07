@@ -1,9 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - OPUS_Demo_5</title>
+    <title>@ViewData["Title"] - OPUS</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -26,15 +29,41 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">OPUS_Demo_5</a>
+
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">OPUS</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+
+
                 </ul>
+                <ul class="nav navbar-nav navbar-right">
+
+                    @{string loggedInUser = "empty"; }
+
+                    @loggedInUser = @Configuration["GlobalVariables:LoggedInUser"]
+
+                    @if (@Configuration.GetSection("AppSettings")["LoggedInUser"] != "")
+                    {
+                        <li><a asp-area="" asp-controller="Home" asp-action="Index">@Configuration.GetSection("AppSettings")["LoggedInUser"]</a></li>
+                    }
+                    else
+                    {
+                        <li><a asp-area="" asp-controller="Home" asp-action="Contact">Login</a></li>
+                    }
+                </ul>
+                @*<ul class="nav navbar-nav">
+                        <partial name="_LoginPartial" />
+                    </ul>*@
+                <ul>
+                </ul>
+
             </div>
+
+
         </div>
     </nav>
 
@@ -44,7 +73,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2021 - OPUS_Demo_5</p>
+            <p>&copy; 2021 - Affordable Window Systems</p>
         </footer>
     </div>
 
