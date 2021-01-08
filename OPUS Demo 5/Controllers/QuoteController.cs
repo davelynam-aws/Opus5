@@ -6,7 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OPUS_Demo_5.Models;
+using OPUS_Demo_5.Models.CustomerManagement;
 using OPUS_Demo_5.Models.DataContexts;
+using OPUS_Demo_5.ViewModels;
 
 namespace OPUS_Demo_5.Controllers
 {
@@ -22,7 +24,57 @@ namespace OPUS_Demo_5.Controllers
         // GET: Quote
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Quotes.ToListAsync());
+            List<QuoteViewModel> quoteViewModels = new List<QuoteViewModel>();
+            QuoteViewModel quoteViewModel;
+
+
+            List<Quote> quotes = await _context.Quotes.ToListAsync();
+
+            //Build viewmodel of quote items etc.
+            if (quotes.Count > 0)
+            {
+                foreach (Quote quote in quotes)
+                {
+                    quoteViewModel = new QuoteViewModel();
+                    quoteViewModel.thisQuote = quote;
+
+
+                    Customer customer = _context.Customers.Where(c => c.Id == quote.CustomerId).Single();
+
+                    quoteViewModel.thisCustomer = customer;
+
+                    List<BifoldItem> bifoldItems = new List<BifoldItem>();
+                    
+                    bifoldItems = await _context.BifoldItems.Where(b => b.QuoteId == quote.Id).ToListAsync();
+                    quoteViewModel.thisBifoldItems = bifoldItems;
+                    //Do Extra Items, Glass Items, Peripheral Items etc.
+
+                    List<ExtraItem> extraItems = new List<ExtraItem>();
+                    List<GlassItem> glassItems = new List<GlassItem>();
+                    List<PeripheralItem> peripheralItems = new List<PeripheralItem>();
+
+                    if (bifoldItems.Count > 0)
+                    {
+                        foreach(BifoldItem bifoldItem in bifoldItems)
+                        {
+
+                            extraItems = await _context.ExtraItems.Where(e => e.BifoldItemId == bifoldItem.Id).ToListAsync();
+                            glassItems = await _context.GlassItems.Where(g => g.BifoldItemId == bifoldItem.Id).ToListAsync();
+                            peripheralItems = await _context.PeripheralItems.Where(p => p.BifoldItemId == bifoldItem.Id).ToListAsync();
+                        }
+                    }
+
+                    quoteViewModel.thisExtraItems = extraItems;
+                    quoteViewModel.thisGlassItems = glassItems;
+                    quoteViewModel.thisPeripheralItems = peripheralItems;
+
+                    quoteViewModels.Add(quoteViewModel);
+
+                }
+            }
+
+            return View(quoteViewModels);
+            //return View(await _context.Quotes.ToListAsync());
         }
 
         // GET: Quote/Details/5

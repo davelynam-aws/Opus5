@@ -47,12 +47,5 @@ namespace OPUS_Demo_5.Models.DataContexts
         //public DbSet<DemoUserCompanyPermission> UserCompanyPermissions { get; set; }
 
 
-
-        // Demo Variables
-
-        public DemoUserIdentity ThisUser { get; set; }
-
-
-
     }
 }

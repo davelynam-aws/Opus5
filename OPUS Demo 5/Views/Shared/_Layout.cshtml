@@ -1,5 +1,4 @@
-﻿
-@using Microsoft.AspNetCore.Http
+﻿@using Microsoft.AspNetCore.Http
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,28 +30,31 @@
 
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">OPUS</a>
             </div>
+
+
+            @*Set current user name in header using session for demo.*@
+            @{var user = @Context.Session.GetString("LoggedInUser"); }
+
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
 
+                    @if (user != null && user != "")
+                    {
+                        <li><a asp-area="" asp-controller="Quote" asp-action="Index">Quotes</a></li>
+                        <li><a asp-area="" asp-controller="PricingFactor" asp-action="Contact">Pricing Factors</a></li>
+                    }
 
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
 
-
-                    @*Set current user name in header using session for demo.*@
-                    @{var user = @Context.Session.GetString("LoggedInUser"); }
-
-                        @if (user != null)
+                    @if (user != null && user != "")
                     {
                         <li><a asp-area="" asp-controller="Home" asp-action="Index">@user</a></li>
-
+                        <li><a asp-area="" asp-controller="Account" asp-action="SignOut">Sign Out</a></li>
                     }
                     else
                     {
-                        <li><a asp-area="" asp-controller="Account" asp-action="Login">Login</a></li>
+                        <li><a asp-area="" asp-controller="Account" asp-action="SignIn">Sign In</a></li>
                     }
 
                 </ul>

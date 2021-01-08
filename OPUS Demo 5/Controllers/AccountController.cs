@@ -23,20 +23,20 @@ namespace OPUS_Demo_5.Controllers
             _db = db;
         }
 
-        private static string loggedInUser;
 
-        public IActionResult Index()
-        {
+
+        //public IActionResult Index()
+        //{
             
 
 
-            return RedirectToAction("Login");
-        }
+        //    return RedirectToAction("Login");
+        //}
 
 
         //Get this working from a view and _layout
         // Get.
-        public IActionResult LogIn()
+        public IActionResult SignIn()
         {
             //loggedInUser = options.loggedInUser;
 
@@ -51,7 +51,7 @@ namespace OPUS_Demo_5.Controllers
 
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public IActionResult Login(DemoUserIdentity loginUser)
+        public IActionResult SignIn(DemoUserIdentity loginUser)
         {
            // Just for DEMO purposes. Mock user login.
 
@@ -78,6 +78,16 @@ namespace OPUS_Demo_5.Controllers
 
 
             return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult SignOut()
+        {
+            HttpContext.Session.SetString("LoggedInUser", "");
+            HttpContext.Session.SetString("Id", "");
+            HttpContext.Session.SetString("BranchCompanyId", "");
+            HttpContext.Session.SetString("Email", "");
+
+            return RedirectToAction("SignIn", "Account");
         }
     }
 }

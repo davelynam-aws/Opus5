@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OPUS_Demo_5.Models;
@@ -17,45 +18,26 @@ namespace OPUS_Demo_5.Controllers
 
         public IActionResult Index()
         {
-            //_db.ThisUser = new Models.UserIdentity.DemoUserIdentity();
-            //_db.ThisUser.FullName = "David McVey";
 
 
-            return View(_db);
+            if (HttpContext.Session.GetString("LoggedInUser") == null || HttpContext.Session.GetString("LoggedInUser") == "")
+            {
+                return RedirectToAction("SignIn", "Account");
+            }
+            else
+            {
+                return View();
+            }
+            
         }
-        //private readonly ApplicationDbContext _db;
 
-        //public CategoryController(ApplicationDbContext db)
-        //{
-        //    _db = db;
-        //}
      
 
         public HomeController(OpusContext db)
         {
             _db = db;
         }
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
 
-            List<Quote> Quotes = _db.Quotes.ToList();
-
-     
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
