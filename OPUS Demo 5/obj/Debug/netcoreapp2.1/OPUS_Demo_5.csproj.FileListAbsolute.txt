@@ -42,3 +42,6 @@ C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\bin\Debug\netcoreapp2.1\Pro
 C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\bin\Debug\netcoreapp2.1\Properties\serviceDependencies.local.json
 C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\OPUS_Demo_5.csprojAssemblyReference.cache
 C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\Razor\Views\Account\SignIn.cshtml.g.cs
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\Razor\Pages\_ValidationScriptsPartial.cshtml.g.cs
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\Razor\Views\PricingFactor\Details.cshtml.g.cs
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\Razor\Views\PricingFactor\Edit.cshtml.g.cs

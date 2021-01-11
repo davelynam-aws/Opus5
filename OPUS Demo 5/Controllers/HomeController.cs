@@ -18,17 +18,19 @@ namespace OPUS_Demo_5.Controllers
 
         public IActionResult Index()
         {
+            // TEMPORARILLY DISABLE LOGIN FOR TESTING.
+            HttpContext.Session.SetString("LoggedInUser", "David Lynam");
 
 
-            if (HttpContext.Session.GetString("LoggedInUser") == null || HttpContext.Session.GetString("LoggedInUser") == "")
-            {
-                return RedirectToAction("SignIn", "Account");
-            }
-            else
-            {
-                return View();
-            }
-            
+            //if (HttpContext.Session.GetString("LoggedInUser") == null || HttpContext.Session.GetString("LoggedInUser") == "")
+            //{
+            //    return RedirectToAction("SignIn", "Account");
+            //}
+            //else
+            //{
+            //    return View();
+            //}
+            return View();
         }
 
      

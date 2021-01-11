@@ -1,0 +1,107 @@
+﻿@model OPUS_Demo_5.Models.QuoteMatrix.PricingFactor
+
+@{
+    ViewData["Title"] = "Pricing Factors";
+}
+
+<h2>Pricing Factors</h2>
+
+
+
+
+<div>
+    <hr />
+
+
+    <dl class="dl-horizontal">
+        <dt class="dt-override">
+            @Html.DisplayNameFor(model => model.SashHeightAbove2100MMSurcharge)
+        </dt>
+        <dd class="dd-override">
+            @Html.DisplayFor(model => model.SashHeightAbove2100MMSurcharge)
+        </dd>
+        <dt class="dt-override">
+            @Html.DisplayNameFor(model => model.MullionSplitsUnder1000MMSurcharge)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MullionSplitsUnder1000MMSurcharge)
+        </dd>
+        <dt class="dt-override">
+            @Html.DisplayNameFor(model => model.MullionSplits1000MMAndOverSurcharge)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MullionSplits1000MMAndOverSurcharge)
+        </dd>
+        <dt class="dt-override">
+            @Html.DisplayNameFor(model => model.UPVCTrickleVentSurcharge)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UPVCTrickleVentSurcharge)
+        </dd>
+        <dt class="dt-override">
+            @Html.DisplayNameFor(model => model.AluminiumTrickleVentSurCharge)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AluminiumTrickleVentSurCharge)
+        </dd>
+        <dt class="dt-override">
+            @Html.DisplayNameFor(model => model.NonStockSingleColourSurCharge)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NonStockSingleColourSurCharge)
+        </dd>
+        <dt class="dt-override">
+            @Html.DisplayNameFor(model => model.NonStockDualColourSurCharge)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NonStockDualColourSurCharge)
+        </dd>
+        <dt class="dt-override">
+            @Html.DisplayNameFor(model => model.SmartSensationSurCharge)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SmartSensationSurCharge)
+        </dd>
+        <dt class="dt-override">
+            @Html.DisplayNameFor(model => model.SmartAlchemySurcharge)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SmartAlchemySurcharge)
+        </dd>
+        <dt class="dt-override">
+            @Html.DisplayNameFor(model => model.MarineHazardousCoatingSurcharge)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MarineHazardousCoatingSurcharge)
+        </dd>
+        <dt class="dt-override">
+            @Html.DisplayNameFor(model => model.UltionBurglarProofCylinderSurcharge)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UltionBurglarProofCylinderSurcharge)
+        </dd>
+        <dt class="dt-override">
+            @Html.DisplayNameFor(model => model.SSLeverOnRoseWithExcutcheonSurcharge)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SSLeverOnRoseWithExcutcheonSurcharge)
+        </dd>
+        <dt class="dt-override">
+            @Html.DisplayNameFor(model => model.SSShootboltHandleSurcharge)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SSShootboltHandleSurcharge)
+        </dd>
+    </dl>
+
+    <div class="col-6 text-left">
+        <a asp-controller="PricingFactor" asp-action="Edit" class="btn btn-primary">
+            Edit Pricing Factors
+        </a>
+
+    </div>
+</div>
+@*<div>
+        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+        <a asp-action="Index">Back to List</a>
+    </div>*@
