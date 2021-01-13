@@ -14,8 +14,11 @@ dd {
     text-align: left;
 }
 
-/*@media (min-width: 768px) {
+@media (min-width: 768px) {
     .dl-horizontal .dd-override{
     text-align: right;
     }
-}*/
+    .dl-horizontal .dt-override{
+        width:100%;
+    }
+}

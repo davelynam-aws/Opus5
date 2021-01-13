@@ -12,6 +12,13 @@
 <div>
     <hr />
 
+    <div class="col-6 text-left">
+        <a asp-controller="PricingFactor" asp-action="Edit" class="btn btn-primary">
+            Edit Pricing Factors
+        </a>
+
+    </div>
+    <hr />
 
     <dl class="dl-horizontal">
         <dt class="dt-override">
@@ -92,14 +99,10 @@
         <dd>
             @Html.DisplayFor(model => model.SSShootboltHandleSurcharge)
         </dd>
+
     </dl>
 
-    <div class="col-6 text-left">
-        <a asp-controller="PricingFactor" asp-action="Edit" class="btn btn-primary">
-            Edit Pricing Factors
-        </a>
 
-    </div>
 </div>
 @*<div>
         <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |

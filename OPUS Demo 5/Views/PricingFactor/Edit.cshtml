@@ -15,79 +15,101 @@
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="SashHeightAbove2100MMSurcharge" class="control-label"></label>
+                <p>(Decimal percentage surcharge i.e. 0.05 will be 5%)</p>
                 <input autocomplete="off" asp-for="SashHeightAbove2100MMSurcharge" class="form-control" />
                 <span asp-validation-for="SashHeightAbove2100MMSurcharge" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="MullionSplitsUnder1000MMSurcharge" class="control-label"></label>
+                <p>(Price for each sash)</p>
                 <input asp-for="MullionSplitsUnder1000MMSurcharge" class="form-control" />
                 <span asp-validation-for="MullionSplitsUnder1000MMSurcharge" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="MullionSplits1000MMAndOverSurcharge" class="control-label"></label>
+                <p>(Price for each sash)</p>
                 <input asp-for="MullionSplits1000MMAndOverSurcharge" class="form-control" />
                 <span asp-validation-for="MullionSplits1000MMAndOverSurcharge" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="UPVCTrickleVentSurcharge" class="control-label"></label>
+                <p>(Price per metre)</p>
                 <input asp-for="UPVCTrickleVentSurcharge" class="form-control" />
                 <span asp-validation-for="UPVCTrickleVentSurcharge" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="AluminiumTrickleVentSurCharge" class="control-label"></label>
+                <p>(Price per metre)</p>
                 <input asp-for="AluminiumTrickleVentSurCharge" class="form-control" />
                 <span asp-validation-for="AluminiumTrickleVentSurCharge" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="NonStockSingleColourSurCharge" class="control-label"></label>
+                <p>(Decimal percentage surcharge i.e. 0.05 will be 5%)</p>
                 <input asp-for="NonStockSingleColourSurCharge" class="form-control" />
                 <span asp-validation-for="NonStockSingleColourSurCharge" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="NonStockDualColourSurCharge" class="control-label"></label>
+                <p>(Decimal percentage surcharge i.e. 0.05 will be 5%)</p>
                 <input asp-for="NonStockDualColourSurCharge" class="form-control" />
                 <span asp-validation-for="NonStockDualColourSurCharge" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="SmartSensationSurCharge" class="control-label"></label>
+                <p>(Decimal percentage surcharge i.e. 0.05 will be 5%)</p>
                 <input asp-for="SmartSensationSurCharge" class="form-control" />
                 <span asp-validation-for="SmartSensationSurCharge" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="SmartAlchemySurcharge" class="control-label"></label>
+                <p>(Decimal percentage surcharge i.e. 0.05 will be 5%)</p>
                 <input asp-for="SmartAlchemySurcharge" class="form-control" />
                 <span asp-validation-for="SmartAlchemySurcharge" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="MarineHazardousCoatingSurcharge" class="control-label"></label>
+                <p>(Decimal percentage surcharge i.e. 0.05 will be 5%)</p>
                 <input asp-for="MarineHazardousCoatingSurcharge" class="form-control" />
                 <span asp-validation-for="MarineHazardousCoatingSurcharge" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="UltionBurglarProofCylinderSurcharge" class="control-label"></label>
+                <p>(Price for each cylinder)</p>
                 <input asp-for="UltionBurglarProofCylinderSurcharge" class="form-control" />
                 <span asp-validation-for="UltionBurglarProofCylinderSurcharge" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="SSLeverOnRoseWithExcutcheonSurcharge" class="control-label"></label>
+                <p>(Price for each handle)</p>
                 <input asp-for="SSLeverOnRoseWithExcutcheonSurcharge" class="form-control" />
                 <span asp-validation-for="SSLeverOnRoseWithExcutcheonSurcharge" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="SSShootboltHandleSurcharge" class="control-label"></label>
+                <p>(Price for each handle)</p>
                 <input asp-for="SSShootboltHandleSurcharge" class="form-control" />
                 <span asp-validation-for="SSShootboltHandleSurcharge" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+
+            <div class="col-6 text-right">
+                <a asp-controller="PricingFactor" asp-action="Index" class="btn btn-primary">
+                    Cancel
+                </a>
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+            <div class="col-6 text-right">
+
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+@*<div>
+    <a asp-action="Index">Cancel</a>
+</div>*@
+
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

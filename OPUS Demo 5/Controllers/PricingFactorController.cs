@@ -48,5 +48,22 @@ namespace OPUS_Demo_5.Controllers
 
             return View(pricingFactor);
         }
+
+        //POST - EDIT
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(PricingFactor pricingFactor)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.PricingFactors.Update(pricingFactor);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(pricingFactor);
+
+
+        }
     }
 }
