@@ -1,4 +1,5 @@
-﻿using OPUS_Demo_5.Models;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using OPUS_Demo_5.Models;
 using OPUS_Demo_5.Models.CustomerManagement;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,10 @@ namespace OPUS_Demo_5.ViewModels
         public List<GlassItem> thisGlassItems { get; set; }
         public List<PeripheralItem> thisPeripheralItems { get; set; }
 
+
+
+
+
         [Display(Name = "Created By")]
         public string CreatedByUsername { get; set; }
 
@@ -26,8 +31,16 @@ namespace OPUS_Demo_5.ViewModels
 
         [Display(Name = "Created By")]
         public string LastModifiedByUsername { get; set; }
-        
 
+
+
+
+
+
+        // View Options
+    //    public List<Customer> ActiveCustomers { get; set; }
+
+        public SelectList ActiveCustomers { get; set; }
 
     }
 }

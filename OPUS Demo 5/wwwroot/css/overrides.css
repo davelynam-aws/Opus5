@@ -1,6 +1,6 @@
-﻿.dl-horizontal .dt-override{
-    width:50%;
-    text-align:right;
+﻿.dl-horizontal .dt-override {
+    width: 50%;
+    text-align: right;
     padding: 0px 5px 0px 0px;
 }
 
@@ -14,11 +14,8 @@ dd {
     text-align: left;
 }
 
-@media (min-width: 768px) {
+/*@media (min-width: 768px) {
     .dl-horizontal .dd-override{
     text-align: right;
     }
-    .dl-horizontal .dt-override{
-        width:100%;
-    }
-}
+}*/

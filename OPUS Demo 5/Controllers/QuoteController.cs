@@ -98,7 +98,29 @@ namespace OPUS_Demo_5.Controllers
         // GET: Quote/Create
         public IActionResult Create()
         {
-            return View();
+            // Populate combo's etc
+
+
+            //var activeCustomers = from c in _context.Customers
+            //                      orderby c.CustomerName
+            //                      select c;
+            //ViewBag.ActiveCustomers = new SelectList(activeCustomers, "CustomerId", "CustomerName", null);
+
+            QuoteViewModel quoteViewModel = new QuoteViewModel();
+            quoteViewModel.thisQuote = new Quote();
+
+            List<Customer> activeCustomers = _context.Customers.Where(c => c.IsActiveCustomer == true).ToList();
+
+           // quoteViewModel.ActiveCustomers = activeCustomers;
+
+       
+            quoteViewModel.ActiveCustomers = new SelectList(activeCustomers, "CustomerId", "CustomerName", null);
+
+            quoteViewModel.thisQuote.CustomerId = ""; 
+
+            ViewBag.Customers = new SelectList(activeCustomers, "CustomerId", "CustomerName", null);
+
+            return View(quoteViewModel);
         }
 
         // POST: Quote/Create

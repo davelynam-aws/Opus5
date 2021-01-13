@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OPUS_Demo_5.Models.DataContexts;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -43,5 +44,10 @@ namespace OPUS_Demo_5.Models.CustomerManagement
         public string SalesNotes { get; set; }
         [Column("ProductionOnlyNotes")]
         public string ProductionOnlyNotes { get; set; }
+
+
+
+
+
     }
 }
