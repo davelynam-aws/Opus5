@@ -15,7 +15,10 @@ namespace OPUS_Demo_5.Models.DataContexts
         public OpusContext(DbContextOptions<OpusContext> options) : base(options)
         {
         }
-       
+
+
+        public DbSet<EmpClass> Employee { get; set; }
+
         // Quote Related related record sets.
         public DbSet<Quote> Quotes { get; set; }
         public DbSet<BifoldItem> BifoldItems { get; set; }

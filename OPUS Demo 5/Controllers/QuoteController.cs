@@ -109,16 +109,22 @@ namespace OPUS_Demo_5.Controllers
             QuoteViewModel quoteViewModel = new QuoteViewModel();
             quoteViewModel.thisQuote = new Quote();
 
-            List<Customer> activeCustomers = _context.Customers.Where(c => c.IsActiveCustomer == true).ToList();
+            //List<Customer> activeCustomers = _context.Customers.Where(c => c.IsActiveCustomer == true).ToList();
 
            // quoteViewModel.ActiveCustomers = activeCustomers;
 
        
-            quoteViewModel.ActiveCustomers = new SelectList(activeCustomers, "CustomerId", "CustomerName", null);
+            //quoteViewModel.ActiveCustomers = new SelectList(activeCustomers, "CustomerId", "CustomerName", null);
 
-            quoteViewModel.thisQuote.CustomerId = ""; 
+            //quoteViewModel.thisQuote.CustomerId = ""; 
 
-            ViewBag.Customers = new SelectList(activeCustomers, "CustomerId", "CustomerName", null);
+            //ViewBag.Customers = new SelectList(activeCustomers, "CustomerId", "CustomerName", null);
+
+
+
+            quoteViewModel.ActiveCustomers = _context.Customers.ToList();
+            ViewBag.ActiveCustomers = quoteViewModel.ActiveCustomers;
+
 
             return View(quoteViewModel);
         }
