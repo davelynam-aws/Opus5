@@ -35,6 +35,9 @@ namespace OPUS_Demo_5
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
+
+
+
             });
 
             services.AddDbContext<OpusContext>(cfg =>
@@ -43,6 +46,9 @@ namespace OPUS_Demo_5
             });
         
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+
+
 
             // Add session for tracking current user variables.
             services.AddDistributedMemoryCache();

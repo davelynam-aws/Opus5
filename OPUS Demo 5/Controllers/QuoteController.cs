@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,92 @@ namespace OPUS_Demo_5.Controllers
         {
             _context = context;
         }
+
+
+        //public async Task<IActionResult> ShowCustomerDetails(string id = "")
+        //{
+
+        //    if (id == "")
+        //    {
+        //        return NotFound();
+        //    }
+        //    else
+        //    {
+        //        CustomerAddress customerAddress = await _context.CustomerAddresses.Where(c => c.CustomerId == id).FirstAsync();
+        //    }
+        //    return View();
+        //}
+
+        public ActionResult PartialView(string customerId)
+        {
+            // string testCustomerId = "38bfd195-3c44-4505-b70d-165c519ce649";
+
+            CustomerAddress customerAddress = new CustomerAddress();
+
+            //if (customerId == null)
+            //{
+            //    return NotFound();
+            //}
+            //else
+            //{
+          //      customerAddress = _context.CustomerAddresses.Where(a => a.CustomerId == customerId).Single();
+          //  }
+
+            if (customerId == null)
+            {
+                return Content("");
+            }
+            else
+            {
+                customerAddress = _context.CustomerAddresses.Where(a => a.CustomerId == customerId).Single();
+            }
+
+
+            return PartialView("~/Views/Shared/_CustomerInvoiceAddress.cshtml", customerAddress);
+        }
+
+
+        //public ActionResult PartialView(string countrylist, clsStakes clsStakes)
+        //{
+        //    if (countrylist == null)
+        //    {
+        //        clsStakes.Country = "IRE";
+        //    }
+        //    else
+        //    {
+        //        clsStakes.Country = countrylist;
+        //    }
+
+        //    StakesDetails stakesDetails = new StakesDetails();
+        //    return PartialView("~/Views/Shared/_PartialStakes.cshtml", stakesDetails.StacksList(clsStakes.Country));
+
+        //}
+
+
+        //public ActionResult ShowCustomerInvoiceAddress(IFormCollection formCollection)
+        //{
+
+        //    string customerId = formCollection["CustomerId"];
+
+        //    CustomerAddress customerAddress;
+
+        //    if (customerId != "")
+        //    {
+        //         customerAddress = _context.CustomerAddresses.Where(a => a.CustomerId == customerId).Single();
+        //    }
+        //    else
+        //    {
+        //        return NotFound();
+        //    }
+
+
+        //    return PartialView("_CustomerInvoiceAddress.cshtml", customerAddress);
+        //}
+
+
+
+
+
 
         // GET: Quote
         public async Task<IActionResult> Index()

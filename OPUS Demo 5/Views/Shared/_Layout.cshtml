@@ -69,6 +69,7 @@
     <partial name="_CookieConsentPartial" />
 
     <div class="container body-content">
+
         @RenderBody()
         <hr />
         <footer>
@@ -80,6 +81,7 @@
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery.unobtrusive-ajax.js"></script>
     </environment>
     <environment exclude="Development">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
@@ -96,6 +98,37 @@
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
+
+
+
+    <script>
+
+        @*$(document).ready(function () {
+            var route = '@Url.Action("PartialView", "Quote")';
+            route = encodeURI(route);
+            $('#mypartial').load(route);
+            console.log("partial loaded")
+        });*@
+
+
+
+
+          // This function handles a drop down selection change and passes the value id to the Quote Controller as an ajax request.
+        $('#CustomerId').change(function () {
+            var customerId = $('#CustomerId').find(":selected").val();
+            $.ajax({
+                url: '@Url.Action("PartialView", "Quote")',
+                type: 'POST',
+                data: { 'customerId': customerId },
+                dataType: 'html',
+                //contentType: 'application/json',
+                success: function (data) {
+                    $("#mypartial").html(data);
+                    //console.log("selection changed - customerId = " + customerId)
+                }
+            });
+        });
+    </script>
 
     @RenderSection("Scripts", required: false)
 </body>

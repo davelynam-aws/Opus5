@@ -2,12 +2,29 @@
 
 @{
     ViewData["Title"] = "New Quote";
+
+    //AjaxOptions ajaxOptions = new AjaxOptions
+    //{
+
+    //}
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+
 }
 
 <h2>New Quote</h2>
 
 
 
+
+
+
+@*<p>top</p>
+
+    <partial name="_CreateTest" />
+
+    <p>bottom</p>*@
 
 
 
@@ -21,11 +38,30 @@
 
             <div class="form-group">
                 <label asp-for="thisCustomer.CustomerName" class="control-label"></label>
-                <select class="form-control" id="CustomerId" onchange="test()" asp-items="@(new SelectList(ViewBag.ActiveCustomers, "Id", "CustomerName"))">
+                <select class="form-control" id="CustomerId" onchange="ToggleDiv()" asp-items="@(new SelectList(ViewBag.ActiveCustomers, "Id", "CustomerName"))">
                     <option value="" selected disabled>-- Select Customer Name --</option>
                 </select>
                 <span asp-validation-for="thisCustomer.CustomerName" class="text-danger"></span>
 
+            </div>
+
+
+
+            <div id="mypartial"> </div>
+
+
+
+
+
+
+            <div>
+                @*<a onclick="showCustomerDetails('@Url.Action("ShowCustomerDetails", "Quote", null,Context.Request.Scheme)', 'Show Customer Details')" class="btn btn-success text-white">Show Customer Details</a>*@
+
+                @*@Url.Action("ShowCustomerInvoiceAddress", "Quote")*@
+
+                @Html.ActionLink("Show", "ShowCustomerInvoiceAddress", "Quote")
+
+                @*<input type="button" value="Show Address" class="btn btn-default" />*@
             </div>
 
 
@@ -194,7 +230,31 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
+
+
     <script>
+
+
+        // This works! Look into using this with ajax etc.
+
+            function HideDiv() {
+                $('#toggleDiv').hide();
+            }
+
+            function ShowDiv() {
+                $('#toggleDiv').show();
+            }
+
+        function ToggleDiv() {
+            if ($("#toggleDiv").is(":visible")) {
+                $('#toggleDiv').hide();
+            } else {
+                $('#toggleDiv').show();
+            }
+        }
+
+
+
         function test() {
             //alert('hi');
 
@@ -202,6 +262,10 @@
             @*var id = 2;
             window.location.href = '@Url.Action("Action", "Controller")/' + id;*@
         }
-    </script>
 
+
+
+
+
+    </script>
 }
