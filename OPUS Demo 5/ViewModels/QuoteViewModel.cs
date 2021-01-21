@@ -39,9 +39,7 @@ namespace OPUS_Demo_5.ViewModels
 
 
         // View Options
-    //    public List<Customer> ActiveCustomers { get; set; }
-
-
+  
 
 
         public IEnumerable<Customer> ActiveCustomers { get; set; }

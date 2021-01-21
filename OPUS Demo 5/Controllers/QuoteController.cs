@@ -23,10 +23,8 @@ namespace OPUS_Demo_5.Controllers
         }
 
 
-
         public ActionResult ShowInvoiceAddressPartial(string customerId)
         {
-
             CustomerAddress customerAddress = new CustomerAddress();
 
             if (customerId == null)
@@ -37,7 +35,6 @@ namespace OPUS_Demo_5.Controllers
             {
                 customerAddress = _context.CustomerAddresses.Where(a => a.CustomerId == customerId).Where(a=> a.IsInvoiceAddress == true).Single();
             }
-
             return PartialView("~/Views/Shared/_CustomerInvoiceAddress.cshtml", customerAddress);
         }
 
@@ -63,7 +60,7 @@ namespace OPUS_Demo_5.Controllers
                     Customer customer = _context.Customers.Where(c => c.Id == quote.CustomerId).Single();
 
 
-                    //quoteViewModel.thisCustomer = customer;
+                    quoteViewModel.thisCustomer = customer;
 
                     List<BifoldItem> bifoldItems = new List<BifoldItem>();
                     
