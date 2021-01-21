@@ -46,7 +46,7 @@ namespace OPUS_Demo_5.Models
         public string ListCode { get; set; }
 
         [Column("RequestedDeliveryDate")]
-        [Display(Name = "Delivery/Collection Date")]
+        [Display(Name = "Shipping Date")]
         public DateTime RequestedDeliveryDate { get; set; }
 
         [Column("ApprovedByUserId")]

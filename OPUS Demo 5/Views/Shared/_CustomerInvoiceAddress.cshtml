@@ -1,10 +1,13 @@
 ﻿@model OPUS_Demo_5.Models.CustomerManagement.CustomerAddress
 
 <div>
-    <h4>CustomerAddress</h4>
-    <hr />
-    <dl class="dl-horizontal">
-       
+
+
+    <h4>Invoice Address</h4>
+
+  
+    <dl>
+
 
         <dd>
             @Html.DisplayFor(model => model.AddressLine1)
@@ -25,7 +28,16 @@
         <dd>
             @Html.DisplayFor(model => model.PostCode)
         </dd>
-        
+
+
+
     </dl>
+    @*<div class="col-6 text-right">
+        <a asp-controller="" asp-action="" class="btn btn-primary">
+            
+        </a>
+        <input type="submit" value="Save" class="btn btn-primary" />
+    </div>*@
+
 </div>
 

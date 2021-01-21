@@ -3,20 +3,11 @@
 @{
     ViewData["Title"] = "New Quote";
 
-    //AjaxOptions ajaxOptions = new AjaxOptions
-    //{
-
-    //}
-
     Layout = "~/Views/Shared/_Layout.cshtml";
-
 
 }
 
 <h2>New Quote</h2>
-
-
-
 
 
 
@@ -28,7 +19,7 @@
 
             <div class="form-group">
                 <label asp-for="thisCustomer.CustomerName" class="control-label"></label>
-                <select class="form-control" id="CustomerId" onchange="ToggleDiv()" asp-items="@(new SelectList(ViewBag.ActiveCustomers, "Id", "CustomerName"))">
+                <select class="form-control" id="CustomerId" asp-items="@(new SelectList(ViewBag.ActiveCustomers, "Id", "CustomerName"))">
                     <option value="" selected disabled>-- Select Customer Name --</option>
                 </select>
                 <span asp-validation-for="thisCustomer.CustomerName" class="text-danger"></span>
@@ -36,206 +27,312 @@
             </div>
 
 
-
             <div id="mypartial"> </div>
 
 
+            <div class="form-group" id="ShippingOptionsDiv" style="display:none">
+                <label asp-for="ShippingOptions" class="control-label">Shipping Options</label>
+                <select class="form-control" id="ShippingOptions" asp-items="Model.ShippingOptions">
+                    <option value="" selected disabled>-- Select Shipping Option --</option>
+                </select>
+                <span asp-validation-for="ShippingOptions" class="text-danger"></span>
+            </div>
+
+            <!--Toggle visibility on selection-->
+            <div class="form-group" id="CollectionAddressesDiv" style="display:none">
+                <label asp-for="CollectionAddresses" class="control-label">Collection Address</label>
+                <select class="form-control" id="CollectionAddresses" asp-items="Model.CollectionAddresses">
+                    <option value="" selected disabled>-- Select Collection Address --</option>
+                </select>
+                <span asp-validation-for="CollectionAddresses" class="text-danger"></span>
+            </div>
+
+            <!--Toggle visibility on selection-->
+            <div class="form-group" id="DeliveryAddressesDiv" style="display:none">
+                <label asp-for="DeliveryAddresses" class="control-label">Delivery Address</label>
+                <select class="form-control" id="DeliveryAddresses" asp-items="Model.DeliveryAddresses">
+                </select>
+                <span asp-validation-for="DeliveryAddresses" class="text-danger"></span>
+            </div>
 
 
             @*<div class="form-group">
-                    <label asp-for="CustomerId" class="control-label"></label>
-                    <input asp-for="CustomerId" class="form-control" />
-                    <span asp-validation-for="CustomerId" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="CreatedByUserId" class="control-label"></label>
-                    <input asp-for="CreatedByUserId" class="form-control" />
-                    <span asp-validation-for="CreatedByUserId" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="CreatedDateTime" class="control-label"></label>
-                    <input asp-for="CreatedDateTime" class="form-control" />
-                    <span asp-validation-for="CreatedDateTime" class="text-danger"></span>
-                </div>*@
-            <div class="form-group">
+            <label asp-for="CustomerId" class="control-label"></label>
+            <input asp-for="CustomerId" class="form-control" />
+            <span asp-validation-for="CustomerId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="CreatedByUserId" class="control-label"></label>
+            <input asp-for="CreatedByUserId" class="form-control" />
+            <span asp-validation-for="CreatedByUserId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="CreatedDateTime" class="control-label"></label>
+            <input asp-for="CreatedDateTime" class="form-control" />
+            <span asp-validation-for="CreatedDateTime" class="text-danger"></span>
+        </div>*@
+
+            @*<div class="form-group">
+            <label asp-for="MasterInternalColourId" class="control-label"></label>
+            <input asp-for="MasterInternalColourId" class="form-control" />
+            <span asp-validation-for="MasterInternalColourId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="MasterExternalColourId" class="control-label"></label>
+            <input asp-for="MasterExternalColourId" class="form-control" />
+            <span asp-validation-for="MasterExternalColourId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="QuoteReferenceNumber" class="control-label"></label>
+            <input asp-for="QuoteReferenceNumber" class="form-control" />
+            <span asp-validation-for="QuoteReferenceNumber" class="text-danger"></span>
+        </div>*@
+            @*<div class="form-group">
+            <label asp-for="ListCode" class="control-label"></label>
+            <input asp-for="ListCode" class="form-control" />
+            <span asp-validation-for="ListCode" class="text-danger"></span>
+        </div>
+            *@<div class="form-group" id="ShippingDateDiv" style="display:none">
+                <label id="ShippingDate" asp-for="thisQuote.RequestedDeliveryDate" class="control-label"></label>
+                <input id="ShippingDateInput" asp-for="thisQuote.RequestedDeliveryDate" class="form-control" />
+                <span asp-validation-for="thisQuote.RequestedDeliveryDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group" id="CustomerReferenceDiv" style="display:none">
                 <label asp-for="thisQuote.CustomerReference" class="control-label"></label>
                 <input asp-for="thisQuote.CustomerReference" class="form-control" />
                 <span asp-validation-for="thisQuote.CustomerReference" class="text-danger"></span>
             </div>
+
+
             @*<div class="form-group">
-                    <label asp-for="MasterInternalColourId" class="control-label"></label>
-                    <input asp-for="MasterInternalColourId" class="form-control" />
-                    <span asp-validation-for="MasterInternalColourId" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="MasterExternalColourId" class="control-label"></label>
-                    <input asp-for="MasterExternalColourId" class="form-control" />
-                    <span asp-validation-for="MasterExternalColourId" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="QuoteReferenceNumber" class="control-label"></label>
-                    <input asp-for="QuoteReferenceNumber" class="form-control" />
-                    <span asp-validation-for="QuoteReferenceNumber" class="text-danger"></span>
-                </div>*@
+            <label asp-for="ApprovedByUserId" class="control-label"></label>
+            <input asp-for="ApprovedByUserId" class="form-control" />
+            <span asp-validation-for="ApprovedByUserId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ApprovedDateTime" class="control-label"></label>
+            <input asp-for="ApprovedDateTime" class="form-control" />
+            <span asp-validation-for="ApprovedDateTime" class="text-danger"></span>
+        </div>*@
             @*<div class="form-group">
-                    <label asp-for="ListCode" class="control-label"></label>
-                    <input asp-for="ListCode" class="form-control" />
-                    <span asp-validation-for="ListCode" class="text-danger"></span>
-                </div>
-            *@<div class="form-group">
-                <label asp-for="thisQuote.RequestedDeliveryDate" class="control-label"></label>
-                <input asp-for="thisQuote.RequestedDeliveryDate" class="form-control" />
-                <span asp-validation-for="thisQuote.RequestedDeliveryDate" class="text-danger"></span>
+            <label asp-for="thisQuote.DeliveryMethod" class="control-label"></label>
+            <input asp-for="thisQuote.DeliveryMethod" class="form-control" />
+            <span asp-validation-for="thisQuote.DeliveryMethod" class="text-danger"></span>
+        </div>*@
+            @*<div class="form-group">
+            <div class="checkbox">
+                <label>
+                    <input asp-for="IsGlassRequired" /> @Html.DisplayNameFor(model => model.IsGlassRequired)
+                </label>
             </div>
-            @*<div class="form-group">
-                    <label asp-for="ApprovedByUserId" class="control-label"></label>
-                    <input asp-for="ApprovedByUserId" class="form-control" />
-                    <span asp-validation-for="ApprovedByUserId" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="ApprovedDateTime" class="control-label"></label>
-                    <input asp-for="ApprovedDateTime" class="form-control" />
-                    <span asp-validation-for="ApprovedDateTime" class="text-danger"></span>
-                </div>*@
-            <div class="form-group">
-                <label asp-for="thisQuote.DeliveryMethod" class="control-label"></label>
-                <input asp-for="thisQuote.DeliveryMethod" class="form-control" />
-                <span asp-validation-for="thisQuote.DeliveryMethod" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <div class="checkbox">
+                <label>
+                    <input asp-for="IsCancelled" /> @Html.DisplayNameFor(model => model.IsCancelled)
+                </label>
             </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="CancelledByUserId" class="control-label"></label>
+            <input asp-for="CancelledByUserId" class="form-control" />
+            <span asp-validation-for="CancelledByUserId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="CancelledDateTime" class="control-label"></label>
+            <input asp-for="CancelledDateTime" class="form-control" />
+            <span asp-validation-for="CancelledDateTime" class="text-danger"></span>
+        </div>*@
             @*<div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            <input asp-for="IsGlassRequired" /> @Html.DisplayNameFor(model => model.IsGlassRequired)
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            <input asp-for="IsCancelled" /> @Html.DisplayNameFor(model => model.IsCancelled)
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label asp-for="CancelledByUserId" class="control-label"></label>
-                    <input asp-for="CancelledByUserId" class="form-control" />
-                    <span asp-validation-for="CancelledByUserId" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="CancelledDateTime" class="control-label"></label>
-                    <input asp-for="CancelledDateTime" class="form-control" />
-                    <span asp-validation-for="CancelledDateTime" class="text-danger"></span>
-                </div>*@
+            <label asp-for="InvoiceAmountNet" class="control-label"></label>
+            <input asp-for="InvoiceAmountNet" class="form-control" />
+            <span asp-validation-for="InvoiceAmountNet" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="InvoiceAmountVat" class="control-label"></label>
+            <input asp-for="InvoiceAmountVat" class="form-control" />
+            <span asp-validation-for="InvoiceAmountVat" class="text-danger"></span>
+        </div>*@
             @*<div class="form-group">
-                    <label asp-for="InvoiceAmountNet" class="control-label"></label>
-                    <input asp-for="InvoiceAmountNet" class="form-control" />
-                    <span asp-validation-for="InvoiceAmountNet" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="InvoiceAmountVat" class="control-label"></label>
-                    <input asp-for="InvoiceAmountVat" class="form-control" />
-                    <span asp-validation-for="InvoiceAmountVat" class="text-danger"></span>
-                </div>*@
-            <div class="form-group">
-                <label asp-for="thisQuote.DepositAmount" class="control-label"></label>
-                <input asp-for="thisQuote.DepositAmount" class="form-control" />
-                <span asp-validation-for="thisQuote.DepositAmount" class="text-danger"></span>
-            </div>
+            <label asp-for="thisQuote.DepositAmount" class="control-label"></label>
+            <input asp-for="thisQuote.DepositAmount" class="form-control" />
+            <span asp-validation-for="thisQuote.DepositAmount" class="text-danger"></span>
+        </div>*@
             @*<div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            <input asp-for="IsTaxExempt" /> @Html.DisplayNameFor(model => model.IsTaxExempt)
-                        </label>
-                    </div>
-                </div>*@
-            <div class="form-group">
-                <label asp-for="thisQuote.DeliveryAddress" class="control-label"></label>
-                <input asp-for="thisQuote.DeliveryAddress" class="form-control" />
-                <span asp-validation-for="thisQuote.DeliveryAddress" class="text-danger"></span>
+            <div class="checkbox">
+                <label>
+                    <input asp-for="IsTaxExempt" /> @Html.DisplayNameFor(model => model.IsTaxExempt)
+                </label>
             </div>
-            <div class="form-group">
-                <label asp-for="thisQuote.DespatchSite" class="control-label"></label>
-                <input asp-for="thisQuote.DespatchSite" class="form-control" />
-                <span asp-validation-for="thisQuote.DespatchSite" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+        </div>*@
+            @*<div class="form-group">
+            <label asp-for="thisQuote.DeliveryAddress" class="control-label"></label>
+            <input asp-for="thisQuote.DeliveryAddress" class="form-control" />
+            <span asp-validation-for="thisQuote.DeliveryAddress" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="thisQuote.DespatchSite" class="control-label"></label>
+            <input asp-for="thisQuote.DespatchSite" class="form-control" />
+            <span asp-validation-for="thisQuote.DespatchSite" class="text-danger"></span>
+        </div>*@
+            <div class="form-group" id="PriorityDiv" style="display:none">
                 <label asp-for="thisQuote.Priority" class="control-label"></label>
                 <input asp-for="thisQuote.Priority" class="form-control" />
                 <span asp-validation-for="thisQuote.Priority" class="text-danger"></span>
             </div>
             @*<div class="form-group">
-                    <label asp-for="LastModifiedByUserId" class="control-label"></label>
-                    <input asp-for="LastModifiedByUserId" class="form-control" />
-                    <span asp-validation-for="LastModifiedByUserId" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="LastModifiedDateTime" class="control-label"></label>
-                    <input asp-for="LastModifiedDateTime" class="form-control" />
-                    <span asp-validation-for="LastModifiedDateTime" class="text-danger"></span>
-                </div>*@
-            <div class="form-group">
+            <label asp-for="LastModifiedByUserId" class="control-label"></label>
+            <input asp-for="LastModifiedByUserId" class="form-control" />
+            <span asp-validation-for="LastModifiedByUserId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="LastModifiedDateTime" class="control-label"></label>
+            <input asp-for="LastModifiedDateTime" class="form-control" />
+            <span asp-validation-for="LastModifiedDateTime" class="text-danger"></span>
+        </div>*@
+            <div class="form-group" id="DespatchNotesDiv" style="display:none">
                 <label asp-for="thisQuote.DespatchNotes" class="control-label"></label>
                 <input asp-for="thisQuote.DespatchNotes" class="form-control" />
                 <span asp-validation-for="thisQuote.DespatchNotes" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" id="AdditionalNotesDiv" style="display:none">
                 <label asp-for="thisQuote.AdditionalNotes" class="control-label"></label>
                 <input asp-for="thisQuote.AdditionalNotes" class="form-control" />
                 <span asp-validation-for="thisQuote.AdditionalNotes" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" id="NotifySalesWhenFabricatedDiv" style="display:none">
                 <div class="checkbox">
                     <label>
                         <input asp-for="thisQuote.NotifySalesWhenFabricated" /> @Html.DisplayNameFor(model => model.thisQuote.NotifySalesWhenFabricated)
                     </label>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group" id="SubmitDiv" style="display:none">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
+@*<div>
     <a asp-action="Index">Back to List</a>
-</div>
+</div>*@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
 
 
-    <script>
+<script>
 
 
-        // This works! Look into using this with ajax etc.
+          // This function handles a drop down selection change and passes the value id to the Quote Controller as an ajax request.
+        $('#CustomerId').change(function () {
+            var customerId = $('#CustomerId').find(":selected").val();
+            $.ajax({
+                url: '@Url.Action("ShowInvoiceAddressPartial", "Quote")',
+                type: 'POST',
+                data: { 'customerId': customerId },
+                dataType: 'html',
+                success: function (data) {
+                    $("#mypartial").html(data);
+                }          
+            });
 
-            function HideDiv() {
-                $('#toggleDiv').hide();
-            }
+            // Populate delivery address drop down via ajax request on customer selection.
+            var deliveryAddresses = $("#DeliveryAddresses");
+            deliveryAddresses.empty().append('<option selected="selected" value="0" disabled = "disabled">Loading.....</option>');
+            $.ajax({
+                type: "POST",
+                url: "/Customer/GetCustomerAddresses",
+                data: { 'customerId': customerId },
+                //contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    deliveryAddresses.empty().append('<option selected="selected" value="0">-- Select Delivery Address --</option>');
+                    $.each(response, function () {
+                        //deliveryAddresses.append($("<option></option>").val(this['Value']).html(this['Text']));
+                        deliveryAddresses.append($("<option />").val(this['Value']).text(this['text']));
+                        console.log("success");
+                    });
+                    
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                    console.log("failure");
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                    console.log("error");
+                }
+            });
 
-            function ShowDiv() {
-                $('#toggleDiv').show();
-            }
+            $('#ShippingOptionsDiv').show();
+        });
 
-        function ToggleDiv() {
-            if ($("#toggleDiv").is(":visible")) {
-                $('#toggleDiv').hide();
-            } else {
-                $('#toggleDiv').show();
-            }
+    // Toggles the text of delivery/collection labels depending on the shipping option selection.
+    $('#ShippingOptions').change(function () {
+        if ($('#ShippingOptions option').filter(':selected').text() == "AWS Vehicle Delivery") {
+            $('#ShippingDate').text("Delivery Date")
+            $('#DeliveryAddressesDiv').show();
+            $('#CollectionAddressesDiv').hide();
+        } else {
+            $('#ShippingDate').text("Collection Date")
+            $('#DeliveryAddressesDiv').hide();
+            $('#CollectionAddressesDiv').show();
         }
 
 
+        //console.log($('#ShippingOptions option').filter(':selected').text())
+    });
 
-        function test() {
+
+    $('#DeliveryAddresses').change(function () {
+        $('#ShippingDateDiv').show();
+    })
+
+  
+
+    $('#ShippingDateInput').on('input', function () {
+        // do something
+        $('#CustomerReferenceDiv').show();
+    });
+
+    //ShippingDateDiv
+
+
+    //$('#toptitle').text(function (i, oldText) {
+    //    return oldText === 'Profil' ? 'New word' : oldText;
+    //});
+
+        // This works! Look into using this with ajax etc.
+
+        //    function HideDiv() {
+        //        $('#toggleDiv').hide();
+        //    }
+
+        //    function ShowDiv() {
+        //        $('#toggleDiv').show();
+        //    }
+
+        //function ToggleDiv() {
+        //    if ($("#toggleDiv").is(":visible")) {
+        //        $('#toggleDiv').hide();
+        //    } else {
+        //        $('#toggleDiv').show();
+        //    }
+        //}
+
+
+
+       // function test() {
             //alert('hi');
 
             //Example of calling a controller path from javascript.
             @*var id = 2;
             window.location.href = '@Url.Action("Action", "Controller")/' + id;*@
-        }
+        //}
 
 
 

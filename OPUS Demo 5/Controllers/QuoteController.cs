@@ -35,7 +35,7 @@ namespace OPUS_Demo_5.Controllers
             }
             else
             {
-                customerAddress = _context.CustomerAddresses.Where(a => a.CustomerId == customerId).Single();
+                customerAddress = _context.CustomerAddresses.Where(a => a.CustomerId == customerId).Where(a=> a.IsInvoiceAddress == true).Single();
             }
 
             return PartialView("~/Views/Shared/_CustomerInvoiceAddress.cshtml", customerAddress);
@@ -60,10 +60,10 @@ namespace OPUS_Demo_5.Controllers
                     quoteViewModel = new QuoteViewModel();
                     quoteViewModel.thisQuote = quote;
 
-
                     Customer customer = _context.Customers.Where(c => c.Id == quote.CustomerId).Single();
 
-                    quoteViewModel.thisCustomer = customer;
+
+                    //quoteViewModel.thisCustomer = customer;
 
                     List<BifoldItem> bifoldItems = new List<BifoldItem>();
                     
