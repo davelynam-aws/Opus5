@@ -20,16 +20,6 @@
 
 
 
-@*<p>top</p>
-
-    <partial name="_CreateTest" />
-
-    <p>bottom</p>*@
-
-
-
-
-
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -48,22 +38,6 @@
 
 
             <div id="mypartial"> </div>
-
-
-
-
-
-
-            <div>
-                @*<a onclick="showCustomerDetails('@Url.Action("ShowCustomerDetails", "Quote", null,Context.Request.Scheme)', 'Show Customer Details')" class="btn btn-success text-white">Show Customer Details</a>*@
-
-                @*@Url.Action("ShowCustomerInvoiceAddress", "Quote")*@
-
-                @Html.ActionLink("Show", "ShowCustomerInvoiceAddress", "Quote")
-
-                @*<input type="button" value="Show Address" class="btn btn-default" />*@
-            </div>
-
 
 
 

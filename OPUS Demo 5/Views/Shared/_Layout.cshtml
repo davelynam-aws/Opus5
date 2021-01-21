@@ -103,28 +103,16 @@
 
     <script>
 
-        @*$(document).ready(function () {
-            var route = '@Url.Action("PartialView", "Quote")';
-            route = encodeURI(route);
-            $('#mypartial').load(route);
-            console.log("partial loaded")
-        });*@
-
-
-
-
           // This function handles a drop down selection change and passes the value id to the Quote Controller as an ajax request.
         $('#CustomerId').change(function () {
             var customerId = $('#CustomerId').find(":selected").val();
             $.ajax({
-                url: '@Url.Action("PartialView", "Quote")',
+                url: '@Url.Action("ShowInvoiceAddressPartial", "Quote")',
                 type: 'POST',
                 data: { 'customerId': customerId },
                 dataType: 'html',
-                //contentType: 'application/json',
                 success: function (data) {
                     $("#mypartial").html(data);
-                    //console.log("selection changed - customerId = " + customerId)
                 }
             });
         });

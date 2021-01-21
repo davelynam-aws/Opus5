@@ -23,34 +23,11 @@ namespace OPUS_Demo_5.Controllers
         }
 
 
-        //public async Task<IActionResult> ShowCustomerDetails(string id = "")
-        //{
 
-        //    if (id == "")
-        //    {
-        //        return NotFound();
-        //    }
-        //    else
-        //    {
-        //        CustomerAddress customerAddress = await _context.CustomerAddresses.Where(c => c.CustomerId == id).FirstAsync();
-        //    }
-        //    return View();
-        //}
-
-        public ActionResult PartialView(string customerId)
+        public ActionResult ShowInvoiceAddressPartial(string customerId)
         {
-            // string testCustomerId = "38bfd195-3c44-4505-b70d-165c519ce649";
 
             CustomerAddress customerAddress = new CustomerAddress();
-
-            //if (customerId == null)
-            //{
-            //    return NotFound();
-            //}
-            //else
-            //{
-          //      customerAddress = _context.CustomerAddresses.Where(a => a.CustomerId == customerId).Single();
-          //  }
 
             if (customerId == null)
             {
@@ -61,50 +38,8 @@ namespace OPUS_Demo_5.Controllers
                 customerAddress = _context.CustomerAddresses.Where(a => a.CustomerId == customerId).Single();
             }
 
-
             return PartialView("~/Views/Shared/_CustomerInvoiceAddress.cshtml", customerAddress);
         }
-
-
-        //public ActionResult PartialView(string countrylist, clsStakes clsStakes)
-        //{
-        //    if (countrylist == null)
-        //    {
-        //        clsStakes.Country = "IRE";
-        //    }
-        //    else
-        //    {
-        //        clsStakes.Country = countrylist;
-        //    }
-
-        //    StakesDetails stakesDetails = new StakesDetails();
-        //    return PartialView("~/Views/Shared/_PartialStakes.cshtml", stakesDetails.StacksList(clsStakes.Country));
-
-        //}
-
-
-        //public ActionResult ShowCustomerInvoiceAddress(IFormCollection formCollection)
-        //{
-
-        //    string customerId = formCollection["CustomerId"];
-
-        //    CustomerAddress customerAddress;
-
-        //    if (customerId != "")
-        //    {
-        //         customerAddress = _context.CustomerAddresses.Where(a => a.CustomerId == customerId).Single();
-        //    }
-        //    else
-        //    {
-        //        return NotFound();
-        //    }
-
-
-        //    return PartialView("_CustomerInvoiceAddress.cshtml", customerAddress);
-        //}
-
-
-
 
 
 
@@ -187,27 +122,8 @@ namespace OPUS_Demo_5.Controllers
         {
             // Populate combo's etc
 
-
-            //var activeCustomers = from c in _context.Customers
-            //                      orderby c.CustomerName
-            //                      select c;
-            //ViewBag.ActiveCustomers = new SelectList(activeCustomers, "CustomerId", "CustomerName", null);
-
             QuoteViewModel quoteViewModel = new QuoteViewModel();
             quoteViewModel.thisQuote = new Quote();
-
-            //List<Customer> activeCustomers = _context.Customers.Where(c => c.IsActiveCustomer == true).ToList();
-
-           // quoteViewModel.ActiveCustomers = activeCustomers;
-
-       
-            //quoteViewModel.ActiveCustomers = new SelectList(activeCustomers, "CustomerId", "CustomerName", null);
-
-            //quoteViewModel.thisQuote.CustomerId = ""; 
-
-            //ViewBag.Customers = new SelectList(activeCustomers, "CustomerId", "CustomerName", null);
-
-
 
             quoteViewModel.ActiveCustomers = _context.Customers.ToList();
             ViewBag.ActiveCustomers = quoteViewModel.ActiveCustomers;
