@@ -54,5 +54,17 @@ namespace OPUS_Demo_5.Controllers
             return Json(stringAddresses);
         }
 
+        // GET
+        public IActionResult Create()
+        {
+
+            Customer newCustomer = new Customer();
+
+            return View("_CreateCustomerModal", newCustomer);
+        }
+
+
+        
+
     }
 }

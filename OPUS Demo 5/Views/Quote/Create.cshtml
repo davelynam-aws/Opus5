@@ -13,15 +13,29 @@
 
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-5">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group">
+
                 <label asp-for="thisCustomer.CustomerName" class="control-label"></label>
-                <select class="form-control" id="CustomerId" asp-items="@(new SelectList(ViewBag.ActiveCustomers, "Id", "CustomerName"))">
-                    <option value="" selected disabled>-- Select Customer Name --</option>
-                </select>
+
+                <div class="input-group">
+
+                    <select class="form-control" id="CustomerId" asp-items="@(new SelectList(ViewBag.ActiveCustomers, "Id", "CustomerName"))">
+                        <option value="" selected disabled>-- Select Customer Name --</option>
+                    </select>
+
+                    <span class="input-group-btn">
+
+                        @*<a style="margin-left: 5px" onclick="showInPopup('@Url.Action("AddOrEdit", "Transaction", null,Context.Request.Scheme)', 'New Transaction')" class="btn btn-success text-white"><i class="fas fa-plus"></i></a>*@
+                       @*Test opening a new view first then change to modal partial*@
+                        <a asp-controller="Customer" asp-action="Create" style="margin-left: 5px" class="btn btn-success text-white"><i class="fas fa-plus"></i></a>
+
+                    </span>
+                </div>
+
                 <span asp-validation-for="thisCustomer.CustomerName" class="text-danger"></span>
 
             </div>
@@ -65,14 +79,14 @@
                 <label asp-for="thisQuote.CustomerReference" class="control-label"></label>
                 <input asp-for="thisQuote.CustomerReference" class="form-control" />
                 <span asp-validation-for="thisQuote.CustomerReference" class="text-danger"></span>
-            </div>   
-            
+            </div>
+
             <div class="form-group" id="PriorityDiv" style="display:none">
                 <label asp-for="thisQuote.Priority" class="control-label"></label>
                 <input asp-for="thisQuote.Priority" class="form-control" />
                 <span asp-validation-for="thisQuote.Priority" class="text-danger"></span>
             </div>
-           
+
             <div class="form-group" id="DespatchNotesDiv" style="display:none">
                 <label asp-for="thisQuote.DespatchNotes" class="control-label"></label>
                 <input asp-for="thisQuote.DespatchNotes" class="form-control" />
