@@ -1,0 +1,26 @@
+﻿@*@model OPUS_Demo_5.ViewModels.CustomerViewModel*@
+
+
+<!--Address drop down ajax google api-->
+
+<label  class="control-label">Choose Address</label>
+
+<div class="input-group">
+
+    <select class="form-control" id="ProposedAddresses" asp-items="@ViewBag.proposedAddresses">
+        <option value="" selected disabled>-- Choose Address --</option>
+    </select>
+
+    <span class="input-group-btn">
+
+        @*<a style="margin-left: 5px" onclick="showInPopup('@Url.Action("AddOrEdit", "Transaction", null,Context.Request.Scheme)', 'New Transaction')" class="btn btn-success text-white"><i class="fas fa-plus"></i></a>*@
+        @*Test opening a new view first then change to modal partial*@
+        @*<a onclick="showInPopup('@Url.Action("Create", "Customer", null,Context.Request.Scheme)', 'New Customer')" style="margin-left: 5px" class="btn btn-success text-white"><i class="fas fa-plus"></i></a>*@
+
+    </span>
+</div>
+
+<span @*asp-validation-for="ProposedAddresses"*@ class="text-danger"></span>
+
+
+

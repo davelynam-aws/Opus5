@@ -31,7 +31,7 @@
 
                         @*<a style="margin-left: 5px" onclick="showInPopup('@Url.Action("AddOrEdit", "Transaction", null,Context.Request.Scheme)', 'New Transaction')" class="btn btn-success text-white"><i class="fas fa-plus"></i></a>*@
                        @*Test opening a new view first then change to modal partial*@
-                        <a asp-controller="Customer" asp-action="Create" style="margin-left: 5px" class="btn btn-success text-white"><i class="fas fa-plus"></i></a>
+                        <a  onclick="showInPopup('@Url.Action("Create", "Customer", null,Context.Request.Scheme)', 'New Customer')" style="margin-left: 5px" class="btn btn-success text-white"><i class="fas fa-plus"></i></a>
 
                     </span>
                 </div>
@@ -191,6 +191,21 @@
         $('#CustomerReferenceDiv').show();
     });
 
+    showInPopup = (url, title) => {
+        $.ajax({
+            type: 'GET',
+            url: url,
+            success: function (res) {
+                $('#form-modal .modal-body').html(res);
+                $('#form-modal .modal-title').html(title);
+                $('#form-modal').modal('show');
+                // to make popup draggable
+                //$('.modal-dialog').draggable({
+                //    handle: ".modal-header"
+                //});
+            }
+        })
+    }
 
 
     </script>

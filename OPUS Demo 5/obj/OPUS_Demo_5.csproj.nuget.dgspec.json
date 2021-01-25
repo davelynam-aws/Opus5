@@ -112,6 +112,10 @@
             "Microsoft.jQuery.Unobtrusive.Validation": {
               "target": "Package",
               "version": "[3.2.11, )"
+            },
+            "getAddress.Sdk": {
+              "target": "Package",
+              "version": "[1.91.7, )"
             }
           },
           "imports": [

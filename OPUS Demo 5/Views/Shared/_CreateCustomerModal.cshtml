@@ -1,4 +1,4 @@
-﻿@model OPUS_Demo_5.Models.CustomerManagement.Customer
+﻿@model OPUS_Demo_5.ViewModels.CustomerViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -8,67 +8,251 @@
 
 <div class="row">
     <div class="col-md-12">
-        <form asp-action="Create" asp-route-id="@Model.Id" onsubmit=" return jQueryAjaxPost(this);" autocomplete="off">
+        <form asp-action="Create" asp-route-id="@Model.thisNewCustomer.Id" onsubmit=" return jQueryAjaxPost(this);" autocomplete="off">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="thisNewCustomer.Id" />
             @*<input type="hidden" asp-for="Date" />*@
+        <div class="form-group">
+            <label asp-for="thisNewCustomer.CustomerName" class="control-label"></label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">@*#*@</div>
+                </div>
+                <input asp-for="thisNewCustomer.CustomerName" class="form-control" />
+            </div>
+
+            <span asp-validation-for="thisNewCustomer.CustomerName" class="text-danger"></span>
+
+            <hr />
+            <h3>Invoice Address</h3>
+
+
+
+            <h4>Search Post Code</h4>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">@*#*@</div>
+                </div>
+                <input id="PostCode" asp-for="thisNewCustomerInvoiceAddress.PostCode" class="form-control" />
+            </div>
+
+            @*<span asp-validation-for="thisNewCustomerInvoiceAddress.PostCode" class="text-danger"></span>*@
+
+
+            <span class="input-group-btn">
+
+                @*<a style="margin-left: 5px" onclick="showInPopup('@Url.Action("AddOrEdit", "Transaction", null,Context.Request.Scheme)', 'New Transaction')" class="btn btn-success text-white"><i class="fas fa-plus"></i></a>*@
+                @*Test opening a new view first then change to modal partial*@
+                <a onclick="ShowProposedAddresses()" style="margin-left: 5px" class="btn btn-success text-white">Show Addresses</a>
+
+            </span>
+
+
+
+
+            <div id="partialProposedAddresses"> </div>
+
+
+
+            <h4>Or</h4>
+            <br />
+            <h4>Enter Manually</h4>
+
+
+            <label asp-for="thisNewCustomerInvoiceAddress.AddressLine1" class="control-label"></label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">@*#*@</div>
+                </div>
+                <input asp-for="thisNewCustomerInvoiceAddress.AddressLine1" class="form-control" />
+            </div>
+
+            <label asp-for="thisNewCustomerInvoiceAddress.AddressLine2" class="control-label"></label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">@*#*@</div>
+                </div>
+                <input asp-for="thisNewCustomerInvoiceAddress.AddressLine2" class="form-control" />
+            </div>
+
+            <label asp-for="thisNewCustomerInvoiceAddress.TownCity" class="control-label"></label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">@*#*@</div>
+                </div>
+                <input asp-for="thisNewCustomerInvoiceAddress.TownCity" class="form-control" />
+            </div>
+
+            <label asp-for="thisNewCustomerInvoiceAddress.County" class="control-label"></label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">@*#*@</div>
+                </div>
+                <input asp-for="thisNewCustomerInvoiceAddress.County" class="form-control" />
+            </div>
+
+            <label asp-for="thisNewCustomerInvoiceAddress.PostCode" class="control-label"></label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">@*#*@</div>
+                </div>
+                <input asp-for="thisNewCustomerInvoiceAddress.PostCode" class="form-control" />
+            </div>
+
+            <label asp-for="thisNewCustomerInvoiceAddress.DespatchSite" class="control-label"></label>
+
+            <select class="form-control" id="CustomerId" asp-items="Model.DespatchSiteOptions">
+                <option value="" selected disabled>-- Select A Despatch Site --</option>
+            </select>
+
+
+            <hr />
+
+            <h3>Contact Info</h3>
+
+            <label asp-for="thisNewCustomerContact.Name" class="control-label"></label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">@*#*@</div>
+                </div>
+                <input asp-for="thisNewCustomerContact.Name" class="form-control" />
+            </div>
+
+            <label asp-for="thisNewCustomerContact.ContactNumber" class="control-label"></label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">@*#*@</div>
+                </div>
+                <input asp-for="thisNewCustomerContact.ContactNumber" class="form-control" />
+            </div>
+
+
+            <label asp-for="thisNewCustomerContact.Email" class="control-label"></label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">@*#*@</div>
+                </div>
+                <input asp-for="thisNewCustomerContact.Email" class="form-control" />
+            </div>
+
+
+            <hr />
+
+            <h3>Preferences</h3>
+
+            <label asp-for="thisNewCustomer.PaymentTerms" class="control-label"></label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">@*#*@</div>
+                </div>
+                <input asp-for="thisNewCustomer.PaymentTerms" class="form-control" />
+            </div>
+
+            <!--<label asp-for="thisNewCustomer.PreferredDeliveryDayOptions" class="control-label"></label>
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <div class="input-group-text">-->
+            @*#*@
+            <!--</div>
+        </div>
+        <input asp-for="thisNewCustomer.PreferredDeliveryDayOptions" class="form-control" />
+    </div>-->
+
+            <label asp-for="PreferredDeliveryDayOptions" class="control-label"></label>
+
+            <select class="form-control" id="CustomerId" asp-items="Model.PreferredDeliveryDayOptions">
+                <option value="" selected disabled>-- Select Preferred Delivery Day --</option>
+            </select>
+
+        </div>
+
+            <label asp-for="thisNewCustomer.CustomerSageAccountReference" class="control-label"></label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">@*#*@</div>
+                </div>
+                <input asp-for="thisNewCustomer.CustomerSageAccountReference" class="form-control" />
+            </div>
+
             <div class="form-group">
-                <label asp-for="CustomerName" class="control-label"></label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">#</div>
-                    </div>
-                    <input asp-for="CustomerName" class="form-control" />
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="thisNewCustomer.IsDepositAllowed" /> @Html.DisplayNameFor(model => model.thisNewCustomer.IsDepositAllowed)
+                    </label>
                 </div>
-
-                <span asp-validation-for="CustomerName" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="thisNewCustomer.IsTaxExempt" /> @Html.DisplayNameFor(model => model.thisNewCustomer.IsTaxExempt)
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="thisNewCustomer.AutoInvoicingEnabled" /> @Html.DisplayNameFor(model => model.thisNewCustomer.AutoInvoicingEnabled)
+                    </label>
+                </div>
+            </div>
+
+            <hr />
+
+
+
+
+
             @*<div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label asp-for="BeneficiaryName" class="control-label"></label>
-                        <input asp-for="BeneficiaryName" class="form-control" />
-                        <span asp-validation-for="BeneficiaryName" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label asp-for="BankName" class="control-label"></label>
-                        <input asp-for="BankName" class="form-control" />
-                        <span asp-validation-for="BankName" class="text-danger"></span>
-                    </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label"></label>
+                    <input class="form-control" />
+                    <span  class="text-danger"></span>
                 </div>
             </div>
+            <label class="control-label">or</label>
 
 
-
-
-            <div class="row">
-                <div class="col-md-6">
-
-                    <div class="form-group">
-                        <label asp-for="SWIFTCode" class="control-label"></label>
-                        <input asp-for="SWIFTCode" class="form-control" />
-                        <span asp-validation-for="SWIFTCode" class="text-danger"></span>
-                    </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label"></label>
+                    <input class="form-control" />
+                    <span class="text-danger"></span>
                 </div>
-                <div class="col-md-6">
+            </div>
+        </div>*@
 
-                    <div class="form-group">
-                        <label asp-for="Amount" class="control-label"></label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">
-                                    <i class="fas fa-dollar-sign"></i>
-                                </div>
+
+
+            @*
+        <div class="row">
+            <div class="col-md-6">
+
+                <div class="form-group">
+                    <label asp-for="SWIFTCode" class="control-label"></label>
+                    <input asp-for="SWIFTCode" class="form-control" />
+                    <span asp-validation-for="SWIFTCode" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+
+                <div class="form-group">
+                    <label asp-for="Amount" class="control-label"></label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-dollar-sign"></i>
                             </div>
-                            <input asp-for="Amount" class="form-control" />
                         </div>
-
-                        <span asp-validation-for="Amount" class="text-danger"></span>
+                        <input asp-for="Amount" class="form-control" />
                     </div>
+
+                    <span asp-validation-for="Amount" class="text-danger"></span>
                 </div>
-            </div>*@
+            </div>
+        </div>*@
 
             <div class="form-group">
                 <input type="submit" value="Submit" class="btn btn-primary btn-block" />
@@ -77,6 +261,41 @@
     </div>
 </div>
 
+<script>
+
+    function ShowProposedAddresses() {
+
+        var PostCode = $('#PostCode').val();
+        $.ajax({
+                url: '@Url.Action("GoogleApiGetAddresses", "Customer", new {id = Model.thisNewCustomerInvoiceAddress.PostCode, viewModel = Model })',
+                type: 'POST',
+            data: { 'PostCode': PostCode},
+                dataType: 'html',
+                success: function (data) {
+                    $("#partialProposedAddresses").html(data);
+                }
+            });
+        $("partialProposedAddresses").show();
+    };
+
+
+    //function PostCodeKeyPress() {
+    //    //alert("test")
+    //};
+
+
+    @*$('#postCode').keypress(function () {
+        var postCode = $('#postCode').val();
+            $.ajax({
+                url: '@Url.Action("GoogleApiGetAddresses", "Customer", new {id = Model.thisNewCustomerInvoiceAddress.PostCode, viewModel = @Model })',
+                type: 'POST',
+                data: { 'postCode': postCode },
+                dataType: 'html',
+                success: function (data) {
+                    $("#partialProposedAddresses").html(data);
+                }
+            });*@
+</script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

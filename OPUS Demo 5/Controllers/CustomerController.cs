@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using getAddress.Sdk;
+using getAddress.Sdk.Api;
+using getAddress.Sdk.Api.Requests;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using OPUS_Demo_5.Models.CustomerManagement;
 using OPUS_Demo_5.Models.DataContexts;
+using OPUS_Demo_5.ViewModels;
 
 namespace OPUS_Demo_5.Controllers
 {
@@ -58,13 +62,130 @@ namespace OPUS_Demo_5.Controllers
         public IActionResult Create()
         {
 
-            Customer newCustomer = new Customer();
+            CustomerViewModel newCustomer = new CustomerViewModel();
+            newCustomer.thisNewCustomer = new Customer();
+            newCustomer.thisNewCustomerContact = new CustomerContact();
+            newCustomer.thisNewCustomerInvoiceAddress = new CustomerAddress();
 
             return View("_CreateCustomerModal", newCustomer);
         }
 
 
-        
+        // POST
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public IActionResult Create(CustomerViewModel newCustomer)
+        {
+            // Set properties that are not set from form input.
+            newCustomer.thisNewCustomer.Id = new Guid().ToString();
+            newCustomer.thisNewCustomer.IsActiveCustomer = true;
+            newCustomer.thisNewCustomer.CustomerIsLocked = false;
+            newCustomer.thisNewCustomer.CreatedDateTime = DateTime.Now;
+            newCustomer.thisNewCustomer.AutoInvoicingEnabled = true;
+            // Globally Acquired
+            newCustomer.thisNewCustomer.CreatedByUserId = "";
+            newCustomer.thisNewCustomer.CreatedByBranchCompanyId = "";
+
+            newCustomer.thisNewCustomerContact.Id = new Guid().ToString();
+            newCustomer.thisNewCustomerContact.CreatedDateTime = DateTime.Now;
+            newCustomer.thisNewCustomerContact.CustomerId = newCustomer.thisNewCustomer.Id;
+            newCustomer.thisNewCustomerContact.IsAccountContact = true;
+            newCustomer.thisNewCustomerContact.IsPrimaryContact = true;
+            //Globally Acquired
+            newCustomer.thisNewCustomerContact.CreatedByUserId = "";
+
+            newCustomer.thisNewCustomerInvoiceAddress.Id = new Guid().ToString();
+            //Globally Acquired
+            newCustomer.thisNewCustomerInvoiceAddress.CreatedByUserId = "";
+            newCustomer.thisNewCustomerInvoiceAddress.CreatedDateTime = DateTime.Now;
+            newCustomer.thisNewCustomerInvoiceAddress.CustomerId = newCustomer.thisNewCustomer.Id;
+            newCustomer.thisNewCustomerInvoiceAddress.IsInvoiceAddress = true;
+            newCustomer.thisNewCustomerInvoiceAddress.IsPrimaryDeliveryAddress = true;
+            
+
+
+            if (ModelState.IsValid)
+            {
+
+
+                // Return a view or redirect after success.
+            }
+
+            
+            // Return the original view model if input does not pass validation.
+            return View(newCustomer);
+        }
+
+   
+
+
+        public async Task<IActionResult> GoogleApiGetAddresses(string postCode)
+        {
+           List<SelectListItem> proposedAddresses = new List<SelectListItem>();
+
+            var apiKey = new ApiKey("fSIWj3fZe0KDOPV7zcRNeg29928");
+
+            IAddressService addressService = new AddressService(apiKey);
+
+            var result = await addressService.Get(new GetAddressRequest(postCode));
+
+          
+
+            int increment = 0;
+
+            if (result.IsSuccess)
+            {
+                var successfulResult = result.SuccessfulResult;
+
+                var latitude = successfulResult.Latitude;
+
+                var Longitude = successfulResult.Longitude;
+
+                foreach (var address in successfulResult.Addresses)
+                {
+                    var line1 = address.Line1;
+                    var line2 = address.Line2;
+                    var line3 = address.Line3;
+                    var line4 = address.Line4;
+                    var locality = address.Locality;
+                    var townOrCity = address.TownOrCity;
+                    var county = address.County;
+
+                    proposedAddresses.Add(new SelectListItem
+                    {
+                        Value = $"{increment}",
+                        Text = $"{line1}{line2}{line3}{line4}{locality}{townOrCity}{county} {postCode}"
+                    });
+
+   
+                        increment += 1;
+                }
+            }
+
+            //customerViewModel = new CustomerViewModel();
+            //customerViewModel.thisNewCustomer = new Customer();
+            //customerViewModel.thisNewCustomerContact = new CustomerContact();
+            //customerViewModel.thisNewCustomerInvoiceAddress = new CustomerAddress();
+
+            ViewBag.ProposedAddresses = proposedAddresses;
+
+            return PartialView("~/Views/Shared/_ProposedAddresses.cshtml");
+           // What do I Return??
+        }
+
+        //public ActionResult Search(string term)
+        //{
+        //    var films = from f in db.Films
+        //                select new
+        //                {
+        //                    id = f.FilmId,
+        //                    label = f.Title
+        //                };
+
+        //    films = films.Where(f => f.label.Contains(term));
+
+        //    return Json(films);
+        //}
 
     }
 }
