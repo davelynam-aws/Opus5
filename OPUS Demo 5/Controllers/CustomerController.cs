@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using getAddress.Sdk;
 using getAddress.Sdk.Api;
 using getAddress.Sdk.Api.Requests;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using OPUS_Demo_5.Models.CustomerManagement;
@@ -67,6 +68,11 @@ namespace OPUS_Demo_5.Controllers
             newCustomer.thisNewCustomerContact = new CustomerContact();
             newCustomer.thisNewCustomerInvoiceAddress = new CustomerAddress();
 
+            // Set default values.
+            newCustomer.thisNewCustomer.IsDepositAllowed = true;
+            newCustomer.thisNewCustomer.IsTaxExempt = false;
+            newCustomer.thisNewCustomer.IsAccountCustomer = false;
+
             return View("_CreateCustomerModal", newCustomer);
         }
 
@@ -77,43 +83,49 @@ namespace OPUS_Demo_5.Controllers
         public IActionResult Create(CustomerViewModel newCustomer)
         {
             // Set properties that are not set from form input.
-            newCustomer.thisNewCustomer.Id = new Guid().ToString();
+            newCustomer.thisNewCustomer.Id = Guid.NewGuid().ToString();
             newCustomer.thisNewCustomer.IsActiveCustomer = true;
             newCustomer.thisNewCustomer.CustomerIsLocked = false;
             newCustomer.thisNewCustomer.CreatedDateTime = DateTime.Now;
             newCustomer.thisNewCustomer.AutoInvoicingEnabled = true;
             // Globally Acquired
-            newCustomer.thisNewCustomer.CreatedByUserId = "";
-            newCustomer.thisNewCustomer.CreatedByBranchCompanyId = "";
+            newCustomer.thisNewCustomer.CreatedByUserId = HttpContext.Session.GetString("UserId");
+            newCustomer.thisNewCustomer.CreatedByBranchCompanyId = HttpContext.Session.GetString("UserBranchId"); 
 
-            newCustomer.thisNewCustomerContact.Id = new Guid().ToString();
+            newCustomer.thisNewCustomerContact.Id = Guid.NewGuid().ToString();
             newCustomer.thisNewCustomerContact.CreatedDateTime = DateTime.Now;
             newCustomer.thisNewCustomerContact.CustomerId = newCustomer.thisNewCustomer.Id;
             newCustomer.thisNewCustomerContact.IsAccountContact = true;
             newCustomer.thisNewCustomerContact.IsPrimaryContact = true;
             //Globally Acquired
-            newCustomer.thisNewCustomerContact.CreatedByUserId = "";
+            newCustomer.thisNewCustomerContact.CreatedByUserId = HttpContext.Session.GetString("UserId"); 
 
-            newCustomer.thisNewCustomerInvoiceAddress.Id = new Guid().ToString();
+            newCustomer.thisNewCustomerInvoiceAddress.Id = Guid.NewGuid().ToString();
             //Globally Acquired
-            newCustomer.thisNewCustomerInvoiceAddress.CreatedByUserId = "";
+            newCustomer.thisNewCustomerInvoiceAddress.CreatedByUserId = HttpContext.Session.GetString("UserId"); 
             newCustomer.thisNewCustomerInvoiceAddress.CreatedDateTime = DateTime.Now;
-            newCustomer.thisNewCustomerInvoiceAddress.CustomerId = newCustomer.thisNewCustomer.Id;
+            newCustomer.thisNewCustomerInvoiceAddress.CustomerId = Guid.NewGuid().ToString();
             newCustomer.thisNewCustomerInvoiceAddress.IsInvoiceAddress = true;
             newCustomer.thisNewCustomerInvoiceAddress.IsPrimaryDeliveryAddress = true;
-            
+
 
 
             if (ModelState.IsValid)
             {
+                // Bespoke Validation?
+
+                // Update database etc.
+
 
 
                 // Return a view or redirect after success.
+                return RedirectToAction("Create", "Quote");
+
             }
 
-            
+
             // Return the original view model if input does not pass validation.
-            return View(newCustomer);
+            return View("_CreateCustomerModal", newCustomer);
         }
 
    

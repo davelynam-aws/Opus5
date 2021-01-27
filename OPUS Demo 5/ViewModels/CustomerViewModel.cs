@@ -15,26 +15,30 @@ namespace OPUS_Demo_5.ViewModels
         {
             PreferredDeliveryDayOptions = new List<SelectListItem>()
         {
-            new SelectListItem{ Value = "0",Text = "Monday" },
-            new SelectListItem{ Value = "1", Text = "Tuesday" },
-            new SelectListItem{ Value = "2", Text = "Wednesday" },
-            new SelectListItem{ Value = "3", Text = "Thursday" },
-            new SelectListItem{ Value = "4", Text = "Friday" }
+            new SelectListItem{ Value = "Monday",Text = "Monday" },
+            new SelectListItem{ Value = "Tuesday", Text = "Tuesday" },
+            new SelectListItem{ Value = "Wednesday", Text = "Wednesday" },
+            new SelectListItem{ Value = "Thursday", Text = "Thursday" },
+            new SelectListItem{ Value = "Friday", Text = "Friday" }
         };
 
             DespatchSiteOptions = new List<SelectListItem>()
             {
-            new SelectListItem{ Value = "0",Text = "21st Altrincham" },
-            new SelectListItem{ Value = "1", Text = "21st Poulton" },
-            new SelectListItem{ Value = "2", Text = "Leyland" },
-            new SelectListItem{ Value = "3", Text = "Marton" },
-            new SelectListItem{ Value = "4", Text = "Marton 2 (Clifton Rd)" },
-            new SelectListItem{ Value = "5", Text = "Stafford" }
+            new SelectListItem{ Value = "21st Altrincham",Text = "21st Altrincham" },
+            new SelectListItem{ Value = "21st Poulton", Text = "21st Poulton" },
+            new SelectListItem{ Value = "Leyland", Text = "Leyland" },
+            new SelectListItem{ Value = "Marton", Text = "Marton" },
+            new SelectListItem{ Value = "Marton 2 (Clifton Rd)", Text = "Marton 2 (Clifton Rd)" },
+            new SelectListItem{ Value = "Stafford", Text = "Stafford" }
             };
 
 
 
         }
+
+        public bool IsNewQuote { get; set; }
+
+
         public Customer thisNewCustomer { get; set; }
 
         public CustomerAddress thisNewCustomerInvoiceAddress { get; set; }

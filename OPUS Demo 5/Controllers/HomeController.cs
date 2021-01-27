@@ -22,6 +22,10 @@ namespace OPUS_Demo_5.Controllers
             // TEMPORARILLY DISABLE LOGIN FOR TESTING.
             HttpContext.Session.SetString("LoggedInUser", "David Lynam");
 
+            HttpContext.Session.SetString("UserId", "fa3d1bee-a4d1-4689-adb6-9388eb3879e5");
+
+            HttpContext.Session.SetString("UserBranchId", "1fcf0d2c-b73f-4f10-b1f6-9c282569c4a3");
+
 
             //if (HttpContext.Session.GetString("LoggedInUser") == null || HttpContext.Session.GetString("LoggedInUser") == "")
             //{
