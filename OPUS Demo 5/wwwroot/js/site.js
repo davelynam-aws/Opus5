@@ -1,4 +1,7 @@
-﻿$(function () {
+﻿
+
+
+$(function () {
     // Set placeholder element as a variable for ease of use.
     var placeholderElement = $('#modal-placeholder');
 
