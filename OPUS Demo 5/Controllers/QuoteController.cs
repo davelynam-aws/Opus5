@@ -129,6 +129,15 @@ namespace OPUS_Demo_5.Controllers
             return View(quoteViewModel);
         }
 
+
+
+        public IActionResult GetActiveCustomersRefresh()
+        {
+
+            return PartialView("");
+        }
+
+
         // POST: Quote/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.

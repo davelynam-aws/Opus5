@@ -80,5 +80,9 @@ namespace OPUS_Demo_5.Models.CustomerManagement
 
 
 
+        public bool IsNewCustomer { get; set; }
+
+
+
     }
 }

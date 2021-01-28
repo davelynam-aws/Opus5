@@ -73,7 +73,7 @@ namespace OPUS_Demo_5.Controllers
             newCustomer.thisNewCustomer.IsTaxExempt = false;
             newCustomer.thisNewCustomer.IsAccountCustomer = false;
 
-            return View("_CreateCustomerModal", newCustomer);
+            return PartialView("_CreateCustomerModal", newCustomer);
         }
 
 
@@ -88,6 +88,7 @@ namespace OPUS_Demo_5.Controllers
             newCustomer.thisNewCustomer.CustomerIsLocked = false;
             newCustomer.thisNewCustomer.CreatedDateTime = DateTime.Now;
             newCustomer.thisNewCustomer.AutoInvoicingEnabled = true;
+            newCustomer.thisNewCustomer.CustomerLastOrderedDateTime = DateTime.Parse("01/01/1753");
             // Globally Acquired
             newCustomer.thisNewCustomer.CreatedByUserId = HttpContext.Session.GetString("UserId");
             newCustomer.thisNewCustomer.CreatedByBranchCompanyId = HttpContext.Session.GetString("UserBranchId"); 
@@ -104,28 +105,39 @@ namespace OPUS_Demo_5.Controllers
             //Globally Acquired
             newCustomer.thisNewCustomerInvoiceAddress.CreatedByUserId = HttpContext.Session.GetString("UserId"); 
             newCustomer.thisNewCustomerInvoiceAddress.CreatedDateTime = DateTime.Now;
-            newCustomer.thisNewCustomerInvoiceAddress.CustomerId = Guid.NewGuid().ToString();
+            newCustomer.thisNewCustomerInvoiceAddress.CustomerId = newCustomer.thisNewCustomer.Id;
             newCustomer.thisNewCustomerInvoiceAddress.IsInvoiceAddress = true;
             newCustomer.thisNewCustomerInvoiceAddress.IsPrimaryDeliveryAddress = true;
 
+
+            
 
 
             if (ModelState.IsValid)
             {
                 // Bespoke Validation?
-
+               
                 // Update database etc.
+                _context.Customers.Add(newCustomer.thisNewCustomer);
+                _context.SaveChanges();
 
+                _context.CustomerAddresses.Add(newCustomer.thisNewCustomerInvoiceAddress);
+                _context.CustomerContacts.Add(newCustomer.thisNewCustomerContact);
+                _context.SaveChanges();
 
+                // Set flag to refresh parent options. i.e. Add the new customer to the customer selection.
+                newCustomer.thisNewCustomer.IsNewCustomer = true;
+
+                return PartialView("_CreateCustomerModal", newCustomer);
 
                 // Return a view or redirect after success.
-                return RedirectToAction("Create", "Quote");
+                // return RedirectToAction("Create", "Quote");
 
             }
 
 
             // Return the original view model if input does not pass validation.
-            return View("_CreateCustomerModal", newCustomer);
+            return PartialView("_CreateCustomerModal", newCustomer);
         }
 
    

@@ -1,0 +1,118 @@
+﻿@model OPUS_Demo_5.ViewModels.CustomerViewModel
+<!-- Modal -->
+<div class="modal fade" id="add-contact" tabindex="-1" role="dialog" aria-labelledby="addContactLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addContactLabel">Add contact</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @*add hidden input field to form to validate model state*@
+                <form asp-action="Create">
+                    <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+                    <div class="form-group">
+                        <h3>Customer Name</h3>
+                        @*<label asp-for="thisNewCustomer.CustomerName"></label>*@
+                        <input asp-for="thisNewCustomer.CustomerName" class="form-control" />
+                        @*display validation errors (if any) for FirstName property*@
+                        <span asp-validation-for="thisNewCustomer.CustomerName" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-group">
+                        <h3>Invoice Address</h3>
+                        <label asp-for="thisNewCustomerInvoiceAddress.PostCode"></label>
+                        <input asp-for="thisNewCustomerInvoiceAddress.PostCode" class="form-control" />
+                        <span asp-validation-for="thisNewCustomerInvoiceAddress.PostCode" class="text-danger"></span>
+
+
+
+                        <label asp-for="thisNewCustomerInvoiceAddress.AddressLine1"></label>
+                        <input asp-for="thisNewCustomerInvoiceAddress.AddressLine1" class="form-control" />
+                        <span asp-validation-for="thisNewCustomerInvoiceAddress.AddressLine1" class="text-danger"></span>
+
+                        <label asp-for="thisNewCustomerInvoiceAddress.AddressLine2"></label>
+                        <input asp-for="thisNewCustomerInvoiceAddress.AddressLine2" class="form-control" />
+                        <span asp-validation-for="thisNewCustomerInvoiceAddress.AddressLine2" class="text-danger"></span>
+
+                        <label asp-for="thisNewCustomerInvoiceAddress.TownCity"></label>
+                        <input asp-for="thisNewCustomerInvoiceAddress.TownCity" class="form-control" />
+                        <span asp-validation-for="thisNewCustomerInvoiceAddress.TownCity" class="text-danger"></span>
+
+                        <label asp-for="thisNewCustomerInvoiceAddress.County"></label>
+                        <input asp-for="thisNewCustomerInvoiceAddress.County" class="form-control" />
+                        <span asp-validation-for="thisNewCustomerInvoiceAddress.County" class="text-danger"></span>
+
+
+
+
+                        <label asp-for="thisNewCustomerInvoiceAddress.DespatchSite" class="control-label"></label>
+
+                        <select asp-for="thisNewCustomerInvoiceAddress.DespatchSite" class="form-control" asp-items="Model.DespatchSiteOptions">
+                            <option value="" selected disabled>-- Select A Despatch Site --</option>
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+                        <h3>Contact</h3>
+                        <label asp-for="thisNewCustomerContact.Name"></label>
+                        <input asp-for="thisNewCustomerContact.Name" class="form-control" />
+                        <span asp-validation-for="thisNewCustomerContact.Name" class="text-danger"></span>
+
+                        <label asp-for="thisNewCustomerContact.ContactNumber"></label>
+                        <input asp-for="thisNewCustomerContact.ContactNumber" class="form-control" />
+                        <span asp-validation-for="thisNewCustomerContact.ContactNumber" class="text-danger"></span>
+
+                        <label asp-for="thisNewCustomerContact.Email"></label>
+                        <input asp-for="thisNewCustomerContact.Email" class="form-control" />
+                        <span asp-validation-for="thisNewCustomerContact.Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <h3>Preferences</h3>
+                        <label asp-for="thisNewCustomer.PreferredDeliveryDate"></label>
+                        <select asp-for="thisNewCustomer.PreferredDeliveryDate" class="form-control" asp-items="Model.PreferredDeliveryDayOptions">
+                            <option value="" selected disabled>-- Select Preferred Delivery Day --</option>
+                        </select>
+                        <span asp-validation-for="thisNewCustomer.PreferredDeliveryDate" class="text-danger"></span>
+
+                        <label asp-for="thisNewCustomer.CustomerSageAccountReference"></label>
+                        <input asp-for="thisNewCustomer.CustomerSageAccountReference" class="form-control" />
+                        <span asp-validation-for="thisNewCustomer.CustomerSageAccountReference" class="text-danger"></span>
+
+                        <div class="checkbox">
+                            <label>
+                                <input asp-for="thisNewCustomer.IsAccountCustomer" /> @Html.DisplayNameFor(model => model.thisNewCustomer.IsAccountCustomer)
+                            </label>
+                        </div>
+
+                        <div class="checkbox">
+                            <label>
+                                <input asp-for="thisNewCustomer.IsDepositAllowed" /> @Html.DisplayNameFor(model => model.thisNewCustomer.IsDepositAllowed)
+                            </label>
+                        </div>
+
+                        <div class="checkbox">
+                            <label>
+                                <input asp-for="thisNewCustomer.IsTaxExempt" /> @Html.DisplayNameFor(model => model.thisNewCustomer.IsTaxExempt)
+                            </label>
+                        </div>
+                    </div>
+
+
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                @*data-save attribute identifies the correct element to attach the "Save" to*@
+                <button type="button" class="btn btn-primary" data-save="modal">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

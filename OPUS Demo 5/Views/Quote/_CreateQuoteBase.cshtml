@@ -1,17 +1,5 @@
 ﻿@model OPUS_Demo_5.ViewModels.QuoteViewModel
 
-@{
-    ViewData["Title"] = "New Quote";
-
-    Layout = "~/Views/Shared/_Layout.cshtml";
-
-}
-
-<h2>New Quote</h2>
-
-
-<!-- Modal placeholder -->
-<div id="modal-placeholder"></div>
 
 
 <hr />
@@ -34,12 +22,7 @@
 
                         @*<a style="margin-left: 5px" onclick="showInPopup('@Url.Action("AddOrEdit", "Transaction", null,Context.Request.Scheme)', 'New Transaction')" class="btn btn-success text-white"><i class="fas fa-plus"></i></a>*@
                         @*Test opening a new view first then change to modal partial*@
-
-                        <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#add-contact" data-url="@Url.Action("Create", "Customer")">
-                            New Customer
-                        </button>
-
-                        @*<a  onclick="showInPopup('@Url.Action("Create", "Customer", null,Context.Request.Scheme)', 'New Customer')" style="margin-left: 5px" class="btn btn-success text-white"><i class="fas fa-plus"></i></a>*@
+                        <a onclick="showInPopup('@Url.Action("Create", "Customer", null,Context.Request.Scheme)', 'New Customer')" style="margin-left: 5px" class="btn btn-success text-white"><i class="fas fa-plus"></i></a>
 
                     </span>
                 </div>
@@ -118,14 +101,7 @@
         </form>
     </div>
 </div>
-@if (Model.thisCustomer.IsNewCustomer == true)
-{
-    <script type="text/javascript">
-            $(function () {
-                alert("Inserted Customer ID: " + @Model.thi);
-            });
-    </script>
-}
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
@@ -206,21 +182,21 @@
         $('#CustomerReferenceDiv').show();
     });
 
-    showInPopup = (url, title) => {
-        $.ajax({
-            type: 'GET',
-            url: url,
-            success: function (res) {
-                $('#form-modal .modal-body').html(res);
-                $('#form-modal .modal-title').html(title);
-                $('#form-modal').modal('show');
-                // to make popup draggable
-                //$('.modal-dialog').draggable({
-                //    handle: ".modal-header"
-                //});
-            }
-        })
-    }
+    //showInPopup = (url, title) => {
+    //    $.ajax({
+    //        type: 'GET',
+    //        url: url,
+    //        success: function (res) {
+    //            $('#form-modal .modal-body').html(res);
+    //            $('#form-modal .modal-title').html(title);
+    //            $('#form-modal').modal('show');
+    //            // to make popup draggable
+    //            //$('.modal-dialog').draggable({
+    //            //    handle: ".modal-header"
+    //            //});
+    //        }
+    //    })
+    //}
 
 
     </script>

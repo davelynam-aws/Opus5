@@ -36,8 +36,6 @@ namespace OPUS_Demo_5.ViewModels
 
         }
 
-        public bool IsNewQuote { get; set; }
-
 
         public Customer thisNewCustomer { get; set; }
 
