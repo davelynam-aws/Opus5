@@ -134,6 +134,8 @@ namespace OPUS_Demo_5.Controllers
         public IActionResult GetActiveCustomersRefresh()
         {
 
+            
+
             return PartialView("");
         }
 

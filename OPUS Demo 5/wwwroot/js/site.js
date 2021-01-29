@@ -4,6 +4,7 @@
 $(function () {
     // Set placeholder element as a variable for ease of use.
     var placeholderElement = $('#modal-placeholder');
+    var customerSelection = $('#CustomerId');
 
     // Event handler to all buttons with data-toggle equal to ajax-modal
     $('button[data-toggle="ajax-modal"]').click(function (event) {
@@ -15,6 +16,7 @@ $(function () {
             placeholderElement.html(data);
             // Display element.
             placeholderElement.find('.modal').modal('show');
+
         });
     });
 
@@ -44,10 +46,61 @@ $(function () {
             // if it's valid then hide modal window
             var isValid = newBody.find('[name="IsValid"]').val() == 'True';
             if (isValid) {
+
+                // Gets a new collection of active customer names and replaces the existing select list
+                AjaxCall();
+
+                // Hides the modal form
                 placeholderElement.find('.modal').modal('hide');
             }
+
+           
+            ///Off Piste!
+            // Wow, this works! Now just get a new select list and replace it.
+
+           // customerSelection.replaceWith("<h3 id>Replaced<h3>");
+            
+            /////
+
         });
+
+
+        function AjaxCall() {
+            $.ajax({
+                url: "/Customer/GetActiveCustomers",
+                success(response) {
+                    parseAndAddDatatForm(response);
+                    //GET THE data OBJECT TO DISPLAY CORRECTLY IN THE NEW SELECT LIST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                   // customerSelection.replaceWith("<select class=\"form-control\" id=\"CustomerId\" asp-items=\"@(new SelectList(" + response + ", \" Id\", \"CustomerName\"))\"><option value=\"\" selected disabled>-- Select Customer Name --</option></select>");
+                }
+            })
+        }
+
+        // Use data obtained by AjaxCall and turn it into a select list and replace a component with the designated ID.
+        function parseAndAddDatatForm(response) {
+            //$('#CustomerData').empty();
+            $('#CustomerId').empty();
+            $('#CustomerId').append("<option value=\"\" selected disabled>-- Select Customer Name --</option>")
+            $.each(response, function (key, responseValue) {
+                var temp = response[key];
+                var option = $('<option/>');
+                option.attr('value', temp.value).text(temp.text);
+                $('#CustomerId').append(option);
+            });
+            $('#CustomerId').select();
+        }
+        //<select class="form-control" id="CustomerId" asp-items="@(new SelectList(ViewBag.ActiveCustomers, " Id", "CustomerName"))" >
+        //    <option value="" selected disabled>-- Select Customer Name --</option>
+        //            </select >
     });
+
+
+
+
+       
+
+
+
 });
 
 

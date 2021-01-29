@@ -79,7 +79,7 @@ namespace OPUS_Demo_5.Models.CustomerManagement
 
 
 
-
+        [NotMapped]
         public bool IsNewCustomer { get; set; }
 
 

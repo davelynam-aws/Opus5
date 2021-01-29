@@ -35,7 +35,7 @@
                         @*<a style="margin-left: 5px" onclick="showInPopup('@Url.Action("AddOrEdit", "Transaction", null,Context.Request.Scheme)', 'New Transaction')" class="btn btn-success text-white"><i class="fas fa-plus"></i></a>*@
                         @*Test opening a new view first then change to modal partial*@
 
-                        <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#add-contact" data-url="@Url.Action("Create", "Customer")">
+                        <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#add-customer" data-url="@Url.Action("Create", "Customer")">
                             New Customer
                         </button>
 
@@ -118,11 +118,11 @@
         </form>
     </div>
 </div>
-@if (Model.thisCustomer.IsNewCustomer == true)
+@if (Model.thisCustomer != null && Model.thisCustomer.IsNewCustomer == true)
 {
     <script type="text/javascript">
             $(function () {
-                alert("Inserted Customer ID: " + @Model.thi);
+                alert("New Customer Added");
             });
     </script>
 }

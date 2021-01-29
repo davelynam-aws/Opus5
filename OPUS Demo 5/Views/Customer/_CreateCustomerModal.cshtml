@@ -1,10 +1,10 @@
 ﻿@model OPUS_Demo_5.ViewModels.CustomerViewModel
 <!-- Modal -->
-<div class="modal fade" id="add-contact" tabindex="-1" role="dialog" aria-labelledby="addContactLabel" aria-hidden="true">
+<div class="modal fade" id="add-customer" tabindex="-1" role="dialog" aria-labelledby="addCustomerLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addContactLabel">Add contact</h5>
+                <h5 class="modal-title" id="addCustomerLabel">Add Customer</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -16,7 +16,7 @@
                     <div class="form-group">
                         <h3>Customer Name</h3>
                         @*<label asp-for="thisNewCustomer.CustomerName"></label>*@
-                        <input asp-for="thisNewCustomer.CustomerName" class="form-control" />
+                        <input asp-for="thisNewCustomer.CustomerName" class="form-control" autocomplete="nay"/>
                         @*display validation errors (if any) for FirstName property*@
                         <span asp-validation-for="thisNewCustomer.CustomerName" class="text-danger"></span>
                     </div>
@@ -25,25 +25,25 @@
                     <div class="form-group">
                         <h3>Invoice Address</h3>
                         <label asp-for="thisNewCustomerInvoiceAddress.PostCode"></label>
-                        <input asp-for="thisNewCustomerInvoiceAddress.PostCode" class="form-control" />
+                        <input asp-for="thisNewCustomerInvoiceAddress.PostCode" class="form-control" autocomplete="nay"/>
                         <span asp-validation-for="thisNewCustomerInvoiceAddress.PostCode" class="text-danger"></span>
 
 
 
                         <label asp-for="thisNewCustomerInvoiceAddress.AddressLine1"></label>
-                        <input asp-for="thisNewCustomerInvoiceAddress.AddressLine1" class="form-control" />
+                        <input asp-for="thisNewCustomerInvoiceAddress.AddressLine1" class="form-control" autocomplete="nay"/>
                         <span asp-validation-for="thisNewCustomerInvoiceAddress.AddressLine1" class="text-danger"></span>
 
                         <label asp-for="thisNewCustomerInvoiceAddress.AddressLine2"></label>
-                        <input asp-for="thisNewCustomerInvoiceAddress.AddressLine2" class="form-control" />
+                        <input asp-for="thisNewCustomerInvoiceAddress.AddressLine2" class="form-control" autocomplete="nay"/>
                         <span asp-validation-for="thisNewCustomerInvoiceAddress.AddressLine2" class="text-danger"></span>
 
                         <label asp-for="thisNewCustomerInvoiceAddress.TownCity"></label>
-                        <input asp-for="thisNewCustomerInvoiceAddress.TownCity" class="form-control" />
+                        <input asp-for="thisNewCustomerInvoiceAddress.TownCity" class="form-control" autocomplete="nay"/>
                         <span asp-validation-for="thisNewCustomerInvoiceAddress.TownCity" class="text-danger"></span>
 
                         <label asp-for="thisNewCustomerInvoiceAddress.County"></label>
-                        <input asp-for="thisNewCustomerInvoiceAddress.County" class="form-control" />
+                        <input asp-for="thisNewCustomerInvoiceAddress.County" class="form-control" autocomplete="nay"/>
                         <span asp-validation-for="thisNewCustomerInvoiceAddress.County" class="text-danger"></span>
 
 
@@ -61,15 +61,15 @@
                     <div class="form-group">
                         <h3>Contact</h3>
                         <label asp-for="thisNewCustomerContact.Name"></label>
-                        <input asp-for="thisNewCustomerContact.Name" class="form-control" />
+                        <input asp-for="thisNewCustomerContact.Name" class="form-control"/>
                         <span asp-validation-for="thisNewCustomerContact.Name" class="text-danger"></span>
 
                         <label asp-for="thisNewCustomerContact.ContactNumber"></label>
-                        <input asp-for="thisNewCustomerContact.ContactNumber" class="form-control" />
+                        <input asp-for="thisNewCustomerContact.ContactNumber" class="form-control" autocomplete="nay" />
                         <span asp-validation-for="thisNewCustomerContact.ContactNumber" class="text-danger"></span>
 
                         <label asp-for="thisNewCustomerContact.Email"></label>
-                        <input asp-for="thisNewCustomerContact.Email" class="form-control" />
+                        <input asp-for="thisNewCustomerContact.Email" class="form-control" autocomplete="nay" />
                         <span asp-validation-for="thisNewCustomerContact.Email" class="text-danger"></span>
                     </div>
 
@@ -82,7 +82,7 @@
                         <span asp-validation-for="thisNewCustomer.PreferredDeliveryDate" class="text-danger"></span>
 
                         <label asp-for="thisNewCustomer.CustomerSageAccountReference"></label>
-                        <input asp-for="thisNewCustomer.CustomerSageAccountReference" class="form-control" />
+                        <input asp-for="thisNewCustomer.CustomerSageAccountReference" class="form-control" autocomplete="nay" />
                         <span asp-validation-for="thisNewCustomer.CustomerSageAccountReference" class="text-danger"></span>
 
                         <div class="checkbox">

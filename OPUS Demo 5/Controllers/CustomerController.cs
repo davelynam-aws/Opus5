@@ -140,7 +140,29 @@ namespace OPUS_Demo_5.Controllers
             return PartialView("_CreateCustomerModal", newCustomer);
         }
 
-   
+
+        public IEnumerable<SelectListItem> GetActiveCustomers()
+        {
+            List<SelectListItem> ActiveCustomersList = new List<SelectListItem>();
+
+            List<Customer> ActiveCustomers = _context.Customers.Where(c => c.IsActiveCustomer == true).ToList();
+
+            if (ActiveCustomers != null)
+            {
+                foreach(Customer cust in ActiveCustomers)
+                {
+                    ActiveCustomersList.Add(new SelectListItem
+                    {
+                        Value = cust.Id,
+                        Text = cust.CustomerName
+                    });
+                }
+            }
+
+            return new SelectList(ActiveCustomersList, "Value", "Text");
+        }
+
+
 
 
         public async Task<IActionResult> GoogleApiGetAddresses(string postCode)
