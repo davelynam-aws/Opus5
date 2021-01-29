@@ -47,6 +47,7 @@ namespace OPUS_Demo_5.Models
 
         [Column("RequestedDeliveryDate")]
         [Display(Name = "Shipping Date")]
+        [DataType(DataType.Date)]
         public DateTime RequestedDeliveryDate { get; set; }
 
         [Column("ApprovedByUserId")]

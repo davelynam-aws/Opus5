@@ -1,0 +1,36 @@
+﻿@model OPUS_Demo_5.ViewModels.QuoteViewModel
+
+@{
+    ViewData["Title"] = "New Quote";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+
+
+
+<!-- Modal placeholder -->
+<div id="modal-placeholder"></div>
+
+
+@if (Model.thisQuote.Id == "")
+{
+    <h2>New Quote</h2>
+
+    <!-- Create Quote placeholder-->
+    <div id="partial-CreateQuote">
+        <partial name="~/Views/Quote/_CreateQuote.cshtml" />
+    </div>
+}
+else
+{
+    <h2>Edit Quote</h2>
+
+    <!-- Create Quote placeholder-->
+    <div id="partial-CreateQuote">
+        <partial name="~/Views/Quote/_EditQuote.cshtml" />
+    </div>
+
+}
+

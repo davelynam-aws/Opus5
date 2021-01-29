@@ -10,7 +10,7 @@
 <h2>Index</h2>
 
 <div class="col-6 text-left">
-    <a asp-controller="Quote" asp-action="Create" class="btn btn-primary">
+    <a asp-controller="Quote" asp-action="CreateOrEdit" class="btn btn-primary">
         New Quote
     </a>
 
@@ -19,14 +19,14 @@
     <thead>
         <tr>
             @*<th>
-                    @Html.DisplayNameFor(model => model.CustomerId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CreatedByUserId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CreatedDateTime)
-                </th>*@
+            @Html.DisplayNameFor(model => model.CustomerId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedByUserId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedDateTime)
+        </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.thisCustomer.CustomerName)
             </th>
@@ -34,77 +34,79 @@
                 @Html.DisplayNameFor(model => model.thisQuote.CustomerReference)
             </th>
             @*<th>
-                    @Html.DisplayNameFor(model => model.thisQuote.MasterInternalColourId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.thisQuote.MasterExternalColourId)
-                </th>*@
+            @Html.DisplayNameFor(model => model.thisQuote.MasterInternalColourId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.thisQuote.MasterExternalColourId)
+        </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.thisQuote.QuoteReferenceNumber)
             </th>
             @*<th>
-                    @Html.DisplayNameFor(model => model.ListCode)
-                </th>*@
+            @Html.DisplayNameFor(model => model.ListCode)
+        </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.thisQuote.RequestedDeliveryDate)
             </th>
             @*<th>
-                    @Html.DisplayNameFor(model => model.ApprovedByUserId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ApprovedDateTime)
-                </th>*@
+            @Html.DisplayNameFor(model => model.ApprovedByUserId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ApprovedDateTime)
+        </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.thisQuote.DeliveryMethod)
             </th>
             @*<th>
-                    @Html.DisplayNameFor(model => model.IsGlassRequired)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IsCancelled)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CancelledByUserId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CancelledDateTime)
-                </th>*@
+            @Html.DisplayNameFor(model => model.IsGlassRequired)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsCancelled)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CancelledByUserId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CancelledDateTime)
+        </th>*@
             @*<th>
-                    @Html.DisplayNameFor(model => model.InvoiceAmountNet)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.InvoiceAmountVat)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DepositAmount)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IsTaxExempt)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DeliveryAddress)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DespatchSite)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Priority)
-                </th>*@
+            @Html.DisplayNameFor(model => model.InvoiceAmountNet)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InvoiceAmountVat)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DepositAmount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsTaxExempt)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DeliveryAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DespatchSite)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Priority)
+        </th>*@
             @*<th>
-                    @Html.DisplayNameFor(model => model.LastModifiedByUserId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.LastModifiedDateTime)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DespatchNotes)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.AdditionalNotes)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.NotifySalesWhenFabricated)
-                </th>*@
+            @Html.DisplayNameFor(model => model.LastModifiedByUserId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastModifiedDateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DespatchNotes)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AdditionalNotes)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NotifySalesWhenFabricated)
+        </th>*@
+
+
             <th></th>
         </tr>
     </thead>
@@ -196,11 +198,15 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.NotifySalesWhenFabricated)
                     </td>*@
-                <td>
-                    @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
-                </td>
+            <td>
+                @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+
+                <a asp-controller="Quote" asp-action="CreateOrEdit" asp-route-id="@item.thisQuote.Id" class="btn btn-primary">
+                    Edit Quote
+                </a>
+            </td>
             </tr>
         }
     </tbody>

@@ -1,17 +1,11 @@
 ﻿@model OPUS_Demo_5.ViewModels.QuoteViewModel
 
 @{
-    ViewData["Title"] = "New Quote";
+    ViewData["Title"] = "Edit Quote";
 
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    // Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
-
-<h2>New Quote</h2>
-
-
-<!-- Modal placeholder -->
-<div id="modal-placeholder"></div>
 
 
 <hr />
@@ -79,7 +73,7 @@
 
             <div class="form-group" id="ShippingDateDiv" style="display:none">
                 <label id="ShippingDate" asp-for="thisQuote.RequestedDeliveryDate" class="control-label"></label>
-                <input id="ShippingDateInput" asp-for="thisQuote.RequestedDeliveryDate" class="form-control" />
+                <input id="ShippingDateInput" asp-for="thisQuote.RequestedDeliveryDate" value="" class="form-control" />
                 <span asp-validation-for="thisQuote.RequestedDeliveryDate" class="text-danger"></span>
             </div>
 
@@ -112,27 +106,34 @@
                     </label>
                 </div>
             </div>
+            <div>
+                <input class="btn btn-primary" id="AddBifold" value="Add Bi-fold" style="display:none" />
+            </div>
             <div class="form-group" id="SubmitDiv" style="display:none">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </form>
     </div>
 </div>
-@if (Model.thisCustomer != null && Model.thisCustomer.IsNewCustomer == true)
-{
-    <script type="text/javascript">
+@*@if (Model.thisCustomer != null && Model.thisCustomer.IsNewCustomer == true)
+    {
+        <script type="text/javascript">
             $(function () {
                 alert("New Customer Added");
             });
-    </script>
-}
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        </script>
+    }*@
 
 
+@*Can't use @script section in partial views. Also, not using _Layout so need to specify jQuery here.*@
+<script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
+        asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+        asp-fallback-test="window.jQuery"
+        crossorigin="anonymous"
+        integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
+</script>
 
-    <script>
+<script>
 
 
           // This function handles a drop down selection change and passes the value id to the Quote Controller as an ajax request.
@@ -195,6 +196,9 @@
         //console.log($('#ShippingOptions option').filter(':selected').text())
     });
 
+        $('#CollectionAddressesDiv').change(function () {
+            $('#ShippingDateDiv').show();
+        })
 
     $('#DeliveryAddresses').change(function () {
         $('#ShippingDateDiv').show();
@@ -204,24 +208,27 @@
 
     $('#ShippingDateInput').on('input', function () {
         $('#CustomerReferenceDiv').show();
+        $('#AddBifold').show();
     });
 
-    showInPopup = (url, title) => {
-        $.ajax({
-            type: 'GET',
-            url: url,
-            success: function (res) {
-                $('#form-modal .modal-body').html(res);
-                $('#form-modal .modal-title').html(title);
-                $('#form-modal').modal('show');
-                // to make popup draggable
-                //$('.modal-dialog').draggable({
-                //    handle: ".modal-header"
-                //});
-            }
-        })
-    }
 
 
-    </script>
-}
+
+    //showInPopup = (url, title) => {
+    //    $.ajax({
+    //        type: 'GET',
+    //        url: url,
+    //        success: function (res) {
+    //            $('#form-modal .modal-body').html(res);
+    //            $('#form-modal .modal-title').html(title);
+    //            $('#form-modal').modal('show');
+    //            // to make popup draggable
+    //            //$('.modal-dialog').draggable({
+    //            //    handle: ".modal-header"
+    //            //});
+    //        }
+    //    })
+    //}
+
+
+</script>
