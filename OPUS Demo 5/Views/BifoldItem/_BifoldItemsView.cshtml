@@ -1,0 +1,24 @@
+﻿@model OPUS_Demo_5.ViewModels.QuoteViewModel
+
+@{ 
+    Layout = null;
+}
+
+<table>
+
+    <tbody>
+        @foreach (var item in Model.thisBifoldItems)
+        {
+            <tr>
+
+
+                <td>
+                    <div id="partial-bifold-item-1">
+                        <partial name="~/Views/BifoldItem/_BifoldItemSummary.cshtml" model="@item" />
+                    </div>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>

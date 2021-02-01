@@ -115,13 +115,13 @@ namespace OPUS_Demo_5.Controllers
         }
 
         // GET: Quote/Create
-        public IActionResult CreateOrEdit(string QuoteId = "014cf1dd-bd2a-4c66-894d-0a5899789b0e")
+        public IActionResult CreateOrEdit(string Id = "")
         {
             QuoteViewModel quoteViewModel = new QuoteViewModel();
             
 
             // Populate combo's etc
-            if (QuoteId == "")
+            if (Id == "")
             {
                 // Create new quote with default values
                 quoteViewModel.thisQuote = new Quote();
@@ -134,8 +134,8 @@ namespace OPUS_Demo_5.Controllers
                 // Load existing quote data for editing.
 
 
-                quoteViewModel.thisQuote = _context.Quotes.Where(q => q.Id == QuoteId).Single();
-
+                quoteViewModel.thisQuote = _context.Quotes.Where(q => q.Id == Id).Single();
+                quoteViewModel.thisBifoldItems = _context.BifoldItems.Where(b => b.QuoteId == Id).ToList();
             }
 
             quoteViewModel.ActiveCustomers = _context.Customers.ToList();

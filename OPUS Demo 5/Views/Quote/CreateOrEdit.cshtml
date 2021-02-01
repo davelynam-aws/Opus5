@@ -14,22 +14,30 @@
 <div id="modal-placeholder"></div>
 
 
-@if (Model.thisQuote.Id == "")
+@if (Model.thisQuote.Id == null)
 {
     <h2>New Quote</h2>
+    @if (Model.thisQuote.Id == "")
+    {
 
+    }
     <!-- Create Quote placeholder-->
     <div id="partial-CreateQuote">
-        <partial name="~/Views/Quote/_CreateQuote.cshtml" />
+        <partial name="~/Views/Quote/_CreateQuote.cshtml" model="@Model"/>
     </div>
 }
 else
 {
+    @if (Model.thisQuote.Id == "")
+    {
+
+    }
+
     <h2>Edit Quote</h2>
 
     <!-- Create Quote placeholder-->
     <div id="partial-CreateQuote">
-        <partial name="~/Views/Quote/_EditQuote.cshtml" />
+        <partial name="~/Views/Quote/_EditQuote.cshtml" model="@Model" />
     </div>
 
 }

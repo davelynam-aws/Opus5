@@ -20,7 +20,7 @@
 
                 <div class="input-group">
 
-                    <select class="form-control" id="CustomerId" asp-items="@(new SelectList(ViewBag.ActiveCustomers, "Id", "CustomerName"))">
+                    <select asp-for="thisQuote.CustomerId" class="form-control" id="CustomerId" asp-items="@(new SelectList(ViewBag.ActiveCustomers, "Id", "CustomerName"))">
                         <option value="" selected disabled>-- Select Customer Name --</option>
                     </select>
 
@@ -48,16 +48,18 @@
 
             <div class="form-group" id="ShippingOptionsDiv" style="display:none">
                 <label asp-for="ShippingOptions" class="control-label">Shipping Options</label>
-                <select class="form-control" id="ShippingOptions" asp-items="Model.ShippingOptions">
+
+                <select asp-for="thisQuote.DeliveryMethod" class="form-control" id="ShippingOptions" asp-items="Model.ShippingOptions">
                     <option value="" selected disabled>-- Select Shipping Option --</option>
                 </select>
+
                 <span asp-validation-for="ShippingOptions" class="text-danger"></span>
             </div>
 
             <!--Toggle visibility on selection-->
             <div class="form-group" id="CollectionAddressesDiv" style="display:none">
                 <label asp-for="CollectionAddresses" class="control-label">Collection Address</label>
-                <select class="form-control" id="CollectionAddresses" asp-items="Model.CollectionAddresses">
+                <select asp-for="thisQuote.DeliveryAddress" class="form-control" id="CollectionAddresses" asp-items="Model.CollectionAddresses">
                     <option value="" selected disabled>-- Select Collection Address --</option>
                 </select>
                 <span asp-validation-for="CollectionAddresses" class="text-danger"></span>
@@ -66,14 +68,14 @@
             <!--Toggle visibility on selection-->
             <div class="form-group" id="DeliveryAddressesDiv" style="display:none">
                 <label asp-for="DeliveryAddresses" class="control-label">Delivery Address</label>
-                <select class="form-control" id="DeliveryAddresses" asp-items="Model.DeliveryAddresses">
+                <select asp-for="thisQuote.DeliveryAddress" class="form-control" id="DeliveryAddresses" asp-items="Model.DeliveryAddresses">
                 </select>
                 <span asp-validation-for="DeliveryAddresses" class="text-danger"></span>
             </div>
 
             <div class="form-group" id="ShippingDateDiv" style="display:none">
                 <label id="ShippingDate" asp-for="thisQuote.RequestedDeliveryDate" class="control-label"></label>
-                <input id="ShippingDateInput" asp-for="thisQuote.RequestedDeliveryDate" value="" class="form-control" />
+                <input id="ShippingDateInput" asp-for="thisQuote.RequestedDeliveryDate" class="form-control" />
                 <span asp-validation-for="thisQuote.RequestedDeliveryDate" class="text-danger"></span>
             </div>
 
@@ -106,15 +108,34 @@
                     </label>
                 </div>
             </div>
-            <div>
+            <!--        <div>
                 <input class="btn btn-primary" id="AddBifold" value="Add Bi-fold" style="display:none" />
             </div>
+                -->
             <div class="form-group" id="SubmitDiv" style="display:none">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </form>
     </div>
+
+    <div class="col-md-7">
+
+
+        <button type="button" class="btn btn-primary pull-right" data-toggle="ajax-modal" data-target="#add-bifold-item" data-url="@Url.Action("Create", "QuoteBifold")">
+            Add Bi-Fold
+        </button>
+
+        <div id="partial-BifoldItem1">
+            <partial name="~/Views/BifoldItem/_BifoldItemsView.cshtml" model=@Model/>
+        </div>
+
+
+    </div>
+
 </div>
+
+
+
 @*@if (Model.thisCustomer != null && Model.thisCustomer.IsNewCustomer == true)
     {
         <script type="text/javascript">
@@ -134,6 +155,94 @@
 </script>
 
 <script>
+
+
+    // Screen load function to show relevant controls.
+    $(function () {
+        //
+        // Populate invoice address for customer.
+        var customerId = $('#CustomerId').find(":selected").val();
+        if (customerId != "") {
+             $.ajax({
+                url: '@Url.Action("ShowInvoiceAddressPartial", "Quote")',
+                type: 'POST',
+                data: { 'customerId': customerId },
+                dataType: 'html',
+                success: function (data) {
+                    $("#mypartial").html(data);
+                }
+         });
+        //
+        // Populate delivery addresses for customer
+
+        var selectedDeliveryAddress = @Html.Raw(Json.Serialize(Model.thisQuote.DeliveryAddress));
+
+      
+     
+
+        var deliveryAddresses = $("#DeliveryAddresses");
+        deliveryAddresses.empty().append('<option selected="selected" value="0" disabled = "disabled">Loading.....</option>');
+        $.ajax({
+            type: "POST",
+            url: "/Customer/GetCustomerAddresses",
+            data: { 'customerId': customerId },
+            //contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                deliveryAddresses.empty().append('<option selected="selected" value="">-- Select Delivery Address --</option>');
+                $.each(response, function () {
+               
+
+                    if (this.text == selectedDeliveryAddress) {
+                        deliveryAddresses.append($("<option />").val(this['Value']).text(this['text']));
+                    } else {
+                        deliveryAddresses.append($("<option selected=\"selected\" />").val(this['Value']).text(this['text']));
+                    }
+                });
+                
+            },
+            failure: function (response) {
+                alert(response.responseText);
+                console.log("failure");
+            },
+            error: function (response) {
+                alert(response.responseText);
+                console.log("error");
+            }
+            
+
+        });
+
+
+
+
+        //
+        // Show fields depending on previous selection.
+
+        $('#ShippingOptionsDiv').show();
+
+        if ($('#ShippingOptions option').filter(':selected').text() == "AWS Vehicle Delivery") {
+            $('#ShippingDate').text("Delivery Date")
+            $('#DeliveryAddressesDiv').show();
+            $('#CollectionAddressesDiv').hide();
+        } else {
+            $('#ShippingDate').text("Collection Date")
+            $('#DeliveryAddressesDiv').hide();
+            $('#CollectionAddressesDiv').show();
+        }
+
+        $('#ShippingDateDiv').show();
+        $('#CustomerReferenceDiv').show();
+        $('#AddBifold').show();
+        }
+
+
+
+
+    });
+
+
+
 
 
           // This function handles a drop down selection change and passes the value id to the Quote Controller as an ajax request.
@@ -163,7 +272,7 @@
                     $.each(response, function () {
                         //deliveryAddresses.append($("<option></option>").val(this['Value']).html(this['Text']));
                         deliveryAddresses.append($("<option />").val(this['Value']).text(this['text']));
-                        console.log("success");
+    
                     });
 
                 },
