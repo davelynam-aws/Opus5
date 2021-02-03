@@ -1,6 +1,5 @@
 ﻿
 
-
 $(function () {
     // Set placeholder element as a variable for ease of use.
     var placeholderElement = $('#modal-placeholder');
@@ -54,11 +53,6 @@ $(function () {
                 placeholderElement.find('.modal').modal('hide');
             }
 
-           
-            ///Off Piste!
-            // Wow, this works! Now just get a new select list and replace it.
-
-           // customerSelection.replaceWith("<h3 id>Replaced<h3>");
             
             /////
 

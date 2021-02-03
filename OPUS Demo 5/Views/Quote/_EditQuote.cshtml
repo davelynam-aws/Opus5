@@ -113,7 +113,7 @@
             </div>
                 -->
             <div class="form-group" id="SubmitDiv" style="display:none">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Update Main Details" class="btn btn-success pull-right" data-url="@Url.Action("Edit", "Quote")" />
             </div>
         </form>
     </div>
@@ -121,9 +121,7 @@
     <div class="col-md-7">
 
 
-        <button type="button" class="btn btn-primary pull-right" data-toggle="ajax-modal" data-target="#add-bifold-item" data-url="@Url.Action("Create", "QuoteBifold")">
-            Add Bi-Fold
-        </button>
+
 
         <div id="partial-BifoldItem1">
             <partial name="~/Views/BifoldItem/_BifoldItemsView.cshtml" model=@Model/>
@@ -234,6 +232,7 @@
         $('#ShippingDateDiv').show();
         $('#CustomerReferenceDiv').show();
         $('#AddBifold').show();
+        $('#SubmitDiv').show();
         }
 
 
@@ -321,23 +320,6 @@
     });
 
 
-
-
-    //showInPopup = (url, title) => {
-    //    $.ajax({
-    //        type: 'GET',
-    //        url: url,
-    //        success: function (res) {
-    //            $('#form-modal .modal-body').html(res);
-    //            $('#form-modal .modal-title').html(title);
-    //            $('#form-modal').modal('show');
-    //            // to make popup draggable
-    //            //$('.modal-dialog').draggable({
-    //            //    handle: ".modal-header"
-    //            //});
-    //        }
-    //    })
-    //}
 
 
 </script>

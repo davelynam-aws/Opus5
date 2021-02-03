@@ -53,5 +53,7 @@ namespace OPUS_Demo_5.ViewModels
         public List<SelectListItem> PreferredDeliveryDayOptions { get; set; }
 
         public List<SelectListItem> DespatchSiteOptions { get; set; }
+
+
     }
 }

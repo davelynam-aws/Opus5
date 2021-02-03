@@ -96,23 +96,24 @@ namespace OPUS_Demo_5.Controllers
             //return View(await _context.Quotes.ToListAsync());
         }
 
-        // GET: Quote/Details/5
-        public async Task<IActionResult> Details(string id)
+        // GET
+        public IActionResult AddBifoldItem()
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            BifoldItemViewModel bifoldItemViewModel = new BifoldItemViewModel();
 
-            var quote = await _context.Quotes
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (quote == null)
-            {
-                return NotFound();
-            }
+            bifoldItemViewModel.thisBifoldItem = new BifoldItem();
 
-            return View(quote);
+            // Increment this from existing.
+            bifoldItemViewModel.thisBifoldItem.ItemNumber = 1;
+
+            bifoldItemViewModel.ProfileColourOptions = _context.ProfileColours.ToList();
+            bifoldItemViewModel.HardwareColourOptions = _context.HardwareColours.ToList();
+
+
+            return PartialView("~/Views/BifoldItem/_CreateBifoldItem.cshtml", bifoldItemViewModel);
         }
+
+     
 
         // GET: Quote/Create
         public IActionResult CreateOrEdit(string Id = "")
@@ -144,6 +145,19 @@ namespace OPUS_Demo_5.Controllers
 
             return View(quoteViewModel);
         }
+
+    
+        // POST
+        [HttpPost]
+        public IActionResult CreateOrEdit(QuoteViewModel quoteViewModel)
+        {
+
+
+
+
+            return View(quoteViewModel);
+        }
+
 
 
 

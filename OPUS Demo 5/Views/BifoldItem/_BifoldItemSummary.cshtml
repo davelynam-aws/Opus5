@@ -5,20 +5,26 @@
     Layout = null;
 
 }
-<div class="row">
-    <div id="BifoldItem" class="col-md-16">
 
-        <h4>Item - @Model.ItemNumber</h4>
-        <h4>Location - @Model.Location</h4>
-        <h4>Width - @Model.Width</h4>
-        <h4>Height - @Model.Height</h4>
-        <h4>Outside - Colour1</h4>
-        <h4>Inside - Colour2</h4>
+    <div class="row" style="margin: 5px 5px 5px 5px; background-color:aliceblue;">
+        <div id="BifoldItem" class="col-md-9">
+
+            <h4>Item - @Model.ItemNumber</h4>
+            <h4>Location - @Model.Location</h4>
+            <h4>Width - @Model.Width</h4>
+            <h4>Height - @Model.Height</h4>
+            <h4>Outside - Colour1</h4>
+            <h4>Inside - Colour2</h4>
+
+
+
+        </div>
+        <div id="Image" class="col-md-3">
+
+            <img src="~/images/Asset 1.png" style="height:auto; width:auto; max-height:100%; max-width:100%";/>
+        </div>
+
     </div>
 
-</div>
 
-<div id="Image" class="col-md-25">
 
-    <img src="~/images/AAS_Icon_2018.png" />
-</div>

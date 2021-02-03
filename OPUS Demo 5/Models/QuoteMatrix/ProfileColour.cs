@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OPUS_Demo_5.Models.QuoteMatrix
 {
-    [Table("QuotingMatrix.ProfileColour")]
+    [Table("QuoteMatrix.ProfileColour")]
     public class ProfileColour
     {
         [Key]
