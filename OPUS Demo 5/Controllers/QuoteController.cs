@@ -109,11 +109,58 @@ namespace OPUS_Demo_5.Controllers
             bifoldItemViewModel.ProfileColourOptions = _context.ProfileColours.ToList();
             bifoldItemViewModel.HardwareColourOptions = _context.HardwareColours.ToList();
 
+            bifoldItemViewModel.SelectedBifoldStyleCode = "Default";
 
             return PartialView("~/Views/BifoldItem/_CreateBifoldItem.cshtml", bifoldItemViewModel);
         }
 
-     
+        //// POST
+        //[ValidateAntiForgeryToken]
+        //[HttpPost]
+        //public IActionResult AddBifoldItem(BifoldItemViewModel bifoldItemViewModel)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        // Test debug
+        //        int i = 1;
+
+        //        i += 1; ;
+
+        //        // Save et
+        //    }
+
+        //    bifoldItemViewModel.ProfileColourOptions = _context.ProfileColours.ToList();
+        //    bifoldItemViewModel.HardwareColourOptions = _context.HardwareColours.ToList();
+
+        //    bifoldItemViewModel.SelectedBifoldStyleCode = "Default";
+
+        //    return PartialView("~/Views/BifoldItem/_CreateBifoldItem.cshtml", bifoldItemViewModel);
+        //}
+
+
+        // POST
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public async Task<IActionResult> AddBifoldItem(BifoldItemViewModel bifoldItemViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                // Test debug
+                int i = 1;
+
+                i += 1; ;
+
+                // Save et
+            }
+
+            //bifoldItemViewModel.ProfileColourOptions = _context.ProfileColours.ToList();
+            //bifoldItemViewModel.HardwareColourOptions = _context.HardwareColours.ToList();
+
+            //bifoldItemViewModel.SelectedBifoldStyleCode = "Default";
+
+            return PartialView("~/Views/BifoldItem/_CreateBifoldItem.cshtml", bifoldItemViewModel);
+        }
+
 
         // GET: Quote/Create
         public IActionResult CreateOrEdit(string Id = "")

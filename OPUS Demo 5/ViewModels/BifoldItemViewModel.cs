@@ -1,26 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using OPUS_Demo_5.Models;
+using OPUS_Demo_5.Models.DataContexts;
 using OPUS_Demo_5.Models.QuoteMatrix;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace OPUS_Demo_5.ViewModels
 {
     public class BifoldItemViewModel
     {
-        //public BifoldItemViewModel()
-        //{
-
-        //}
 
 
         public BifoldItem thisBifoldItem { get; set; }
 
 
-
+        public string SelectedBifoldStyleCode { get; set; }
 
         public List<ProfileColour> ProfileColourOptions { get; set; }
 

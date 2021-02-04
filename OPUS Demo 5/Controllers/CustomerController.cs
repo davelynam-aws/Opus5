@@ -135,7 +135,6 @@ namespace OPUS_Demo_5.Controllers
 
             }
 
-
             // Return the original view model if input does not pass validation.
             return PartialView("_CreateCustomerModal", newCustomer);
         }

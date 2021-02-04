@@ -18,23 +18,21 @@ namespace OPUS_Demo_5.Models
 
         [Column("Width")]
         [Required(ErrorMessage = "Please enter a width in millemeters")]
-        [MaxLength(4)]
         public int Width { get; set; }
 
         [Column("Height")]
-        [Required(ErrorMessage = "Please enter a height in millemeters")]
-        [MaxLength(4)]
+        //[Required(ErrorMessage = "Please enter a height in millemeters")]
         public int Height { get; set; }
 
         [Column("StyleId")]
         public int StyleId { get; set; }
 
         [Column("InternalColourId")]
-        [Required(ErrorMessage = "Please select an outside colour")]
+       // [Required(ErrorMessage = "Please select an outside colour")]
         public string InternalColourId { get; set; }
 
         [Column("ExternalColourId")]
-        [Required(ErrorMessage = "Please select an inside colour")]
+        //[Required(ErrorMessage = "Please select an inside colour")]
         public string ExternalColourId { get; set; }
 
         
@@ -80,7 +78,7 @@ namespace OPUS_Demo_5.Models
         [Column("AdditionalNotes")]
         public string AdditionalNotes { get; set; }
 
-        [Required(ErrorMessage = "Please select a hardware colour")]
+        //[Required(ErrorMessage = "Please select a hardware colour")]
         [Column("HardwareColourId")]
         public int HardwareColourId { get; set; }
     }

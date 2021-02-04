@@ -1,5 +1,10 @@
 ﻿@model OPUS_Demo_5.ViewModels.BifoldItemViewModel
 <!-- Modal -->
+
+@{
+    Layout = null;
+}
+
 <div class="modal fade" id="add-bifold-item" tabindex="-1" role="dialog" aria-labelledby="addBifoldItemLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -14,115 +19,128 @@
                 <form asp-action="AddBifoldItem">
                     <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
 
-                    <div class="form-group">
-                        <h3>Bifold Item @Model.thisBifoldItem.ItemNumber</h3>
-
-                        <div class="form-group col-md-6">
-                            <label asp-for="thisBifoldItem.Width"></label>
-                            <input asp-for="thisBifoldItem.Width" class="form-control" autocomplete="nay" />
-                            <span asp-validation-for="thisBifoldItem.Width" class="text-danger"></span>
-                        </div>
-
-                        <div class="form-group col-md-6">
-                            <label asp-for="thisBifoldItem.Height"></label>
-                            <input asp-for="thisBifoldItem.Height" class="form-control" autocomplete="nay" />
-                            <span asp-validation-for="thisBifoldItem.Height" class="text-danger"></span>
-                        </div>
-
-                        <div class="form-group col-md-6">
-                            <label asp-for="ProfileColourOptions" class="control-label">Outside Colour</label>
-                            <select asp-for="thisBifoldItem.ExternalColourId" class="form-control" asp-items="@(new SelectList(Model.ProfileColourOptions, "Id", "ColourName"))">
-                                <option value="" selected disabled>-- Select --</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group col-md-6">
-                            <label asp-for="ProfileColourOptions" class="control-label">Inside Colour</label>
-                            <select asp-for="thisBifoldItem.InternalColourId" class="form-control" asp-items="@(new SelectList(Model.ProfileColourOptions, "Id", "ColourName"))">
-                                <option value="" selected disabled>-- Select --</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group col-md-4">
-                            <label asp-for="DoorQuantityOptions" class="control-label">How Many Doors?</label>
-                            <select asp-for="SelectedDoorQuantity" class="form-control" asp-items="@Model.DoorQuantityOptions">
-                                <option value="" selected disabled>-- Select --</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group col-md-4">
-                            <label asp-for="OpeningOptions" class="control-label">Open In Or Out?</label>
-                            <select asp-for="SelectedOpeningOption" class="form-control" asp-items="Model.OpeningOptions">
-                                <option value="" selected disabled>-- Select --</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group col-md-4">
-                            <label asp-for="SashProfileOptions" class="control-label">Sash Profile</label>
-                            <select asp-for="SelectedSashProfile" class="form-control" asp-items="Model.SashProfileOptions">
-                                <option value="" selected disabled>-- Select --</option>
-                            </select>
-                        </div>
 
 
-                     
-                        <div style="height: 500px">
+                    <h3>Bifold Item @Model.thisBifoldItem.ItemNumber</h3>
 
-                        </div>
+                    <div class="form-group col-md-6">
+                        <label asp-for="thisBifoldItem.Width"></label>
+                        <input asp-for="thisBifoldItem.Width" class="form-control" autocomplete="nay" />
+                        <span asp-validation-for="thisBifoldItem.Width" class="text-danger"></span>
+                    </div>
 
+                    <div class="form-group col-md-6">
+                        <label asp-for="thisBifoldItem.Height"></label>
+                        <input asp-for="thisBifoldItem.Height" class="form-control" autocomplete="nay" />
+                        <span asp-validation-for="thisBifoldItem.Height" class="text-danger"></span>
+                    </div>
 
+                    @Html.HiddenFor(m => m.ProfileColourOptions)
+                    @Html.HiddenFor(m => m.HardwareColourOptions)
 
-
-                        <div class="checkbox">
-                            <label asp-for="thisBifoldItem.IsMarineOrHazardousCoating">
-                                <input asp-for="thisBifoldItem.IsMarineOrHazardousCoating" /> @Html.DisplayNameFor(model => model.thisBifoldItem.IsMarineOrHazardousCoating)
-                            </label>
-                        </div>
-
-
-                        <label asp-for="HardwareColourOptions" class="control-label">Hardware Colour</label>
-                        <select asp-for="thisBifoldItem.HardwareColourId" class="form-control" asp-items="@(new SelectList(Model.HardwareColourOptions, "Id", "ColourName"))">
+                    <div class="form-group col-md-6">
+                        <label asp-for="ProfileColourOptions" class="control-label">Outside Colour</label>
+                        <select asp-for="thisBifoldItem.ExternalColourId" class="form-control" asp-items="@(new SelectList(Model.ProfileColourOptions, "Id", "ColourName"))">
                             <option value="" selected disabled>-- Select --</option>
                         </select>
+                    </div>
 
+                    <div class="form-group col-md-6">
+                        <label asp-for="ProfileColourOptions" class="control-label">Inside Colour</label>
+                        <select asp-for="thisBifoldItem.InternalColourId" class="form-control" asp-items="@(new SelectList(Model.ProfileColourOptions, "Id", "ColourName"))">
+                            <option value="" selected disabled>-- Select --</option>
+                        </select>
+                    </div>
 
-                        <button value="">
-                        </button>
+                    <div class="form-group col-md-4">
+                        <label asp-for="DoorQuantityOptions" class="control-label">How Many Doors?</label>
+                        <select asp-for="SelectedDoorQuantity" class="form-control" asp-items="@Model.DoorQuantityOptions">
+                            <option value="" selected disabled>-- Select --</option>
+                        </select>
+                    </div>
 
+                    <div class="form-group col-md-4">
+                        <label asp-for="OpeningOptions" class="control-label">Open In Or Out?</label>
+                        <select asp-for="SelectedOpeningOption" class="form-control" asp-items="Model.OpeningOptions">
+                            <option value="" selected disabled>-- Select --</option>
+                        </select>
+                    </div>
 
-                        <!--Style Selector Partial-->
+                    <div class="form-group col-md-4">
+                        <label asp-for="SashProfileOptions" class="control-label">Sash Profile</label>
+                        <select asp-for="SelectedSashProfile" class="form-control" asp-items="Model.SashProfileOptions">
+                            <option value="" selected disabled>-- Select --</option>
+                        </select>
+                    </div>
 
-                        <label asp-for="thisBifoldItem.AdditionalNotes"></label>
-                        <input asp-for="thisBifoldItem.AdditionalNotes" class="form-control" autocomplete="nay" />
-                        <span asp-validation-for="thisBifoldItem.AdditionalNotes" class="text-danger"></span>
+                    @Html.HiddenFor(m => m.SelectedBifoldStyleCode, new { @id = "SelectedBifoldStyle" })
 
-
-                        <div class="checkbox">
-                            <label asp-for="thisBifoldItem.IsLowThreshold">
-                                <input asp-for="thisBifoldItem.IsLowThreshold" /> @Html.DisplayNameFor(model => model.thisBifoldItem.IsLowThreshold)
-                            </label>
+                    <div class=" form-group" id="OneDoorImages">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="thumbnail" style="cursor:pointer;">
+                                    <a class="BifoldStyleImages" onclick="$('#SelectedBifoldStyle').val('TL');">
+                                        <!--Testing onclick event for image. Use this to register the selection and highlight the image-->
+                                        <img src="~/images/BifoldThumbnails/TL.png" style="height:auto; width:auto; max-height:100%; max-width:100%">
+                                        <div class="caption">
+                                            <p style="text-align:center;">OUTSIDE VIEW</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="thumbnail" style="cursor:pointer;">
+                                    <a>
+                                        <!--Testing onclick event for image. Use this to register the selection and highlight the image-->
+                                        <img src="~/images/BifoldThumbnails/TR.png" style="height:auto; width:auto; max-height:100%; max-width:100%" onclick="alert('Image Selected')">
+                                        <div class="caption">
+                                            <p style="text-align:center;">OUTSIDE VIEW</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
+                    </div>
 
-                        <div class="checkbox">
-                            <label asp-for="thisBifoldItem.HasRamps">
-                                <input asp-for="thisBifoldItem.HasRamps" /> @Html.DisplayNameFor(model => model.thisBifoldItem.HasRamps)
-                            </label>
-                        </div>
+                    <div class="checkbox">
+                        <label asp-for="thisBifoldItem.IsMarineOrHazardousCoating">
+                            <input asp-for="thisBifoldItem.IsMarineOrHazardousCoating" /> @Html.DisplayNameFor(model => model.thisBifoldItem.IsMarineOrHazardousCoating)
+                        </label>
+                    </div>
+
+                    <label asp-for="HardwareColourOptions" class="control-label">Hardware Colour</label>
+                    <select asp-for="thisBifoldItem.HardwareColourId" class="form-control" asp-items="@(new SelectList(Model.HardwareColourOptions, "Id", "ColourName"))">
+                        <option value="" selected disabled>-- Select --</option>
+                    </select>
+
+                    <label asp-for="thisBifoldItem.AdditionalNotes"></label>
+                    <input asp-for="thisBifoldItem.AdditionalNotes" class="form-control" autocomplete="nay" />
+                    <span asp-validation-for="thisBifoldItem.AdditionalNotes" class="text-danger"></span>
 
 
-                        <div class="checkbox">
-                            <label asp-for="thisBifoldItem.IsKitForm">
-                                <input asp-for="thisBifoldItem.IsKitForm" /> @Html.DisplayNameFor(model => model.thisBifoldItem.IsKitForm)
-                            </label>
-                        </div>
+                    <div class="checkbox">
+                        <label asp-for="thisBifoldItem.IsLowThreshold">
+                            <input asp-for="thisBifoldItem.IsLowThreshold" /> @Html.DisplayNameFor(model => model.thisBifoldItem.IsLowThreshold)
+                        </label>
+                    </div>
 
-
-
-
+                    <div class="checkbox">
+                        <label asp-for="thisBifoldItem.HasRamps">
+                            <input asp-for="thisBifoldItem.HasRamps" /> @Html.DisplayNameFor(model => model.thisBifoldItem.HasRamps)
+                        </label>
                     </div>
 
 
-</form>
+                    <div class="checkbox">
+                        <label asp-for="thisBifoldItem.IsKitForm">
+                            <input asp-for="thisBifoldItem.IsKitForm" /> @Html.DisplayNameFor(model => model.thisBifoldItem.IsKitForm)
+                        </label>
+                    </div>
+
+
+
+
+                </form>
 
 
             </div>
