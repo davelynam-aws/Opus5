@@ -5086,6 +5086,22 @@ a.badge:focus {
   -o-transition: border 0.2s ease-in-out;
   transition: border 0.2s ease-in-out;
 }
+
+/*Bespoke class added to show the selected thumbnail to the user.*/
+.thumbnail-clicked {
+    display: block;
+    padding: 4px;
+    margin-bottom: 20px;
+    line-height: 1.42857143;
+    background-color: #28a745;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    -webkit-transition: border 0.2s ease-in-out;
+    -o-transition: border 0.2s ease-in-out;
+    transition: border 0.2s ease-in-out;
+}
+
+
 .thumbnail > img,
 .thumbnail a > img {
   margin-right: auto;

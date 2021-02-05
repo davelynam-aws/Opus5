@@ -78,8 +78,8 @@
                     <div class=" form-group" id="OneDoorImages">
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="thumbnail" style="cursor:pointer;">
-                                    <a class="BifoldStyleImages" onclick="$('#SelectedBifoldStyle').val('TL');">
+                                <div id="ThumbnailTL" class="thumbnail" style="cursor:pointer;">
+                                    <a class="BifoldStyleImages" onclick="$('#SelectedBifoldStyle').val('TL'); toggleSelectedImageClass('#ThumbnailTL');">
                                         <!--Testing onclick event for image. Use this to register the selection and highlight the image-->
                                         <img src="~/images/BifoldThumbnails/TL.png" style="height:auto; width:auto; max-height:100%; max-width:100%">
                                         <div class="caption">
@@ -89,10 +89,10 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="thumbnail" style="cursor:pointer;">
-                                    <a>
+                                <div id="ThumbnailTR" class="thumbnail" style="cursor:pointer;">
+                                    <a class="BifoldStyleImages" onclick="$('#SelectedBifoldStyle').val('TR'); toggleSelectedImageClass('#ThumbnailTR');">
                                         <!--Testing onclick event for image. Use this to register the selection and highlight the image-->
-                                        <img src="~/images/BifoldThumbnails/TR.png" style="height:auto; width:auto; max-height:100%; max-width:100%" onclick="alert('Image Selected')">
+                                        <img src="~/images/BifoldThumbnails/TR.png" style="height:auto; width:auto; max-height:100%; max-width:100%">
                                         <div class="caption">
                                             <p style="text-align:center;">OUTSIDE VIEW</p>
                                         </div>
@@ -101,6 +101,14 @@
                             </div>
                         </div>
                     </div>
+
+                    <script>
+                        // This toggles the selected thumbnail image class so that the selection is clear to the user.
+                        function toggleSelectedImageClass(thumbId) {   
+                            $('.thumbnail').removeClass('thumbnail-clicked');
+                            $(thumbId).addClass('thumbnail-clicked');
+                        };
+                    </script>
 
                     <div class="checkbox">
                         <label asp-for="thisBifoldItem.IsMarineOrHazardousCoating">

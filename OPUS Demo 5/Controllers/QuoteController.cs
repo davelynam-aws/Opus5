@@ -22,7 +22,6 @@ namespace OPUS_Demo_5.Controllers
             _context = context;
         }
 
-
         public ActionResult ShowInvoiceAddressPartial(string customerId)
         {
             CustomerAddress customerAddress = new CustomerAddress();
@@ -37,7 +36,6 @@ namespace OPUS_Demo_5.Controllers
             }
             return PartialView("~/Views/Shared/_CustomerInvoiceAddress.cshtml", customerAddress);
         }
-
 
 
         // GET: Quote
@@ -114,34 +112,11 @@ namespace OPUS_Demo_5.Controllers
             return PartialView("~/Views/BifoldItem/_CreateBifoldItem.cshtml", bifoldItemViewModel);
         }
 
-        //// POST
-        //[ValidateAntiForgeryToken]
-        //[HttpPost]
-        //public IActionResult AddBifoldItem(BifoldItemViewModel bifoldItemViewModel)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        // Test debug
-        //        int i = 1;
-
-        //        i += 1; ;
-
-        //        // Save et
-        //    }
-
-        //    bifoldItemViewModel.ProfileColourOptions = _context.ProfileColours.ToList();
-        //    bifoldItemViewModel.HardwareColourOptions = _context.HardwareColours.ToList();
-
-        //    bifoldItemViewModel.SelectedBifoldStyleCode = "Default";
-
-        //    return PartialView("~/Views/BifoldItem/_CreateBifoldItem.cshtml", bifoldItemViewModel);
-        //}
-
 
         // POST
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public async Task<IActionResult> AddBifoldItem(BifoldItemViewModel bifoldItemViewModel)
+        public IActionResult AddBifoldItem(BifoldItemViewModel bifoldItemViewModel)
         {
             if (ModelState.IsValid)
             {

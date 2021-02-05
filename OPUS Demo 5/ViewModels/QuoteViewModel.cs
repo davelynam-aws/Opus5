@@ -58,12 +58,13 @@ namespace OPUS_Demo_5.ViewModels
         [Display(Name = "Collection Address")]
         public List<SelectListItem> CollectionAddresses = new List<SelectListItem>()
     {
-        new SelectListItem() { Text="[Marton] Unit 20 Cornford House, Cornford Road, Marton, Lancashire, FY4 4QQ", Value="0"},
-        new SelectListItem() { Text="[Stafford] 21st Century Trade Centre, Stafford Road, Stafford, Staffordshire, ST20 0JR", Value="1"},
-        new SelectListItem() { Text="[21st Altrincham] 21st Century Trade Centre, Stafford Road, Stafford, Staffordshire, ST20 0JR", Value="2"},
-        new SelectListItem() { Text="[21st Poulton] Unit 1 Beacon Road, Poulton Industrial Estate, Poulton-Le-Fylde, Lancashire, FY6 8JE", Value="3"},
-        new SelectListItem() { Text="[Marton 2 (Clifton Rd)] Tangerine House, Clifton Road, Marton, Lancashire, FY4 4QB", Value="4"},
-        new SelectListItem() { Text="[Leyland] Unit 28, Tomlinson Road, Leyland, Lancashire, PR25 2DY", Value="5"},
+        
+        new SelectListItem() { Text="[Marton] Unit 20 Cornford House, Cornford Road, Marton, Lancashire, FY4 4QQ", Value="[Marton] Unit 20 Cornford House, Cornford Road, Marton, Lancashire, FY4 4QQ"},
+        new SelectListItem() { Text="[Stafford] 21st Century Trade Centre, Stafford Road, Stafford, Staffordshire, ST20 0JR", Value="[Stafford] 21st Century Trade Centre, Stafford Road, Stafford, Staffordshire, ST20 0JR"},
+        new SelectListItem() { Text="[21st Altrincham] 21st Century Trade Centre, Stafford Road, Stafford, Staffordshire, ST20 0JR", Value="[21st Altrincham] 21st Century Trade Centre, Stafford Road, Stafford, Staffordshire, ST20 0JR"},
+        new SelectListItem() { Text="[21st Poulton] Unit 1 Beacon Road, Poulton Industrial Estate, Poulton-Le-Fylde, Lancashire, FY6 8JE", Value="[21st Poulton] Unit 1 Beacon Road, Poulton Industrial Estate, Poulton-Le-Fylde, Lancashire, FY6 8JE"},
+        new SelectListItem() { Text="[Marton 2 (Clifton Rd)] Tangerine House, Clifton Road, Marton, Lancashire, FY4 4QB", Value="[Marton 2 (Clifton Rd)] Tangerine House, Clifton Road, Marton, Lancashire, FY4 4QB"},
+        new SelectListItem() { Text="[Leyland] Unit 28, Tomlinson Road, Leyland, Lancashire, PR25 2DY", Value="[Leyland] Unit 28, Tomlinson Road, Leyland, Lancashire, PR25 2DY"},
     };
 
 
