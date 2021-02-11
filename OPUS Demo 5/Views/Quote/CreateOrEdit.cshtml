@@ -14,13 +14,10 @@
 <div id="modal-placeholder"></div>
 
 
-@if (Model.thisQuote.Id == null)
+@if (Model.IsNewQuote == true)
 {
     <h2>New Quote</h2>
-    @if (Model.thisQuote.Id == "")
-    {
 
-    }
     <!-- Create Quote placeholder-->
     <div id="partial-CreateQuote">
         <partial name="~/Views/Quote/_CreateQuote.cshtml" model="@Model"/>
@@ -28,10 +25,7 @@
 }
 else
 {
-    @if (Model.thisQuote.Id == "")
-    {
 
-    }
 
     <h2>Edit Quote</h2>
 

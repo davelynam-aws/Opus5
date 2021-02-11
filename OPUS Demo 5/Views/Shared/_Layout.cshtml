@@ -16,6 +16,7 @@
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+
     </environment>
 
     @*Font awesome*@
@@ -45,7 +46,8 @@
 
                     @if (user != null && user != "")
                     {
-                        <li><a asp-area="" asp-controller="Quote" asp-action="Index">Quotes</a></li>
+                        <li><a asp-area="" asp-controller="Quote" asp-action="Index">Active Quotes</a></li>
+                        <li><a asp-area="" asp-controller="Quote" asp-action="QuoteHistory">Quote History</a></li>
                         <li><a asp-area="" asp-controller="PricingFactor" asp-action="Index">Pricing Factors</a></li>
                     }
 

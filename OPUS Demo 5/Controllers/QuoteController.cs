@@ -148,7 +148,7 @@ namespace OPUS_Demo_5.Controllers
             {
                 // Create new quote with default values
                 quoteViewModel.thisQuote = new Quote();
-
+                quoteViewModel.IsNewQuote = true;
                 //quoteViewModel.ActiveCustomers = _context.Customers.ToList();
                 //ViewBag.ActiveCustomers = quoteViewModel.ActiveCustomers;
             }
@@ -156,7 +156,7 @@ namespace OPUS_Demo_5.Controllers
             {
                 // Load existing quote data for editing.
 
-
+                quoteViewModel.IsNewQuote = false;
                 quoteViewModel.thisQuote = _context.Quotes.Where(q => q.Id == Id).Single();
                 quoteViewModel.thisBifoldItems = _context.BifoldItems.Where(b => b.QuoteId == Id).ToList();
             }
@@ -165,15 +165,84 @@ namespace OPUS_Demo_5.Controllers
             ViewBag.ActiveCustomers = quoteViewModel.ActiveCustomers;
 
 
+            quoteViewModel.ProfileColours = _context.ProfileColours.ToList();
+
             return View(quoteViewModel);
         }
 
     
         // POST
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public IActionResult CreateOrEdit(QuoteViewModel quoteViewModel)
         {
+            if(quoteViewModel.thisQuote.Id == null)
+            {
+                // New Quote
+                quoteViewModel.thisQuote.Id = Guid.NewGuid().ToString();
+                quoteViewModel.thisQuote.CreatedByUserId = HttpContext.Session.GetString("UserId");
+                quoteViewModel.thisQuote.CreatedDateTime = DateTime.Now;
+                quoteViewModel.thisQuote.LastModifiedByUserId = HttpContext.Session.GetString("UserId");
+                quoteViewModel.thisQuote.LastModifiedDateTime = DateTime.Now;
 
+                quoteViewModel.thisCustomer = _context.Customers.Where(c => c.Id == quoteViewModel.thisQuote.CustomerId).Single();
+
+                quoteViewModel.thisQuote.IsTaxExempt = quoteViewModel.thisCustomer.IsTaxExempt;
+
+                // Extract despatch site from delivery/collection address.
+
+                quoteViewModel.thisQuote.DespatchSite =
+                    quoteViewModel.thisQuote.DeliveryAddress.Substring(quoteViewModel.thisQuote.DeliveryAddress.IndexOf("[")).Replace("[", "").Replace("]", "").TrimEnd();
+
+                // Establish next quote ref
+                string lastRef = "";
+                lastRef = _context.Quotes
+                    .Where(q => (q.QuoteReferenceNumber).Substring(0, q.QuoteReferenceNumber.IndexOf("-")) == quoteViewModel.thisQuote.CustomerId.Substring(0, 3))
+                    .OrderByDescending(x => x.CreatedDateTime)
+                    .Take(1)
+                    .Select(q => q.QuoteReferenceNumber).FirstOrDefault();
+
+                if (lastRef != null)
+                {
+                    int increment = Convert.ToInt32(lastRef.Substring(9));
+                    quoteViewModel.thisQuote.QuoteReferenceNumber = $"{quoteViewModel.thisQuote.CustomerId.Substring(0, 3)}-{DateTime.Now.Year}-{increment += 1}";
+                }
+                else
+                {
+                    quoteViewModel.thisQuote.QuoteReferenceNumber = $"{quoteViewModel.thisQuote.CustomerId.Substring(0, 3)}-{DateTime.Now.Year}-1";
+                }
+
+                
+                if (ModelState.IsValid)
+                {
+
+                    _context.Quotes.Add(quoteViewModel.thisQuote);
+                    _context.SaveChanges();
+
+
+                }
+                else
+                {
+                    quoteViewModel.ActiveCustomers = _context.Customers.ToList();
+                    ViewBag.ActiveCustomers = quoteViewModel.ActiveCustomers;
+
+
+                    quoteViewModel.ProfileColours = _context.ProfileColours.ToList();
+                    quoteViewModel.thisBifoldItems = new List<BifoldItem>();
+                    quoteViewModel.thisExtraItems = new List<ExtraItem>();
+                    quoteViewModel.thisGlassItems = new List<GlassItem>();
+                    quoteViewModel.thisPeripheralItems = new List<PeripheralItem>();
+                    quoteViewModel.IsNewQuote = true;
+
+                    return View("CreateOrEdit", quoteViewModel);
+                }
+
+            }
+            else
+            {
+                // Edit Existing Quote
+
+            }
 
 
 

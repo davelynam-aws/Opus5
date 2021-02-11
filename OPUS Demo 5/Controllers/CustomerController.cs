@@ -109,9 +109,11 @@ namespace OPUS_Demo_5.Controllers
             newCustomer.thisNewCustomerInvoiceAddress.IsInvoiceAddress = true;
             newCustomer.thisNewCustomerInvoiceAddress.IsPrimaryDeliveryAddress = true;
 
+            int lastLegacyId;
 
-            
+            lastLegacyId = _context.Customers.OrderByDescending(c => c.LegacyId).Take(1).FirstOrDefault().LegacyId;
 
+            newCustomer.thisNewCustomer.LegacyId = lastLegacyId += 1;
 
             if (ModelState.IsValid)
             {
@@ -138,6 +140,9 @@ namespace OPUS_Demo_5.Controllers
             // Return the original view model if input does not pass validation.
             return PartialView("_CreateCustomerModal", newCustomer);
         }
+
+
+
 
 
         public IEnumerable<SelectListItem> GetActiveCustomers()

@@ -76,6 +76,8 @@ namespace OPUS_Demo_5.Models.CustomerManagement
         [Display(Name = "Production Only Notes")]
         public string ProductionOnlyNotes { get; set; }
 
+        [Column("LegacyId")]
+        public int LegacyId { get; set; }
 
 
 

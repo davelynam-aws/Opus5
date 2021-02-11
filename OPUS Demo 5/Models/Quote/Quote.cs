@@ -82,6 +82,7 @@ namespace OPUS_Demo_5.Models
 
         [Column("DepositAmount")]
         [Display(Name = "Deposit Amount Net")]
+        [DataType(DataType.Currency)]
         public decimal? DepositAmount { get; set; }
 
         [Column("IsTaxExempt")]
@@ -112,6 +113,7 @@ namespace OPUS_Demo_5.Models
 
         [Column("AdditionalNotes")]
         [Display(Name = "Additional Notes")]
+        [DataType(DataType.MultilineText)]
         public string AdditionalNotes { get; set; }
 
         [Column("NotifySalesWhenFabricated")]
