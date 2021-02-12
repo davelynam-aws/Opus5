@@ -90,6 +90,7 @@ namespace OPUS_Demo_5.Models
         public bool IsTaxExempt { get; set; }
 
         [Column("DeliveryAddress")]
+        [Required(ErrorMessage ="Please select a delivery or collection address")]
         [Display(Name = "Delivery Address")]
         public string DeliveryAddress { get; set; }
 

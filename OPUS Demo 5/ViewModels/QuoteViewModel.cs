@@ -21,7 +21,7 @@ namespace OPUS_Demo_5.ViewModels
         public List<GlassItem> thisGlassItems { get; set; }
         public List<PeripheralItem> thisPeripheralItems { get; set; }
 
-
+        public CustomerAddress thisCustomerInvoiceAddress { get; set; }
 
         [Display(Name = "Created By")]
         public string CreatedByUsername { get; set; }

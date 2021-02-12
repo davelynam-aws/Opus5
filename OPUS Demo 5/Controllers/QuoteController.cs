@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using OPUS_Demo_5.Models;
 using OPUS_Demo_5.Models.CustomerManagement;
 using OPUS_Demo_5.Models.DataContexts;
@@ -32,9 +33,21 @@ namespace OPUS_Demo_5.Controllers
             }
             else
             {
-                customerAddress = _context.CustomerAddresses.Where(a => a.CustomerId == customerId).Where(a=> a.IsInvoiceAddress == true).Single();
+                customerAddress = _context.CustomerAddresses.Where(a => a.CustomerId == customerId && a.IsInvoiceAddress == true).Single();
             }
             return PartialView("~/Views/Shared/_CustomerInvoiceAddress.cshtml", customerAddress);
+        }
+
+        public ActionResult RefreshQuoteHeaderInformation(string jsonString)
+        {
+
+            QuoteViewModel quoteViewModel = JsonConvert.DeserializeObject<QuoteViewModel>(jsonString);
+
+            quoteViewModel.thisCustomerInvoiceAddress = _context.CustomerAddresses.Where(a => a.CustomerId == quoteViewModel.thisQuote.CustomerId).Where(a => a.IsInvoiceAddress == true).FirstOrDefault();
+            
+
+
+            return PartialView("_QuoteHeader", quoteViewModel);
         }
 
 
@@ -191,8 +204,12 @@ namespace OPUS_Demo_5.Controllers
 
                 // Extract despatch site from delivery/collection address.
 
-                quoteViewModel.thisQuote.DespatchSite =
-                    quoteViewModel.thisQuote.DeliveryAddress.Substring(quoteViewModel.thisQuote.DeliveryAddress.IndexOf("[")).Replace("[", "").Replace("]", "").TrimEnd();
+                if (quoteViewModel.thisQuote.DeliveryAddress != null)
+                {
+                    quoteViewModel.thisQuote.DespatchSite =
+    quoteViewModel.thisQuote.DeliveryAddress.Substring(quoteViewModel.thisQuote.DeliveryAddress.IndexOf("[")).Replace("[", "").Replace("]", "").TrimEnd();
+                }
+
 
                 // Establish next quote ref
                 string lastRef = "";
@@ -223,9 +240,43 @@ namespace OPUS_Demo_5.Controllers
                 }
                 else
                 {
+                    // Populate collections etc so validation form is populated with options.
                     quoteViewModel.ActiveCustomers = _context.Customers.ToList();
                     ViewBag.ActiveCustomers = quoteViewModel.ActiveCustomers;
 
+                    List<CustomerAddress> customerAddresses = new List<CustomerAddress>();
+                    customerAddresses = _context.CustomerAddresses.Where(c => c.CustomerId == quoteViewModel.thisQuote.CustomerId).ToList();
+
+                    List<SelectListItem> stringAddresses = new List<SelectListItem>();
+
+                    if (customerAddresses.Count > 0){
+
+                     
+
+                        //'<option selected="selected" selected disabled value="-1">-- Select Delivery Address --</option>'
+                        if (quoteViewModel.thisQuote.DeliveryAddress == null)
+                        {
+                            stringAddresses.Add(new SelectListItem {Selected=true, Disabled = true, Value = "-1", Text = "-- Select Delivery Address --" });
+                        }
+                        else
+                        {
+                            stringAddresses.Add(new SelectListItem { Disabled = true, Value = "-1", Text = "-- Select Delivery Address --" });
+                        }
+                        
+
+                        foreach (CustomerAddress address in customerAddresses)
+                        {
+
+                            stringAddresses.Add(new SelectListItem
+                            {
+                                Value = $"{address.AddressLine1}, {address.AddressLine2}, {address.TownCity}, {address.County}, {address.PostCode}, [{address.DespatchSite}]",
+                                Text = $"{address.AddressLine1}, {address.AddressLine2}, {address.TownCity}, {address.County}, {address.PostCode}, [{address.DespatchSite}]"
+                            });
+               
+                        }
+                    }
+
+                    quoteViewModel.DeliveryAddresses = stringAddresses;
 
                     quoteViewModel.ProfileColours = _context.ProfileColours.ToList();
                     quoteViewModel.thisBifoldItems = new List<BifoldItem>();

@@ -1,0 +1,27 @@
+﻿@model OPUS_Demo_5.ViewModels.QuoteViewModel
+
+<div class="row">
+    <div class="col-md-5">
+        @if(Model.IsNewQuote == true)
+        {
+            <h4>New Quote</h4>
+        }
+        else
+        {
+            <h4>Quote #@Model.thisQuote.QuoteReferenceNumber</h4>
+        }
+
+        @if(Model.thisCustomer.CustomerName == null)
+        {
+            <h4> </h4>
+        }
+        else
+        {
+    <h4>@Model.thisCustomerInvoiceAddress.AddressLine1, @Model.thisCustomerInvoiceAddress.AddressLine2, @Model.thisCustomerInvoiceAddress.TownCity, @Model.thisCustomerInvoiceAddress.County, @Model.thisCustomerInvoiceAddress.PostCode</h4>
+        }
+
+    </div>
+    <div class="col-md-7">
+
+    </div>
+</div> 

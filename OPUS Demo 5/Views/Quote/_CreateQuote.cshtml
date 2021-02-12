@@ -10,16 +10,7 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-
-
             <div class="form-group">
-
-
-
-
-
-
-
 
 
                 <label asp-for="thisCustomer.CustomerName" class="control-label"></label>
@@ -60,22 +51,6 @@
             </div>
 
 
-            <!--Toggle visibility on selection-->
-            @*<div class="input-group">
-            <div class="form-group" id="DeliveryAddressesDiv" style="display:none">
-                <label asp-for="thisQuote.DeliveryAddress" class="control-label">Delivery Address</label>
-                <select class="form-control" id="DeliveryAddresses" asp-for="thisQuote.DeliveryAddress" asp-items="Model.DeliveryAddresses">
-                </select>
-            </div>
-            <span class="input-group-btn" id="DeliveryAddressSpan" style="display:none">
-                <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#add-delivery-address" data-url="@Url.Action("Create", "Customer")">
-                    New Address
-                </button>
-            </span>
-            <span asp-validation-for="thisQuote.DeliveryAddress" class="text-danger"></span>
-        </div>*@
-
-
 
 
 
@@ -97,7 +72,15 @@
             <div class="row">
                 <div class="form-group col-md-4" id="ShippingDateDiv" style="display:none; ">
                     <label id="ShippingDate" asp-for="thisQuote.RequestedDeliveryDate" class="control-label"></label>
-                    <input id="ShippingDateInput" asp-for="thisQuote.RequestedDeliveryDate" value="" class="form-control" />
+                    @if (Model.thisQuote.RequestedDeliveryDate == DateTime.Parse("01/01/0001"))
+                    {
+                        <input id="ShippingDateInput" asp-for="thisQuote.RequestedDeliveryDate" value="" class="form-control" />
+                    }
+                    else
+                    {
+                        <input id="ShippingDateInput" asp-for="thisQuote.RequestedDeliveryDate" class="form-control" />
+                    }
+
                     <span asp-validation-for="thisQuote.RequestedDeliveryDate" class="text-danger"></span>
                 </div>
             </div>
@@ -161,13 +144,13 @@
 
 
 
-            <div class="form-group" id="NotifySalesWhenFabricatedDiv" style="display:none">
+            @*<div class="form-group" id="NotifySalesWhenFabricatedDiv" style="display:none">
                 <div class="checkbox">
                     <label>
                         <input asp-for="thisQuote.NotifySalesWhenFabricated" /> @Html.DisplayNameFor(model => model.thisQuote.NotifySalesWhenFabricated)
                     </label>
                 </div>
-            </div>
+            </div>*@
             @*<div>
             <input class="btn btn-primary" id="AddBifold" value="Add Bi-fold" style="display:none" />
         </div>*@
@@ -189,6 +172,51 @@
 
     <script>
 
+
+        $(function () {
+            // Show fields if they contain a value - On validation return etc.
+            if ($('#CustomerId').find(":selected").val() != -1) {
+
+
+                  var customerId = $('#CustomerId').find(":selected").val();
+            $.ajax({
+                url: '@Url.Action("ShowInvoiceAddressPartial", "Quote")',
+                type: 'POST',
+                data: { 'customerId': customerId },
+                dataType: 'html',
+                success: function (data) {
+                    $("#mypartial").html(data);
+                }
+            });
+
+                $('#ShippingOptionsDiv').show();
+
+                $('#ShippingDateDiv').show();
+
+
+                if ($('#ShippingOptions option').filter(':selected').text() == "AWS Vehicle Delivery") {
+                    $('#ShippingDate').text("Delivery Date")
+                    $('#DeliveryAddressesDiv').show();
+                    $('#DeliveryAddressSpan').show();
+                    $('#CollectionAddressesDiv').hide();
+                } else {
+                    $('#ShippingDate').text("Collection Date")
+                    $('#DeliveryAddressesDiv').hide();
+                    $('#DeliveryAddressSpan').hide();
+                    $('#CollectionAddressesDiv').show();
+                }
+
+
+                $('#MasterExternalColourDiv').show();
+                $('#MasterInternalColourDiv').show();
+
+                $('#CustomerReferenceDiv').show();
+                $('#DespatchNotesDiv').show();
+                $('#AdditionalNotesDiv').show();
+                $('#DepositAmountDiv').show();
+                $('#SubmitDiv').show();
+            }
+        });
 
           // This function handles a drop down selection change and passes the value id to the Quote Controller as an ajax request.
         $('#CustomerId').change(function () {
@@ -245,11 +273,15 @@
             $('#DeliveryAddressesDiv').show();
             $('#DeliveryAddressSpan').show();
             $('#CollectionAddressesDiv').hide();
+            $("#CollectionAddressesSelect").val('-1');
+            $("#DeliveryAddressesSelect").val('-1');
         } else {
             $('#ShippingDate').text("Collection Date")
             $('#DeliveryAddressesDiv').hide();
             $('#DeliveryAddressSpan').hide();
             $('#CollectionAddressesDiv').show();
+            $("#DeliveryAddressesSelect").val('-1');
+            $("#CollectionAddressesSelect").val('-1');
         }
 
 
@@ -258,7 +290,7 @@
 
         $('#DeliveryAddressesSelect').change(function () {
             $('#ShippingDateDiv').show();
- 
+
         })
 
         $('#CollectionAddressesSelect').change(function () {
@@ -268,7 +300,7 @@
 
     $('#DeliveryAddresses').change(function () {
         $('#ShippingDateDiv').show();
-   
+
     })
 
 
@@ -282,7 +314,7 @@
 
 
         $('#MasterExternalColour').change(function () {
-            
+
             if ($('#MasterInternalColour').find(":selected").val() != -1) {
                 $('#CustomerReferenceDiv').show();
                 $('#DespatchNotesDiv').show();

@@ -1,7 +1,14 @@
 ﻿@model OPUS_Demo_5.ViewModels.QuoteViewModel
 
 @{
-    ViewData["Title"] = "Edit Quote";
+    <div class="row">
+        <div class="col-md-4">
+
+        </div>
+        <div class="col-md-8" id="mypartial"> </div>
+    </div>
+
+    Layout = null;
 
     // Layout = "~/Views/Shared/_Layout.cshtml";
 
@@ -21,7 +28,7 @@
                 <div class="input-group">
 
                     <select asp-for="thisQuote.CustomerId" class="form-control" id="CustomerId" asp-items="@(new SelectList(ViewBag.ActiveCustomers, "Id", "CustomerName"))">
-                        <option value="" selected disabled>-- Select Customer Name --</option>
+                        <option value="-1" selected disabled>-- Select Customer Name --</option>
                     </select>
 
                     <span class="input-group-btn">
@@ -43,76 +50,125 @@
             </div>
 
 
-            <div id="mypartial"> </div>
 
 
-            <div class="form-group" id="ShippingOptionsDiv" style="display:none">
+
+            <div class="form-group" id="ShippingOptionsDiv">
                 <label asp-for="ShippingOptions" class="control-label">Shipping Options</label>
 
                 <select asp-for="thisQuote.DeliveryMethod" class="form-control" id="ShippingOptions" asp-items="Model.ShippingOptions">
-                    <option value="" selected disabled>-- Select Shipping Option --</option>
+                    <option value="-1" selected disabled>-- Select Shipping Option --</option>
                 </select>
 
                 <span asp-validation-for="ShippingOptions" class="text-danger"></span>
             </div>
 
+
             <!--Toggle visibility on selection-->
             <div class="form-group" id="CollectionAddressesDiv" style="display:none">
                 <label asp-for="CollectionAddresses" class="control-label">Collection Address</label>
-                <select asp-for="thisQuote.DeliveryAddress" class="form-control" id="CollectionAddresses" asp-items="Model.CollectionAddresses">
-                    <option value="" selected disabled>-- Select Collection Address --</option>
+                <select asp-for="thisQuote.DeliveryAddress" class="form-control" id="CollectionAddressesSelect" asp-items="Model.CollectionAddresses">
+                    <option value="-1" selected disabled>-- Select Collection Address --</option>
                 </select>
                 <span asp-validation-for="CollectionAddresses" class="text-danger"></span>
             </div>
 
+
             <!--Toggle visibility on selection-->
             <div class="form-group" id="DeliveryAddressesDiv" style="display:none">
                 <label asp-for="DeliveryAddresses" class="control-label">Delivery Address</label>
-                <select asp-for="thisQuote.DeliveryAddress" class="form-control" id="DeliveryAddresses" asp-items="Model.DeliveryAddresses">
+                <select asp-for="thisQuote.DeliveryAddress" class="form-control" id="DeliveryAddressesSelect" asp-items="Model.DeliveryAddresses">
                 </select>
                 <span asp-validation-for="DeliveryAddresses" class="text-danger"></span>
             </div>
 
-            <div class="form-group" id="ShippingDateDiv" style="display:none">
+            <div class="form-group" id="ShippingDateDiv">
                 <label id="ShippingDate" asp-for="thisQuote.RequestedDeliveryDate" class="control-label"></label>
                 <input id="ShippingDateInput" asp-for="thisQuote.RequestedDeliveryDate" class="form-control" />
                 <span asp-validation-for="thisQuote.RequestedDeliveryDate" class="text-danger"></span>
             </div>
 
-            <div class="form-group" id="CustomerReferenceDiv" style="display:none">
+            <div class="row">
+                <div class="form-group col-md-6" id="MasterExternalColourDiv">
+                    <label asp-for="thisQuote.MasterExternalColourId" class="control-label">External Colour</label>
+                    <select class="form-control" id="MasterExternalColour" asp-for="thisQuote.MasterExternalColourId" asp-items="@(new SelectList(Model.ProfileColours, "Id", "ColourName"))">
+                        <option value="-1" selected disabled>-- Select External Colour --</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-6" id="MasterInternalColourDiv">
+                    <label asp-for="thisQuote.MasterInternalColourId" class="control-label">Internal Colour</label>
+                    <select class="form-control" id="MasterInternalColour" asp-for="thisQuote.MasterInternalColourId" asp-items="@(new SelectList(Model.ProfileColours, "Id", "ColourName"))">
+                        <option value="-1" selected disabled>-- Select Internal Colour --</option>
+                    </select>
+                </div>
+            </div>
+
+
+
+
+
+
+            <div class="form-group" id="CustomerReferenceDiv">
                 <label asp-for="thisQuote.CustomerReference" class="control-label"></label>
                 <input asp-for="thisQuote.CustomerReference" class="form-control" />
                 <span asp-validation-for="thisQuote.CustomerReference" class="text-danger"></span>
             </div>
 
-            <div class="form-group" id="PriorityDiv" style="display:none">
-                <label asp-for="thisQuote.Priority" class="control-label"></label>
-                <input asp-for="thisQuote.Priority" class="form-control" />
-                <span asp-validation-for="thisQuote.Priority" class="text-danger"></span>
-            </div>
 
             <div class="form-group" id="DespatchNotesDiv" style="display:none">
                 <label asp-for="thisQuote.DespatchNotes" class="control-label"></label>
-                <input asp-for="thisQuote.DespatchNotes" class="form-control" />
+                @*<input asp-for="thisQuote.DespatchNotes" class="form-control" />*@
+                <textarea asp-for="thisQuote.DespatchNotes" style="height:150px" class="form-control" text-wrap:normal" type="text" placeholder="Optional"></textarea>
                 <span asp-validation-for="thisQuote.DespatchNotes" class="text-danger"></span>
             </div>
             <div class="form-group" id="AdditionalNotesDiv" style="display:none">
                 <label asp-for="thisQuote.AdditionalNotes" class="control-label"></label>
-                <input asp-for="thisQuote.AdditionalNotes" class="form-control" />
+                @*<input asp-for="thisQuote.AdditionalNotes" class="form-control" />*@
+                <textarea asp-for="thisQuote.AdditionalNotes" style="height:150px" class="form-control" text-wrap:normal" type="text" placeholder="Optional"></textarea>
                 <span asp-validation-for="thisQuote.AdditionalNotes" class="text-danger"></span>
             </div>
-            <div class="form-group" id="NotifySalesWhenFabricatedDiv" style="display:none">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="thisQuote.NotifySalesWhenFabricated" /> @Html.DisplayNameFor(model => model.thisQuote.NotifySalesWhenFabricated)
-                    </label>
+
+
+            <div class="row">
+                <div class="form-group col-md-4" id="DepositAmountDiv" style="display:none">
+                    <label asp-for="thisQuote.DepositAmount" class="control-label"></label>
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <div class="input-group-text">
+                                <i class="fas fa-pound-sign"></i>
+                            </div>
+                        </div>
+                        <input asp-for="thisQuote.DepositAmount" placeholder="Optional" class="form-control" />
+                    </div>
+
+                    <span asp-validation-for="thisQuote.DepositAmount" class="text-danger"></span>
                 </div>
             </div>
+
+
+            @*<div class="form-group" id="DespatchNotesDiv" >
+                    <label asp-for="thisQuote.DespatchNotes" class="control-label"></label>
+                    <input asp-for="thisQuote.DespatchNotes" class="form-control" />
+                    <span asp-validation-for="thisQuote.DespatchNotes" class="text-danger"></span>
+                </div>
+                <div class="form-group" id="AdditionalNotesDiv" >
+                    <label asp-for="thisQuote.AdditionalNotes" class="control-label"></label>
+                    <input asp-for="thisQuote.AdditionalNotes" class="form-control" />
+                    <span asp-validation-for="thisQuote.AdditionalNotes" class="text-danger"></span>
+                </div>
+                <div class="form-group" id="NotifySalesWhenFabricatedDiv">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="thisQuote.NotifySalesWhenFabricated" /> @Html.DisplayNameFor(model => model.thisQuote.NotifySalesWhenFabricated)
+                        </label>
+                    </div>
+                </div>*@
             <!--        <div>
                 <input class="btn btn-primary" id="AddBifold" value="Add Bi-fold" style="display:none" />
             </div>
                 -->
-            <div class="form-group" id="SubmitDiv" style="display:none">
+            <div class="form-group" id="SubmitDiv">
                 <input type="submit" value="Update Main Details" class="btn btn-success pull-right" data-url="@Url.Action("Edit", "Quote")" />
             </div>
         </form>
@@ -121,10 +177,8 @@
     <div class="col-md-7">
 
 
-
-
         <div id="partial-BifoldItem1">
-            <partial name="~/Views/BifoldItem/_BifoldItemsView.cshtml" model=@Model/>
+            <partial name="~/Views/BifoldItem/_BifoldItemsView.cshtml" model=@Model />
         </div>
 
 
@@ -134,14 +188,6 @@
 
 
 
-@*@if (Model.thisCustomer != null && Model.thisCustomer.IsNewCustomer == true)
-    {
-        <script type="text/javascript">
-            $(function () {
-                alert("New Customer Added");
-            });
-        </script>
-    }*@
 
 
 @*Can't use @script section in partial views. Also, not using _Layout so need to specify jQuery here.*@
@@ -161,7 +207,7 @@
         // Populate invoice address for customer.
         var customerId = $('#CustomerId').find(":selected").val();
         if (customerId != "") {
-             $.ajax({
+             @*$.ajax({
                 url: '@Url.Action("ShowInvoiceAddressPartial", "Quote")',
                 type: 'POST',
                 data: { 'customerId': customerId },
@@ -169,16 +215,35 @@
                 success: function (data) {
                     $("#mypartial").html(data);
                 }
-         });
+             });*@
+
+
+          var serModel =  '@Html.Raw(Json.Serialize(@Model))';
+            //console.log(serModel)
+            $.ajax({
+                url: '@Url.Action("RefreshQuoteHeaderInformation", "Quote")',
+                type: "POST",
+                @*data: { 'jsonString', @Html.Raw(Json.Serialize(@Model))},*@
+                data: { jsonString: serModel},
+            //dataType: "json",
+            success: function (response) {
+                $("#mypartial").html(data);
+            }
+        });
+
+
         //
         // Populate delivery addresses for customer
 
         var selectedDeliveryAddress = @Html.Raw(Json.Serialize(Model.thisQuote.DeliveryAddress));
 
-      
-     
 
-        var deliveryAddresses = $("#DeliveryAddresses");
+
+
+
+
+
+            var deliveryAddresses = $("#DeliveryAddressesSelect");
         deliveryAddresses.empty().append('<option selected="selected" value="0" disabled = "disabled">Loading.....</option>');
         $.ajax({
             type: "POST",
@@ -187,9 +252,9 @@
             //contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
-                deliveryAddresses.empty().append('<option selected="selected" value="">-- Select Delivery Address --</option>');
+                deliveryAddresses.empty().append('<option selected="selected" value="-1">-- Select Delivery Address --</option>');
                 $.each(response, function () {
-               
+
 
                     if (this.text == selectedDeliveryAddress) {
                         deliveryAddresses.append($("<option />").val(this['Value']).text(this['text']));
@@ -197,7 +262,7 @@
                         deliveryAddresses.append($("<option selected=\"selected\" />").val(this['Value']).text(this['text']));
                     }
                 });
-                
+
             },
             failure: function (response) {
                 alert(response.responseText);
@@ -207,32 +272,59 @@
                 alert(response.responseText);
                 console.log("error");
             }
-            
+
 
         });
 
 
 
+            $('#ShippingOptionsDiv').show();
+
+            $('#ShippingDateDiv').show();
+
+
+            if ($('#ShippingOptions option').filter(':selected').text() == "AWS Vehicle Delivery") {
+                $('#ShippingDate').text("Delivery Date")
+                $('#DeliveryAddressesDiv').show();
+                $('#DeliveryAddressSpan').show();
+                $('#CollectionAddressesDiv').hide();
+            } else {
+                $('#ShippingDate').text("Collection Date")
+                $('#DeliveryAddressesDiv').hide();
+                $('#DeliveryAddressSpan').hide();
+                $('#CollectionAddressesDiv').show();
+            }
+
+
+            $('#MasterExternalColourDiv').show();
+            $('#MasterInternalColourDiv').show();
+
+            $('#CustomerReferenceDiv').show();
+            $('#DespatchNotesDiv').show();
+            $('#AdditionalNotesDiv').show();
+            $('#DepositAmountDiv').show();
+            $('#SubmitDiv').show();
+
 
         //
         // Show fields depending on previous selection.
 
-        $('#ShippingOptionsDiv').show();
+       // $('#ShippingOptionsDiv').show();
 
-        if ($('#ShippingOptions option').filter(':selected').text() == "AWS Vehicle Delivery") {
-            $('#ShippingDate').text("Delivery Date")
-            $('#DeliveryAddressesDiv').show();
-            $('#CollectionAddressesDiv').hide();
-        } else {
-            $('#ShippingDate').text("Collection Date")
-            $('#DeliveryAddressesDiv').hide();
-            $('#CollectionAddressesDiv').show();
-        }
+        //if ($('#ShippingOptions option').filter(':selected').text() == "AWS Vehicle Delivery") {
+        //    $('#ShippingDate').text("Delivery Date")
+        //    $('#DeliveryAddressesDiv').show();
+        //    $('#CollectionAddressesDiv').hide();
+        //} else {
+        //    $('#ShippingDate').text("Collection Date")
+        //    $('#DeliveryAddressesDiv').hide();
+        //    $('#CollectionAddressesDiv').show();
+        //}
 
-        $('#ShippingDateDiv').show();
-        $('#CustomerReferenceDiv').show();
-        $('#AddBifold').show();
-        $('#SubmitDiv').show();
+        //$('#ShippingDateDiv').show();
+        //$('#CustomerReferenceDiv').show();
+        //$('#AddBifold').show();
+        //$('#SubmitDiv').show();
         }
 
 
@@ -258,7 +350,7 @@
             });
 
             // Populate delivery address drop down via ajax request on customer selection.
-            var deliveryAddresses = $("#DeliveryAddresses");
+            var deliveryAddresses = $("#DeliveryAddressesSelect");
             deliveryAddresses.empty().append('<option selected="selected" value="0" disabled = "disabled">Loading.....</option>');
             $.ajax({
                 type: "POST",
@@ -267,11 +359,11 @@
                 //contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
-                    deliveryAddresses.empty().append('<option selected="selected" value="0">-- Select Delivery Address --</option>');
+                    deliveryAddresses.empty().append('<option selected="selected" value="-1">-- Select Delivery Address --</option>');
                     $.each(response, function () {
                         //deliveryAddresses.append($("<option></option>").val(this['Value']).html(this['Text']));
                         deliveryAddresses.append($("<option />").val(this['Value']).text(this['text']));
-    
+
                     });
 
                 },
@@ -294,30 +386,34 @@
             $('#ShippingDate').text("Delivery Date")
             $('#DeliveryAddressesDiv').show();
             $('#CollectionAddressesDiv').hide();
+            $("#CollectionAddressesSelect").val('-1');
+            $("#DeliveryAddressesSelect").val('-1');
         } else {
             $('#ShippingDate').text("Collection Date")
             $('#DeliveryAddressesDiv').hide();
             $('#CollectionAddressesDiv').show();
+            $("#CollectionAddressesSelect").val('-1');
+            $("#DeliveryAddressesSelect").val('-1');
         }
 
 
         //console.log($('#ShippingOptions option').filter(':selected').text())
     });
 
-        $('#CollectionAddressesDiv').change(function () {
-            $('#ShippingDateDiv').show();
-        })
+        //$('#CollectionAddressesDiv').change(function () {
+        //    $('#ShippingDateDiv').show();
+        //})
 
-    $('#DeliveryAddresses').change(function () {
-        $('#ShippingDateDiv').show();
-    })
+    //$('#DeliveryAddresses').change(function () {
+    //    $('#ShippingDateDiv').show();
+    //})
 
 
 
-    $('#ShippingDateInput').on('input', function () {
-        $('#CustomerReferenceDiv').show();
-        $('#AddBifold').show();
-    });
+    //$('#ShippingDateInput').on('input', function () {
+    //    $('#CustomerReferenceDiv').show();
+    //    $('#AddBifold').show();
+    //});
 
 
 
