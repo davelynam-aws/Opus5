@@ -1,12 +1,19 @@
 ﻿@model OPUS_Demo_5.ViewModels.QuoteViewModel
 
 @{
-    <div class="row">
+    <!--<div class="row">
         <div class="col-md-4">
+            <div id="mypartial">
 
+            </div>
         </div>
-        <div class="col-md-8" id="mypartial"> </div>
-    </div>
+        <div class="col-md-8 pull-right">
+            <div id="quoteHeaderPartial">
+
+            </div>
+        </div>-->
+        @*<div class="col-md-8" id="mypartial"> </div>*@
+    <!--</div>-->
 
     Layout = null;
 
@@ -15,13 +22,16 @@
 }
 
 
-<hr />
 <div class="row">
     <div class="col-md-5">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group">
+
+                <div id="mypartial">
+
+                </div>
 
                 <label asp-for="thisCustomer.CustomerName" class="control-label"></label>
 
@@ -176,6 +186,9 @@
 
     <div class="col-md-7">
 
+        <div id="quoteHeaderPartial">
+
+        </div>
 
         <div id="partial-BifoldItem1">
             <partial name="~/Views/BifoldItem/_BifoldItemsView.cshtml" model=@Model />
@@ -217,20 +230,52 @@
                 }
              });*@
 
-
-          var serModel =  '@Html.Raw(Json.Serialize(@Model))';
-            //console.log(serModel)
             $.ajax({
-                url: '@Url.Action("RefreshQuoteHeaderInformation", "Quote")',
-                type: "POST",
-                @*data: { 'jsonString', @Html.Raw(Json.Serialize(@Model))},*@
-                data: { jsonString: serModel},
-            //dataType: "json",
-            success: function (response) {
-                $("#mypartial").html(data);
-            }
-        });
+                url: '@Url.Action("RefreshCustomerHeader", "Quote")',
+                type: 'POST',
+                data: { 'customerId': customerId },
+                dataType: 'html',
+                success: function (data) {
+                    $("#mypartial").html(data);
+                }
+            });
 
+
+
+            $.ajax({
+                url: '@Url.Action("RefreshQuoteHeader", "Quote")',
+                type: 'POST',
+                data: { quoteId: @Html.Raw(Json.Serialize(Model.thisQuote.Id)) },
+                datatype: 'html',
+                success: function (data) {
+                    $("#quoteHeaderPartial").html(data);
+                }
+            });
+
+     //    var serModel =  '@Html.Raw(Json.Serialize(@Model))';
+     //      //console.log(serModel)
+     //      $.ajax({
+     //          url: '@Url.Action("RefreshQuoteHeaderInformation", "Quote")',
+     //          type: "POST",
+     //          @*data: { 'jsonString', @Html.Raw(Json.Serialize(@Model))},*@
+     //          data: { jsonString: serModel},
+     //      dataType: "html",
+     //          success: function (response) {
+     //          $("#mypartial").html(response);
+     //      }
+     //  });
+
+
+             @*var customerId = $('#CustomerId').find(":selected").val();
+            $.ajax({
+                url: '@Url.Action("ShowInvoiceAddressPartial", "Quote")',
+                type: 'POST',
+                data: { 'customerId': customerId },
+                dataType: 'html',
+                success: function (data) {
+                    $("#mypartial").html(data);
+                }
+            });*@
 
         //
         // Populate delivery addresses for customer
@@ -339,8 +384,18 @@
           // This function handles a drop down selection change and passes the value id to the Quote Controller as an ajax request.
         $('#CustomerId').change(function () {
             var customerId = $('#CustomerId').find(":selected").val();
-            $.ajax({
+            @*$.ajax({
                 url: '@Url.Action("ShowInvoiceAddressPartial", "Quote")',
+                type: 'POST',
+                data: { 'customerId': customerId },
+                dataType: 'html',
+                success: function (data) {
+                    $("#mypartial").html(data);
+                }
+            });*@
+
+            $.ajax({
+                url: '@Url.Action("RefreshCustomerHeader", "Quote")',
                 type: 'POST',
                 data: { 'customerId': customerId },
                 dataType: 'html',

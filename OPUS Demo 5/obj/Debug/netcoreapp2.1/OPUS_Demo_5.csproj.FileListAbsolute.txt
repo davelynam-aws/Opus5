@@ -53,4 +53,5 @@ C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\OPU
 C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\OPUS_Demo_5.csproj.CopyComplete
 C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\OPUS_Demo_5.csprojAssemblyReference.cache
 C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\Razor\Views\BifoldItem\_CreateBifoldItem.cshtml.g.cs
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\Razor\Views\Quote\_QuoteCustomerHeader.cshtml.g.cs
 C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\Razor\Views\Quote\_QuoteHeader.cshtml.g.cs

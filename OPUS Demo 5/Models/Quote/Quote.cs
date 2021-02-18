@@ -74,16 +74,18 @@ namespace OPUS_Demo_5.Models
 
         [Column("InvoiceAmountNet")]
         [Display(Name ="Invoice Amount Net")]
-        public decimal? InvoiceAmountNet { get; set; }
+        [DataType(DataType.Currency)]
+        public decimal InvoiceAmountNet { get; set; }
 
         [Column("InvoiceAmountVat")]
         [Display(Name = "Invoice Amount Vat")]
-        public decimal? InvoiceAmountVat { get; set; }
+        [DataType(DataType.Currency)]
+        public decimal InvoiceAmountVat { get; set; }
 
         [Column("DepositAmount")]
         [Display(Name = "Deposit Amount Net")]
         [DataType(DataType.Currency)]
-        public decimal? DepositAmount { get; set; }
+        public decimal DepositAmount { get; set; }
 
         [Column("IsTaxExempt")]
         [Display(Name = "Exempt From Tax")]

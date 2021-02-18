@@ -44,10 +44,40 @@ namespace OPUS_Demo_5.Controllers
             QuoteViewModel quoteViewModel = JsonConvert.DeserializeObject<QuoteViewModel>(jsonString);
 
             quoteViewModel.thisCustomerInvoiceAddress = _context.CustomerAddresses.Where(a => a.CustomerId == quoteViewModel.thisQuote.CustomerId).Where(a => a.IsInvoiceAddress == true).FirstOrDefault();
-            
+
+            quoteViewModel.thisCustomer = _context.Customers.Where(c => c.Id == quoteViewModel.thisQuote.CustomerId).Single();
+
+            return PartialView("_QuoteHeader", quoteViewModel);
+        }
+
+        public ActionResult RefreshQuoteHeader(string quoteId)
+        {
+            QuoteViewModel quoteViewModel = new QuoteViewModel();
+
+            if (quoteId == null)
+            {
+
+            }
+            else
+            {
+                quoteViewModel.thisQuote = _context.Quotes.Where(q => q.Id == quoteId).SingleOrDefault();
+            }
 
 
             return PartialView("_QuoteHeader", quoteViewModel);
+        }
+
+
+
+        public ActionResult RefreshCustomerHeader(string customerId)
+        {
+            CustomerViewModel customerViewModel = new CustomerViewModel();
+
+            customerViewModel.thisNewCustomer = _context.Customers.Where(c => c.Id == customerId).SingleOrDefault();
+
+            customerViewModel.thisNewCustomerInvoiceAddress = _context.CustomerAddresses.Where(a => a.CustomerId == customerId && a.IsInvoiceAddress == true).SingleOrDefault();
+
+            return PartialView("_QuoteCustomerHeader", customerViewModel);
         }
 
 
