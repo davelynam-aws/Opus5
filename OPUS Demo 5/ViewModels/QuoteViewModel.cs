@@ -17,6 +17,10 @@ namespace OPUS_Demo_5.ViewModels
         public Customer thisCustomer { get; set; }
 
         public List<BifoldItem> thisBifoldItems { get; set; }
+
+        public List<BifoldItemViewModel> thisBifoldItemViewModels { get; set; }
+
+
         public List<ExtraItem> thisExtraItems { get; set; }
         public List<GlassItem> thisGlassItems { get; set; }
         public List<PeripheralItem> thisPeripheralItems { get; set; }

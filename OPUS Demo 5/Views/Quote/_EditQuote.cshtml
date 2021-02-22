@@ -12,7 +12,7 @@
 
             </div>
         </div>-->
-        @*<div class="col-md-8" id="mypartial"> </div>*@
+    @*<div class="col-md-8" id="mypartial"> </div>*@
     <!--</div>-->
 
     Layout = null;
@@ -22,16 +22,16 @@
 }
 
 
+
 <div class="row">
+
     <div class="col-md-5">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="form-group">
+            <div class="form-group" style="margin-top:15px;">
 
-                <div id="mypartial">
-
-                </div>
+ 
 
                 <label asp-for="thisCustomer.CustomerName" class="control-label"></label>
 
@@ -157,27 +157,7 @@
             </div>
 
 
-            @*<div class="form-group" id="DespatchNotesDiv" >
-                    <label asp-for="thisQuote.DespatchNotes" class="control-label"></label>
-                    <input asp-for="thisQuote.DespatchNotes" class="form-control" />
-                    <span asp-validation-for="thisQuote.DespatchNotes" class="text-danger"></span>
-                </div>
-                <div class="form-group" id="AdditionalNotesDiv" >
-                    <label asp-for="thisQuote.AdditionalNotes" class="control-label"></label>
-                    <input asp-for="thisQuote.AdditionalNotes" class="form-control" />
-                    <span asp-validation-for="thisQuote.AdditionalNotes" class="text-danger"></span>
-                </div>
-                <div class="form-group" id="NotifySalesWhenFabricatedDiv">
-                    <div class="checkbox">
-                        <label>
-                            <input asp-for="thisQuote.NotifySalesWhenFabricated" /> @Html.DisplayNameFor(model => model.thisQuote.NotifySalesWhenFabricated)
-                        </label>
-                    </div>
-                </div>*@
-            <!--        <div>
-                <input class="btn btn-primary" id="AddBifold" value="Add Bi-fold" style="display:none" />
-            </div>
-                -->
+
             <div class="form-group" id="SubmitDiv">
                 <input type="submit" value="Update Main Details" class="btn btn-success pull-right" data-url="@Url.Action("Edit", "Quote")" />
             </div>
@@ -189,6 +169,12 @@
         <div id="quoteHeaderPartial">
 
         </div>
+
+        @*<div id="mypartial">
+
+        </div>*@
+
+
 
         <div id="partial-BifoldItem1">
             <partial name="~/Views/BifoldItem/_BifoldItemsView.cshtml" model=@Model />

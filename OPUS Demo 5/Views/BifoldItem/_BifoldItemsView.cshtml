@@ -6,10 +6,10 @@
 
 <div class="form-group">
     <div class="row">
-        <div class="col-md-10">
+        @*<div class="col-md-10">
 
-        </div>
-        <button type="button" class="btn btn-primary col-md-2" data-toggle="ajax-modal" data-target="#add-bifold-item" data-url="@Url.Action("AddBifoldItem", "Quote")">
+        </div>*@
+        <button type="button" class="btn btn-primary col-md-3" style="margin-left:5px;" data-toggle="ajax-modal" data-target="#add-bifold-item" data-url="@Url.Action("AddBifoldItem", "Quote")">
             Add Bi-Fold
         </button>
     </div>
@@ -37,12 +37,12 @@
     </table>*@
 
 
-<div class="row col-md-12">
-    @foreach (var item in Model.thisBifoldItems)
+<div class="row">
+    @foreach (var item in Model.thisBifoldItemViewModels)
     {
 
 
-        <div id="partial-bifold-item-1" style="cursor:pointer;" onclick="javascript: alert('@item.Id clicked.');">
+        <div id="partial-bifold-item-1" style="cursor:pointer;" onclick="javascript: alert('@item.thisBifoldItem.Id clicked.');">
             <partial name="~/Views/BifoldItem/_BifoldItemSummary.cshtml" model="@item" />
         </div>
 

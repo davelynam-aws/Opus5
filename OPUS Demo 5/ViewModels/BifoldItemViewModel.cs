@@ -24,6 +24,11 @@ namespace OPUS_Demo_5.ViewModels
         public List<HardwareColour> HardwareColourOptions { get; set; }
 
 
+        public string InternalColourName { get; set; }
+
+        public string ExternalColourName { get; set; }
+
+
         public string SelectedOpeningOption { get; set; }
 
         [Display(Name ="Opening Option")]

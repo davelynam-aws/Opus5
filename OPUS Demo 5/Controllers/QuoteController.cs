@@ -105,7 +105,7 @@ namespace OPUS_Demo_5.Controllers
 
                     List<BifoldItem> bifoldItems = new List<BifoldItem>();
                     
-                    bifoldItems = await _context.BifoldItems.Where(b => b.QuoteId == quote.Id).ToListAsync();
+                    bifoldItems = await _context.BifoldItems.Where(b => b.QuoteId == quote.Id).OrderBy(b => b.ItemNumber).ToListAsync();
                     quoteViewModel.thisBifoldItems = bifoldItems;
                     //Do Extra Items, Glass Items, Peripheral Items etc.
 
@@ -201,8 +201,28 @@ namespace OPUS_Demo_5.Controllers
 
                 quoteViewModel.IsNewQuote = false;
                 quoteViewModel.thisQuote = _context.Quotes.Where(q => q.Id == Id).Single();
-                quoteViewModel.thisBifoldItems = _context.BifoldItems.Where(b => b.QuoteId == Id).ToList();
+                quoteViewModel.thisBifoldItems = _context.BifoldItems.Where(b => b.QuoteId == Id).OrderBy(b => b.ItemNumber).ToList();
+
+                quoteViewModel.thisBifoldItemViewModels = new List<BifoldItemViewModel>();
+                BifoldItemViewModel bifoldItemViewModel;
+
+                if (quoteViewModel.thisBifoldItems.Count > 0)
+                {
+                    foreach (BifoldItem bifoldItem in quoteViewModel.thisBifoldItems)
+                    {
+                        bifoldItemViewModel = new BifoldItemViewModel();
+                        bifoldItemViewModel.thisBifoldItem = bifoldItem;
+                        bifoldItemViewModel.InternalColourName = _context.ProfileColours.Where(c => c.Id == bifoldItem.InternalColourId).Select(c => c.ColourName).Single();
+                        bifoldItemViewModel.ExternalColourName = _context.ProfileColours.Where(c => c.Id == bifoldItem.ExternalColourId).Select(c => c.ColourName).Single();
+
+                        quoteViewModel.thisBifoldItemViewModels.Add(bifoldItemViewModel);
+                    }
+                }
             }
+
+          
+
+           
 
             quoteViewModel.ActiveCustomers = _context.Customers.ToList();
             ViewBag.ActiveCustomers = quoteViewModel.ActiveCustomers;

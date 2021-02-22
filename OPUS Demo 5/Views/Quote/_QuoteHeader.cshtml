@@ -5,9 +5,9 @@
 
     </div>*@
     <div class="col-md-4">
-        <h1>Quote #@Model.thisQuote.QuoteReferenceNumber</h1>
+        <h3>Quote #@Model.thisQuote.QuoteReferenceNumber</h3>
     </div>
-    <div class="col-md-8 pul">
+    <div class="col-md-8 text-right">
         @*@if (Model.IsNewQuote == true)
             {
                 <h4>New Quote</h4>
@@ -19,15 +19,13 @@
 
         @if (Model.thisQuote.QuoteReferenceNumber == null)
         {
-        <h4> </h4>
+        <h3> </h3>
         }
         else
         {
-        <h1>Total: £@Model.thisQuote.InvoiceAmountNet + VAT</h1>
+        <h3>Total: £@Model.thisQuote.InvoiceAmountNet + VAT</h3>
  }
 
     </div>
-    @*<div class="col-md-7">
 
-        </div>*@
 </div> 
