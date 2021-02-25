@@ -59,5 +59,12 @@ namespace OPUS_Demo_5.Models.CustomerManagement
 
         [Column("CreatedDateTime")]
         public DateTime CreatedDateTime { get; set; }
+
+
+        [NotMapped]
+        public int IncrementForSelectList { get; set; }
+
+        [NotMapped]
+        public string DisplayAddress { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿@*@model OPUS_Demo_5.ViewModels.CustomerViewModel*@
+﻿@model OPUS_Demo_5.ViewModels.CustomerViewModel
 
 
 <!--Address drop down ajax google api-->
@@ -7,9 +7,14 @@
 
 <div class="input-group">
 
-    <select class="form-control" id="ProposedAddresses" asp-items="@ViewBag.proposedAddresses">
+    <select class="form-control" id="ProposedAddresses" asp-for="SelectedCustomerAddress" asp-items="@(new SelectList(Model.ProposedCustomerAddresses, "IncrementForSelectList", "DisplayAddress"))">
         <option value="" selected disabled>-- Choose Address --</option>
     </select>
+
+@if (ViewBag.ProposedAddresses == null)
+{
+    <div>@Model.thisNewCustomer.CustomerName</div>
+}
 
     <span class="input-group-btn">
 
@@ -22,5 +27,9 @@
 
 <span @*asp-validation-for="ProposedAddresses"*@ class="text-danger"></span>
 
-
-
+<script>
+    $("#ProposedAddresses").change(function () {
+        alert("Address changed");
+        $('#CustomerName').val = "Test";
+    });
+</script>

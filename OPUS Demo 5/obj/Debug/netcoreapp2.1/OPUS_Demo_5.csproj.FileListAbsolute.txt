@@ -37,7 +37,6 @@ C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\Raz
 C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\Razor\Views\Quote\_EditQuote.cshtml.g.cs
 C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\Razor\Views\Shared\Error.cshtml.g.cs
 C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_CookieConsentPartial.cshtml.g.cs
-C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_CreateCustomerModal.cshtml.g.cs
 C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_CustomerInvoiceAddress.cshtml.g.cs
 C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_Layout.cshtml.g.cs
 C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_ProposedAddresses.cshtml.g.cs
@@ -55,3 +54,4 @@ C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\OPU
 C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\Razor\Views\BifoldItem\_CreateBifoldItem.cshtml.g.cs
 C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\Razor\Views\Quote\_QuoteCustomerHeader.cshtml.g.cs
 C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\Razor\Views\Quote\_QuoteHeader.cshtml.g.cs
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_CreateCustomerModalOld.cshtml.g.cs

@@ -169,47 +169,67 @@ namespace OPUS_Demo_5.Controllers
 
 
 
-        public async Task<IActionResult> GoogleApiGetAddresses(string postCode)
+        public async Task<IActionResult> GoogleApiGetAddresses(string postCode, CustomerViewModel customerViewModel)
         {
            List<SelectListItem> proposedAddresses = new List<SelectListItem>();
 
-            var apiKey = new ApiKey("fSIWj3fZe0KDOPV7zcRNeg29928");
+            var apiKey = new ApiKey("2w2ahJuRuUWIHlyAbFwRwA30372");
 
             IAddressService addressService = new AddressService(apiKey);
-
+            
             var result = await addressService.Get(new GetAddressRequest(postCode));
 
-          
 
-            int increment = 0;
 
+            //int increment = 0;
+            List<CustomerAddress> ProposedAddresses = new List<CustomerAddress>();
+            CustomerAddress customerAddress;
             if (result.IsSuccess)
             {
-                var successfulResult = result.SuccessfulResult;
-
-                var latitude = successfulResult.Latitude;
-
-                var Longitude = successfulResult.Longitude;
-
-                foreach (var address in successfulResult.Addresses)
+                int increment = 0;
+                foreach(var address in result.SuccessfulResult.Addresses)
                 {
-                    var line1 = address.Line1;
-                    var line2 = address.Line2;
-                    var line3 = address.Line3;
-                    var line4 = address.Line4;
-                    var locality = address.Locality;
-                    var townOrCity = address.TownOrCity;
-                    var county = address.County;
-
-                    proposedAddresses.Add(new SelectListItem
-                    {
-                        Value = $"{increment}",
-                        Text = $"{line1}{line2}{line3}{line4}{locality}{townOrCity}{county} {postCode}"
-                    });
-
-   
-                        increment += 1;
+                    customerAddress = new CustomerAddress();
+                    customerAddress.IncrementForSelectList = increment;
+                    customerAddress.AddressLine1 = address.Line1;
+                    customerAddress.AddressLine2 = $"{address.Line2} {address.Line3} {address.Line4}".Trim();
+                    customerAddress.TownCity = address.TownOrCity;
+                    customerAddress.County = address.County;
+                    customerAddress.PostCode = postCode.ToUpper();
+                    customerAddress.DisplayAddress = $"{customerAddress.AddressLine1}{customerAddress.AddressLine2}{customerAddress.TownCity}{customerAddress.County} {customerAddress.PostCode}";
+                    increment += 1;
+                    ProposedAddresses.Add(customerAddress);
                 }
+                customerViewModel.ProposedCustomerAddresses = ProposedAddresses;
+                //var successfulResult = result.SuccessfulResult;
+
+                //var latitude = successfulResult.Latitude;
+
+                //var Longitude = successfulResult.Longitude;
+
+                //foreach (var address in successfulResult.Addresses)
+                //{
+                //    var line1 = address.Line1;
+                //    var line2 = address.Line2;
+                //    var line3 = address.Line3;
+                //    var line4 = address.Line4;
+                //    var locality = address.Locality;
+                //    var townOrCity = address.TownOrCity;
+                //    var county = address.County;
+
+                //    proposedAddresses.Add(new SelectListItem
+                //    {
+                //        Value = $"{increment}",
+                //        Text = $"{line1}{line2}{line3}{line4}{locality}{townOrCity}{county} {postCode}"
+                //    });
+                //ViewData["ProposedAddresses"] = new SelectList(ProposedAddresses, "IncrementForSelectList", "DisplayAddress");
+                ViewBag.ProposedAddresses = new SelectList(ProposedAddresses, "IncrementForSelectList", "DisplayAddress");
+                //        increment += 1;
+                //}
+            }
+            else
+            {
+                ViewBag.ProposedAddresses = null;
             }
 
             //customerViewModel = new CustomerViewModel();
@@ -217,9 +237,9 @@ namespace OPUS_Demo_5.Controllers
             //customerViewModel.thisNewCustomerContact = new CustomerContact();
             //customerViewModel.thisNewCustomerInvoiceAddress = new CustomerAddress();
 
-            ViewBag.ProposedAddresses = proposedAddresses;
-
-            return PartialView("~/Views/Shared/_ProposedAddresses.cshtml");
+            // ViewBag.ProposedAddresses = proposedAddresses;
+            //ViewBag.ProposedAddresses = result.SuccessfulResult.Addresses;
+            return PartialView("~/Views/Shared/_ProposedAddresses.cshtml", customerViewModel);
            // What do I Return??
         }
 

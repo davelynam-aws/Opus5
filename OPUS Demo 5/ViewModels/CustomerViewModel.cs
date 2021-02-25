@@ -44,12 +44,15 @@ namespace OPUS_Demo_5.ViewModels
         public CustomerContact thisNewCustomerContact { get; set; }
 
 
+        [Display(Name = "Choose Address")]
+        public List<CustomerAddress> ProposedCustomerAddresses { get; set; }
 
 
         [Display(Name = "Choose Address")]
         public List<SelectListItem> ProposedAddresses { get; set; }
 
-  
+        public CustomerAddress SelectedCustomerAddress { get; set; }
+
         public List<SelectListItem> PreferredDeliveryDayOptions { get; set; }
 
         public List<SelectListItem> DespatchSiteOptions { get; set; }

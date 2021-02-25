@@ -38,17 +38,21 @@
 
 
 <div class="row">
-    @foreach (var item in Model.thisBifoldItemViewModels)
+    @if (Model.thisBifoldItemViewModels.Count > 0)
     {
+        @foreach (var item in Model.thisBifoldItemViewModels)
+        {
 
 
-        <div id="partial-bifold-item-1" style="cursor:pointer;" onclick="javascript: alert('@item.thisBifoldItem.Id clicked.');">
-            <partial name="~/Views/BifoldItem/_BifoldItemSummary.cshtml" model="@item" />
-        </div>
+            <div id="partial-bifold-item-1" style="cursor:pointer;" onclick="javascript: alert('@item.thisBifoldItem.Id clicked.');">
+                <partial name="~/Views/BifoldItem/_BifoldItemSummary.cshtml" model="@item" />
+            </div>
 
 
 
+        }
     }
+
 </div>
 
 @*Can't use @script section in partial views. Also, not using _Layout so need to specify jQuery here.*@

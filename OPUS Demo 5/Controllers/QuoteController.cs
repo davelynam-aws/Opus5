@@ -192,6 +192,9 @@ namespace OPUS_Demo_5.Controllers
                 // Create new quote with default values
                 quoteViewModel.thisQuote = new Quote();
                 quoteViewModel.IsNewQuote = true;
+                quoteViewModel.thisBifoldItems = new List<BifoldItem>();
+                quoteViewModel.thisBifoldItemViewModels = new List<BifoldItemViewModel>();
+
                 //quoteViewModel.ActiveCustomers = _context.Customers.ToList();
                 //ViewBag.ActiveCustomers = quoteViewModel.ActiveCustomers;
             }
@@ -280,13 +283,14 @@ namespace OPUS_Demo_5.Controllers
                 }
 
                 
+                
                 if (ModelState.IsValid)
                 {
 
                     _context.Quotes.Add(quoteViewModel.thisQuote);
                     _context.SaveChanges();
 
-
+                    return RedirectToAction("CreateOrEdit", new { id = quoteViewModel.thisQuote.Id });
                 }
                 else
                 {
