@@ -3,18 +3,18 @@
 
 <!--Address drop down ajax google api-->
 
-<label  class="control-label">Choose Address</label>
 
-<div class="input-group">
 
+<div class="form-group">
+    <label class="control-label">Choose Address</label>
     <select class="form-control" id="ProposedAddresses" asp-for="SelectedCustomerAddress" asp-items="@(new SelectList(Model.ProposedCustomerAddresses, "IncrementForSelectList", "DisplayAddress"))">
         <option value="" selected disabled>-- Choose Address --</option>
     </select>
 
-@if (ViewBag.ProposedAddresses == null)
-{
-    <div>@Model.thisNewCustomer.CustomerName</div>
-}
+    @if (ViewBag.ProposedAddresses == null)
+    {
+        <div>@Model.thisNewCustomer.CustomerName</div>
+    }
 
     <span class="input-group-btn">
 
@@ -27,19 +27,5 @@
 
 <span @*asp-validation-for="ProposedAddresses"*@ class="text-danger"></span>
 
-<script>
-    $(function () {
-        $("#ProposedAddresses").change(function () {
-            alert("Address changed");
-            //HOw can I update parent ID's??
-
-            $('#CustomerName').val = 'test';
 
 
-        });
-    });
-
-
-
-   
-</script>

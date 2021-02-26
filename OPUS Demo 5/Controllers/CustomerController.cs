@@ -68,6 +68,8 @@ namespace OPUS_Demo_5.Controllers
             newCustomer.thisNewCustomerContact = new CustomerContact();
             newCustomer.thisNewCustomerInvoiceAddress = new CustomerAddress();
 
+            newCustomer.SelectedCustomerAddress = new CustomerAddress();
+
             // Set default values.
             newCustomer.thisNewCustomer.IsDepositAllowed = true;
             newCustomer.thisNewCustomer.IsTaxExempt = false;
@@ -136,6 +138,10 @@ namespace OPUS_Demo_5.Controllers
                 // return RedirectToAction("Create", "Quote");
 
             }
+            else
+            {
+                newCustomer.FailedValidation = true;
+            }
 
             // Return the original view model if input does not pass validation.
             return PartialView("_CreateCustomerModal", newCustomer);
@@ -173,7 +179,7 @@ namespace OPUS_Demo_5.Controllers
         {
            List<SelectListItem> proposedAddresses = new List<SelectListItem>();
 
-            var apiKey = new ApiKey("2w2ahJuRuUWIHlyAbFwRwA30372");
+            var apiKey = new ApiKey("zLIh4NnlNkqQeGp-mqc67w30396");
 
             IAddressService addressService = new AddressService(apiKey);
             
@@ -196,36 +202,15 @@ namespace OPUS_Demo_5.Controllers
                     customerAddress.TownCity = address.TownOrCity;
                     customerAddress.County = address.County;
                     customerAddress.PostCode = postCode.ToUpper();
-                    customerAddress.DisplayAddress = $"{customerAddress.AddressLine1}{customerAddress.AddressLine2}{customerAddress.TownCity}{customerAddress.County} {customerAddress.PostCode}";
+                    customerAddress.DisplayAddress = $"{customerAddress.AddressLine1}, {customerAddress.AddressLine2}, {customerAddress.TownCity}, {customerAddress.County}";
                     increment += 1;
                     ProposedAddresses.Add(customerAddress);
                 }
                 customerViewModel.ProposedCustomerAddresses = ProposedAddresses;
-                //var successfulResult = result.SuccessfulResult;
-
-                //var latitude = successfulResult.Latitude;
-
-                //var Longitude = successfulResult.Longitude;
-
-                //foreach (var address in successfulResult.Addresses)
-                //{
-                //    var line1 = address.Line1;
-                //    var line2 = address.Line2;
-                //    var line3 = address.Line3;
-                //    var line4 = address.Line4;
-                //    var locality = address.Locality;
-                //    var townOrCity = address.TownOrCity;
-                //    var county = address.County;
-
-                //    proposedAddresses.Add(new SelectListItem
-                //    {
-                //        Value = $"{increment}",
-                //        Text = $"{line1}{line2}{line3}{line4}{locality}{townOrCity}{county} {postCode}"
-                //    });
-                //ViewData["ProposedAddresses"] = new SelectList(ProposedAddresses, "IncrementForSelectList", "DisplayAddress");
+                customerViewModel.SelectedCustomerAddress = new CustomerAddress();
+     
                 ViewBag.ProposedAddresses = new SelectList(ProposedAddresses, "IncrementForSelectList", "DisplayAddress");
-                //        increment += 1;
-                //}
+
             }
             else
             {

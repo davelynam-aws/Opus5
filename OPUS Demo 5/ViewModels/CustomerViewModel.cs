@@ -57,7 +57,7 @@ namespace OPUS_Demo_5.ViewModels
 
         public List<SelectListItem> DespatchSiteOptions { get; set; }
 
-
+        public bool FailedValidation { get; set; }
 
     }
 }
