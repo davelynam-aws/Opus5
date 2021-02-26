@@ -28,8 +28,18 @@
 <span @*asp-validation-for="ProposedAddresses"*@ class="text-danger"></span>
 
 <script>
-    $("#ProposedAddresses").change(function () {
-        alert("Address changed");
-        $('#CustomerName').val = "Test";
+    $(function () {
+        $("#ProposedAddresses").change(function () {
+            alert("Address changed");
+            //HOw can I update parent ID's??
+
+            $('#CustomerName').val = 'test';
+
+
+        });
     });
+
+
+
+   
 </script>
