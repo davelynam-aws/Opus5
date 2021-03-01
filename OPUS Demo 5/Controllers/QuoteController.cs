@@ -81,6 +81,8 @@ namespace OPUS_Demo_5.Controllers
         }
 
 
+
+
         // GET: Quote
         public async Task<IActionResult> Index()
         {
@@ -179,6 +181,33 @@ namespace OPUS_Demo_5.Controllers
             return PartialView("~/Views/BifoldItem/_CreateBifoldItem.cshtml", bifoldItemViewModel);
         }
 
+        //GET
+        public IActionResult AddDeliveryAddress()
+        {
+            AddressViewModel addressViewModel = new AddressViewModel();
+
+            addressViewModel.thisAddress = new CustomerAddress();
+
+            return PartialView("~/Views/Shared/_NewDeliveryAddress.cshtml", addressViewModel);
+        }
+
+
+        //POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddDeliveryAddress(AddressViewModel addressViewModel)
+        {
+
+
+            if (ModelState.IsValid)
+            {
+
+            }
+
+            return PartialView("~/Views/Shared/_NewDeliveryAddress.cshtml", addressViewModel);
+        }
+
+
 
         // GET: Quote/Create
         public IActionResult CreateOrEdit(string Id = "")
@@ -194,6 +223,16 @@ namespace OPUS_Demo_5.Controllers
                 quoteViewModel.IsNewQuote = true;
                 quoteViewModel.thisBifoldItems = new List<BifoldItem>();
                 quoteViewModel.thisBifoldItemViewModels = new List<BifoldItemViewModel>();
+                quoteViewModel.thisCustomer = new Customer();
+                quoteViewModel.thisCustomerDeliveryAddress = new AddressViewModel();
+                quoteViewModel.thisCustomerInvoiceAddress = new CustomerAddress();
+                quoteViewModel.thisExtraItems = new List<ExtraItem>();
+                quoteViewModel.thisGlassItems = new List<GlassItem>();
+                quoteViewModel.thisPeripheralItems = new List<PeripheralItem>();
+                quoteViewModel.IsNewQuote = true;
+
+
+                quoteViewModel.thisCustomerDeliveryAddress.thisAddress = new CustomerAddress();
 
                 //quoteViewModel.ActiveCustomers = _context.Customers.ToList();
                 //ViewBag.ActiveCustomers = quoteViewModel.ActiveCustomers;

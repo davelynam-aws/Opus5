@@ -1,86 +1,102 @@
-﻿@model OPUS_Demo_5.ViewModels.CustomerViewModel
+﻿@model OPUS_Demo_5.ViewModels.AddressViewModel
 <!-- Modal -->
-<div class="modal fade" id="add-address" tabindex="-1" role="dialog" aria-labelledby="addAddressrLabel" aria-hidden="true">
+<div class="modal fade" id="add-delivery-address" tabindex="-1" role="dialog" aria-labelledby="addDeliveryAddressLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addCustomerLabel">Add Address</h5>
+                <h5 class="modal-title" id="addDeliveryAddress">Add Delivery Address</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 @*add hidden input field to form to validate model state*@
-                <form asp-action="NewDeliveryD">
+                <form asp-action="AddDeliveryAddress" autocomplete="nay">
                     <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
                     <div class="form-group">
-                        <h3>Customer Name</h3>
-                        @*<label asp-for="thisNewCustomer.CustomerName"></label>*@
-                        <input asp-for="thisNewCustomer.CustomerName" id="CustomerName" class="form-control" autocomplete="nay" />
-                        @*display validation errors (if any) for FirstName property*@
-                        <span asp-validation-for="thisNewCustomer.CustomerName" class="text-danger"></span>
+                        <h3>Delivery Address</h3>
                     </div>
 
+                    @Html.HiddenFor(m => m.thisAddress.ValidatedByGoogleAPI, new { @id = "ValidatedByGoogleAPI" })
 
                     <div class="form-group">
-                        <h3>Invoice Address</h3>
                         <div id="PostCodeDiv">
-                            @*<label asp-for="thisNewCustomerInvoiceAddress.PostCode"></label>
-                                <input asp-for="thisNewCustomerInvoiceAddress.PostCode" class="form-control" autocomplete="nay" />
-                                <span asp-validation-for="thisNewCustomerInvoiceAddress.PostCode" class="text-danger"></span>*@
-                            <select asp-for="thisNewCustomerInvoiceAddress.DespatchSite" id="Test" class="form-control" asp-items="Model.DespatchSiteOptions">
-                                <option value="" selected disabled>-- Select A Despatch Site --</option>
-                                <option value="1">-- 1 --</option>
-                                <option value="2">-- 2 --</option>
-                                <option value="3">-- 3 --</option>
-                            </select>
-                            <label asp-for="thisNewCustomerInvoiceAddress.PostCode"></label>
 
-                            <div class="input-group">
 
-                                <input asp-for="thisNewCustomerInvoiceAddress.PostCode" class="form-control" id="PostCode" />
+                            <div class="form-group">
+                                <label asp-for="thisAddress.PostCode"></label>
 
-                                <span class="input-group-btn">
+                                <div class="input-group">
 
-                                    @*<button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#add-customer" data-url="@Url.Action("Create", "Customer")">
+                                    <input asp-for="thisAddress.PostCode" class="form-control" id="PostCode" autocomplete="no" />
+
+                                    <span class="input-group-btn">
+
+                                        <button type="button" class="btn btn-primary" style="border-radius:0px 4px 4px 0px;" onclick="ShowProposedAddresses()">
                                             Find Address
-                                        </button>*@
-                                    <button type="button" class="btn btn-primary" onclick="ShowProposedAddresses()">
-                                        Find Address
-                                    </button>
+                                        </button>
+                                        <span>
+                                            <button type="button" disabled class="btn" style="background-color:transparent; cursor:default">OR</button>
+                                        </span>
 
-                                </span>
+                                        <button type="button" class="btn btn-primary" style="border-radius: 4px;" onclick="EnableManualFields()">
+                                            Enter Manually
+                                        </button>
+
+
+                                    </span>
+
+                                </div>
+
+
+                                <span asp-validation-for="thisAddress.PostCode" class="text-danger"></span>
                             </div>
 
-                            <span asp-validation-for="thisNewCustomerInvoiceAddress.PostCode" class="text-danger"></span>
+
                         </div>
+
 
                         <div id="partialProposedAddresses">
-                            @*<partial name="~/Views/Shared/_ProposedAddresses.cshtml" />*@
+
                         </div>
 
-                        <div id="AddressFieldsDiv" style="display:none">
-                            <label asp-for="thisNewCustomerInvoiceAddress.AddressLine1"></label>
-                            <input asp-for="thisNewCustomerInvoiceAddress.AddressLine1" class="form-control" autocomplete="nay" />
-                            <span asp-validation-for="thisNewCustomerInvoiceAddress.AddressLine1" class="text-danger"></span>
 
-                            <label asp-for="thisNewCustomerInvoiceAddress.AddressLine2"></label>
-                            <input asp-for="thisNewCustomerInvoiceAddress.AddressLine2" class="form-control" autocomplete="nay" />
-                            <span asp-validation-for="thisNewCustomerInvoiceAddress.AddressLine2" class="text-danger"></span>
+                        <div id="AddressFieldsDiv">
+                            <div class="form-group">
+                                <label asp-for="thisAddress.AddressLine1"></label>
+                                <input asp-for="thisAddress.AddressLine1" id="AddressLine1" class="form-control" autocomplete="nay" />
+                                <span asp-validation-for="thisAddress.AddressLine1" class="text-danger"></span>
+                            </div>
 
-                            <label asp-for="thisNewCustomerInvoiceAddress.TownCity"></label>
-                            <input asp-for="thisNewCustomerInvoiceAddress.TownCity" class="form-control" autocomplete="nay" />
-                            <span asp-validation-for="thisNewCustomerInvoiceAddress.TownCity" class="text-danger"></span>
 
-                            <label asp-for="thisNewCustomerInvoiceAddress.County"></label>
-                            <input asp-for="thisNewCustomerInvoiceAddress.County" class="form-control" autocomplete="nay" />
-                            <span asp-validation-for="thisNewCustomerInvoiceAddress.County" class="text-danger"></span>
+                            <div class="form-group">
+                                <label asp-for="thisAddress.AddressLine2"></label>
+                                <input asp-for="thisAddress.AddressLine2" id="AddressLine2" class="form-control" autocomplete="nay" />
+                                <span asp-validation-for="thisAddress.AddressLine2" class="text-danger"></span>
+                            </div>
 
-                            <label asp-for="thisNewCustomerInvoiceAddress.DespatchSite" class="control-label"></label>
+                            <div class="form-group">
+                                <label asp-for="thisAddress.TownCity"></label>
+                                <input asp-for="thisAddress.TownCity" id="TownCity" class="form-control" autocomplete="nay" />
+                                <span asp-validation-for="thisAddress.TownCity" class="text-danger"></span>
+                            </div>
 
-                            <select asp-for="thisNewCustomerInvoiceAddress.DespatchSite" class="form-control" asp-items="Model.DespatchSiteOptions">
-                                <option value="" selected disabled>-- Select A Despatch Site --</option>
-                            </select>
+                            <div class="form-group">
+                                <label asp-for="thisAddress.County"></label>
+                                <input asp-for="thisAddress.County" id="County" class="form-control" autocomplete="nay" />
+                                <span asp-validation-for="thisAddress.County" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="thisAddress.DespatchSite" class="control-label"></label>
+
+                                <select asp-for="thisAddress.DespatchSite" id="DespatchSite" class="form-control" asp-items="Model.DespatchSiteOptions">
+                                    <option value="" selected disabled>-- Select A Despatch Site --</option>
+                                </select>
+                                <span asp-validation-for="thisAddress.DespatchSite" class="text-danger"></span>
+                            </div>
+
+
                         </div>
 
 
@@ -89,51 +105,13 @@
                     </div>
 
 
-                    <div class="form-group" id="ContactDiv" style="display:none">
-                        <h3>Contact</h3>
-                        <label asp-for="thisNewCustomerContact.Name"></label>
-                        <input asp-for="thisNewCustomerContact.Name" class="form-control" />
-                        <span asp-validation-for="thisNewCustomerContact.Name" class="text-danger"></span>
-
-                        <label asp-for="thisNewCustomerContact.ContactNumber"></label>
-                        <input asp-for="thisNewCustomerContact.ContactNumber" class="form-control" autocomplete="nay" />
-                        <span asp-validation-for="thisNewCustomerContact.ContactNumber" class="text-danger"></span>
-
-                        <label asp-for="thisNewCustomerContact.Email"></label>
-                        <input asp-for="thisNewCustomerContact.Email" class="form-control" autocomplete="nay" />
-                        <span asp-validation-for="thisNewCustomerContact.Email" class="text-danger"></span>
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="thisAddress.SaveToCustomerAddresses" id="SaveAddress" /> Save to customer addresses for future use.
+                        </label>
                     </div>
 
-                    <div class="form-group" id="PreferencesDiv" style="display:none">
-                        <h3>Preferences</h3>
-                        <label asp-for="thisNewCustomer.PreferredDeliveryDate"></label>
-                        <select asp-for="thisNewCustomer.PreferredDeliveryDate" class="form-control" asp-items="Model.PreferredDeliveryDayOptions">
-                            <option value="" selected disabled>-- Select Preferred Delivery Day --</option>
-                        </select>
-                        <span asp-validation-for="thisNewCustomer.PreferredDeliveryDate" class="text-danger"></span>
-
-                        <label asp-for="thisNewCustomer.CustomerSageAccountReference"></label>
-                        <input asp-for="thisNewCustomer.CustomerSageAccountReference" class="form-control" autocomplete="nay" />
-                        <span asp-validation-for="thisNewCustomer.CustomerSageAccountReference" class="text-danger"></span>
-
-                        <div class="checkbox">
-                            <label>
-                                <input asp-for="thisNewCustomer.IsAccountCustomer" /> @Html.DisplayNameFor(model => model.thisNewCustomer.IsAccountCustomer)
-                            </label>
-                        </div>
-
-                        <div class="checkbox">
-                            <label>
-                                <input asp-for="thisNewCustomer.IsDepositAllowed" /> @Html.DisplayNameFor(model => model.thisNewCustomer.IsDepositAllowed)
-                            </label>
-                        </div>
-
-                        <div class="checkbox">
-                            <label>
-                                <input asp-for="thisNewCustomer.IsTaxExempt" /> @Html.DisplayNameFor(model => model.thisNewCustomer.IsTaxExempt)
-                            </label>
-                        </div>
-                    </div>
+       
 
 
 
@@ -142,18 +120,24 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 @*data-save attribute identifies the correct element to attach the "Save" to*@
-                <button type="button" style="display:none" id="SaveButton" class="btn btn-primary" data-save="modal">Save</button>
+
+  
+                <button type="button" id="DeliveryAddressSave" class="btn btn-primary" data-save-address="modal">Save</button>
+
+
+
             </div>
         </div>
     </div>
 </div>
 
 <script>
+    // Use Google API to return address options in a partial view select list.
      function ShowProposedAddresses() {
 
             var PostCode = $('#PostCode').val();
             $.ajax({
-                url: '@Url.Action("GoogleApiGetAddresses", "Customer", new {id = Model.thisNewCustomerInvoiceAddress.PostCode, viewModel = Model })',
+                url: '@Url.Action("GoogleApiGetAddresses", "Customer", new {id = Model.thisAddress.PostCode, viewModel = Model })',
                 type: 'POST',
                 data: { 'PostCode': PostCode },
                 dataType: 'html',
@@ -162,18 +146,63 @@
                 }
             });
          $("#partialProposedAddresses").show();
+         $('#ChooseAddressDiv').show();
+
+
+         $('#ValidatedByGoogleAPI').val(true);
+
+
+    };
 
 
 
-        };
+    function EnableManualFields() {
+        $('#AddressLine1').val('');
+        $('#AddressLine2').val('');
+        $('#TownCity').val('');
+        $('#County').val('');
+
+        $('#AddressLine1').prop("disabled", false);
+        $('#AddressLine2').prop("disabled", false);
+        $('#TownCity').prop("disabled", false);
+        $('#County').prop("disabled", false);
+
+        $('#AddressFieldsDiv').show();
+        $('#ChooseAddressDiv').hide();
+
+        $('#AddressLine1').show();
+        $('#AddressLine2').show();
+        $('#TownCity').show();
+        $('#County').show();
+
+        $("#DespatchSite").val('');
+
+        $('#ValidatedByGoogleAPI').val(false);
+    };
 
 
 
+    // When an address is selected, populate fields and show next controls.
+    $(document).on('change', '#ProposedAddresses', function (event) {
+        $('#AddressFieldsDiv').show();
+
+        var address = $('#ProposedAddresses').find(":selected").text();
+        var addressArray = address.split(',');
+
+        $('#AddressLine1').val(addressArray[0]);
+        $('#AddressLine2').val(addressArray[1]);
+        $('#TownCity').val(addressArray[2]);
+        $('#County').val(addressArray[3]);
 
 
 
-    $("#Test").change(function () {
-        alert("Address changed");
+    });
+
+    //When a despatch site has been selected, show next controls
+    $(document).on('change', '#DespatchSite', function (event) {
+        $('#ContactDiv').show();
+        $('#PreferencesDiv').show();
+        $('#SaveButton').show();
     });
 
 
@@ -181,9 +210,8 @@
 
 
 
+
+
+
+
 </script>
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}

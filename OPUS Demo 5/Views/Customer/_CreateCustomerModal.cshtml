@@ -11,10 +11,9 @@
             </div>
             <div class="modal-body">
                 @*add hidden input field to form to validate model state*@
-                <form asp-action="Create">
+                <form asp-action="Create" autocomplete="nay">
                     <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
-
-                    <div class="form-group">
+                   <div class="form-group">
                         <h3>Customer Name</h3>
                         @*<label asp-for="thisNewCustomer.CustomerName"></label>*@
                         <input asp-for="thisNewCustomer.CustomerName" id="CustomerName" class="form-control" autocomplete="nay" />
@@ -22,42 +21,72 @@
                         <span asp-validation-for="thisNewCustomer.CustomerName" class="text-danger"></span>
                     </div>
 
+                    @Html.HiddenFor(m => m.thisNewCustomerInvoiceAddress.ValidatedByGoogleAPI, new { @id = "ValidatedByGoogleAPI" })
 
                     <div class="form-group">
                         <h3>Invoice Address</h3>
                         <div id="PostCodeDiv">
                             @*<label asp-for="thisNewCustomerInvoiceAddress.PostCode"></label>
-                <input asp-for="thisNewCustomerInvoiceAddress.PostCode" class="form-control" autocomplete="nay" />
-                <span asp-validation-for="thisNewCustomerInvoiceAddress.PostCode" class="text-danger"></span>*@
+        <input asp-for="thisNewCustomerInvoiceAddress.PostCode" class="form-control" autocomplete="nay" />
+        <span asp-validation-for="thisNewCustomerInvoiceAddress.PostCode" class="text-danger"></span>*@
                             @*<select asp-for="thisNewCustomerInvoiceAddress.DespatchSite" id="Test" class="form-control" asp-items="Model.DespatchSiteOptions">
-                    <option value="" selected disabled>-- Select A Despatch Site --</option>
-                    <option value="1">-- 1 --</option>
-                    <option value="2">-- 2 --</option>
-                    <option value="3">-- 3 --</option>
-                </select>*@
+            <option value="" selected disabled>-- Select A Despatch Site --</option>
+            <option value="1">-- 1 --</option>
+            <option value="2">-- 2 --</option>
+            <option value="3">-- 3 --</option>
+        </select>*@
+             
                             <div class="form-group">
                                 <label asp-for="thisNewCustomerInvoiceAddress.PostCode"></label>
 
                                 <div class="input-group">
 
-                                    <input asp-for="thisNewCustomerInvoiceAddress.PostCode" class="form-control" id="PostCode" autocomplete="nay" />
+                                    <input asp-for="thisNewCustomerInvoiceAddress.PostCode" class="form-control" id="PostCode" autocomplete="no" />
 
                                     <span class="input-group-btn">
 
                                         @*<button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#add-customer" data-url="@Url.Action("Create", "Customer")">
-                                Find Address
-                            </button>*@
-                                        <button type="button" class="btn btn-primary" onclick="ShowProposedAddresses()">
+            Find Address
+        </button>*@
+                                        <button type="button" class="btn btn-primary" style="border-radius:0px 4px 4px 0px;" onclick="ShowProposedAddresses()">
                                             Find Address
                                         </button>
+                                        <span>
+                                            <button type="button" disabled class="btn" style="background-color:transparent; cursor:default">OR</button>
+                                        </span>
+                                      
+                                        
+                         
+                                            <button type="button" class="btn btn-primary" style="border-radius: 4px;" onclick="EnableManualFields()">
+                                                Enter Manually
+                                            </button>
+                                  
 
                                     </span>
+
+                                    @*<label>OR</label>
+
+                                    <button type="button" class="btn btn-primary" onclick="EnableManualFields()">
+                                        Enter Manually
+                                    </button>*@
+
                                 </div>
+
+      
+
 
                                 <span asp-validation-for="thisNewCustomerInvoiceAddress.PostCode" class="text-danger"></span>
                             </div>
+
+    
                         </div>
 
+                        @*<div form-group>
+                            <label class="text-center" style="margin-left:50%; margin-right:50%">OR</label>
+                            <button type="button" class="btn btn-primary" style="width:100%; margin-top:5px;" onclick="EnableManualFields()">
+                                Enter Manually
+                            </button>
+                        </div>*@
 
                         <div id="partialProposedAddresses">
                             @*<partial name="~/Views/Shared/_ProposedAddresses.cshtml" />*@
@@ -320,22 +349,56 @@
                 }
             });
          $("#partialProposedAddresses").show();
+         $('#ChooseAddressDiv').show();
+
+
+         $('#ValidatedByGoogleAPI').val(true);
+
+    
+    };
 
 
 
-        };
+    function EnableManualFields() {
+        $('#AddressLine1').val('');
+        $('#AddressLine2').val('');
+        $('#TownCity').val('');
+        $('#County').val('');
+
+        $('#AddressLine1').prop("disabled", false);
+        $('#AddressLine2').prop("disabled", false);
+        $('#TownCity').prop("disabled", false);
+        $('#County').prop("disabled", false);
+
+        $('#AddressFieldsDiv').show();
+        $('#ChooseAddressDiv').hide();
+
+        $('#AddressLine1').show();
+        $('#AddressLine2').show();
+        $('#TownCity').show();
+        $('#County').show();
+
+        $("#DespatchSite").val('');
+
+        $('#ValidatedByGoogleAPI').val(false);
+    };
+
+
 
     // When an address is selected, populate fields and show next controls.
     $(document).on('change', '#ProposedAddresses', function (event) {
         $('#AddressFieldsDiv').show();
 
-        var address = $('#ProposedAddresses').find(":selected").text()
+        var address = $('#ProposedAddresses').find(":selected").text();
         var addressArray = address.split(',');
-   
-        $('#AddressLine1').val(addressArray[0])
-        $('#AddressLine2').val(addressArray[1])
-        $('#TownCity').val(addressArray[2])
-        $('#County').val(addressArray[3])
+
+        $('#AddressLine1').val(addressArray[0]);
+        $('#AddressLine2').val(addressArray[1]);
+        $('#TownCity').val(addressArray[2]);
+        $('#County').val(addressArray[3]);
+
+
+
     });
 
     //When a despatch site has been selected, show next controls

@@ -27,6 +27,9 @@ namespace OPUS_Demo_5.ViewModels
 
         public CustomerAddress thisCustomerInvoiceAddress { get; set; }
 
+        public AddressViewModel thisCustomerDeliveryAddress { get; set; }
+
+
         [Display(Name = "Created By")]
         public string CreatedByUsername { get; set; }
 

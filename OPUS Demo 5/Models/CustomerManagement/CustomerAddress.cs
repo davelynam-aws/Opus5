@@ -36,7 +36,7 @@ namespace OPUS_Demo_5.Models.CustomerManagement
         [Column("County")]
         public string County { get; set; }
 
-        [Required]
+        [Required]       
         [Display(Name = "Post Code")]
         [Column("PostCode")]
         public string PostCode { get; set; }
@@ -60,11 +60,18 @@ namespace OPUS_Demo_5.Models.CustomerManagement
         [Column("CreatedDateTime")]
         public DateTime CreatedDateTime { get; set; }
 
+        [Column("ValidatedByGoogleAPI")]
+        public bool ValidatedByGoogleAPI { get; set; }
 
         [NotMapped]
         public int IncrementForSelectList { get; set; }
 
         [NotMapped]
         public string DisplayAddress { get; set; }
+
+        [NotMapped]
+        public bool SaveToCustomerAddresses { get; set; }
+
+
     }
 }

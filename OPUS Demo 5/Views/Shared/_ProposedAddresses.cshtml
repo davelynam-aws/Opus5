@@ -5,16 +5,13 @@
 
 
 
-<div class="form-group">
+<div class="form-group" id="ChooseAddressDiv">
     <label class="control-label">Choose Address</label>
     <select class="form-control" id="ProposedAddresses" asp-for="SelectedCustomerAddress" asp-items="@(new SelectList(Model.ProposedCustomerAddresses, "IncrementForSelectList", "DisplayAddress"))">
         <option value="" selected disabled>-- Choose Address --</option>
     </select>
 
-    @if (ViewBag.ProposedAddresses == null)
-    {
-        <div>@Model.thisNewCustomer.CustomerName</div>
-    }
+
 
     <span class="input-group-btn">
 

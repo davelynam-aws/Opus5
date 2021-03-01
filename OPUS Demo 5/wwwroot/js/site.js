@@ -1,5 +1,6 @@
 ﻿
 
+
 $(function () {
     // Set placeholder element as a variable for ease of use.
     var placeholderElement = $('#modal-placeholder');
@@ -63,7 +64,7 @@ $(function () {
             $.ajax({
                 url: "/Customer/GetActiveCustomers",
                 success(response) {
-                    parseAndAddDatatForm(response);
+                    parseAndAddDataToForm(response);
                     //GET THE data OBJECT TO DISPLAY CORRECTLY IN THE NEW SELECT LIST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                    // customerSelection.replaceWith("<select class=\"form-control\" id=\"CustomerId\" asp-items=\"@(new SelectList(" + response + ", \" Id\", \"CustomerName\"))\"><option value=\"\" selected disabled>-- Select Customer Name --</option></select>");
                 }
@@ -71,7 +72,7 @@ $(function () {
         }
 
         // Use data obtained by AjaxCall and turn it into a select list and replace a component with the designated ID.
-        function parseAndAddDatatForm(response) {
+        function parseAndAddDataToForm(response) {
             //$('#CustomerData').empty();
             $('#CustomerId').empty();
             $('#CustomerId').append("<option value=\"\" selected disabled>-- Select Customer Name --</option>")
@@ -89,10 +90,47 @@ $(function () {
     });
 
 
+    //placeholderElement.on('click', '[data-save-address="modal"]', function (event) {
+    //    event.preventDefault();
+    //    // Navigate DOM in order to find a form tag located inside the modal. 
+    //    // Then extract form action url.
+    //    // Then get form data and make it eligible for sending(serialization).
+    //    // Then send the data to server. Once response is received, close the modal.
+    //    var form = $(this).parents('.modal').find('form');
+    //    var actionUrl = form.attr('action');
+    //    var dataToSend = form.serialize();
+
+    //    // Extract modal body from the response and replace current modal body with the one from response.
+    //    $.post(actionUrl, dataToSend).done(function (data) {
+    //        var newBody = $('.modal-body', data);
+    //        placeholderElement.find('.modal-body').replaceWith(newBody);
+
+    //        // find IsValid input field and check it's value
+    //        // if it's valid then hide modal window
+    //        var isValid = newBody.find('[name="IsValid"]').val() == 'True';
+    //        if (isValid) {
+
+    //            // Gets a new collection of active customer names and replaces the existing select list
+    //            //AjaxCall();
+
+    //            // Hides the modal form
+    //            placeholderElement.find('.modal').modal('hide');
+
+    //        }
+
+
+    //        /////
+
+    //    });
 
 
        
-
+        // Use data obtained by AjaxCall and turn it into a select list and replace a component with the designated ID.
+        
+        //<select class="form-control" id="CustomerId" asp-items="@(new SelectList(ViewBag.ActiveCustomers, " Id", "CustomerName"))" >
+        //    <option value="" selected disabled>-- Select Customer Name --</option>
+        //            </select >
+    //});
 
 
 });
