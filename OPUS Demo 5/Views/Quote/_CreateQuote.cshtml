@@ -76,7 +76,7 @@
             @Html.HiddenFor(m => m.thisCustomerDeliveryAddress.DeliveryDespatchSite, new { id = "DeliveryDespatchSite" })
             @Html.HiddenFor(m => m.thisCustomerDeliveryAddress.DeliveryAddressString, new { id = "DeliveryAddressString" })
             @Html.HiddenFor(m => m.thisCustomerDeliveryAddress.DeliverySaveAddress, new { id = "DeliverySaveAddress" })
-
+            @Html.HiddenFor(m => m.thisCustomerDeliveryAddress.ValidatedByGoogleAPI, new { id = "DeliveryValidatedByGoogleAPI" })
 
 
             <div class="form-group" id="DeliveryAddressesDiv" style="display:none">
@@ -216,13 +216,7 @@
 <script>
 
 
-    $(document).on('click', '#DeliveryAddressSave', function (event) {
 
-
-        //alert("test");
-
-
-    });
 
     $(document).on('click', '#DeliveryAddressSave', function (event) {
 
@@ -248,28 +242,27 @@
             if (isValid) {
 
 
-            @*@Html.HiddenFor(m => m.thisCustomerDeliveryAddress.DeliveryPostCode, new { id = "DeliveryPostCode" })
-            @Html.HiddenFor(m => m.thisCustomerDeliveryAddress.DeliveryAddressLine1, new { id = "DeliveryAddressLine1" })
-            @Html.HiddenFor(m => m.thisCustomerDeliveryAddress.DeliveryAddressLine2, new { id = "DeliveryAddressLine2" })
-            @Html.HiddenFor(m => m.thisCustomerDeliveryAddress.DeliveryTownCity, new { id = "DeliveryTownCity" })
-            @Html.HiddenFor(m => m.thisCustomerDeliveryAddress.DeliveryCounty, new { id = "DeliveryCounty" })
-            @Html.HiddenFor(m => m.thisCustomerDeliveryAddress.DeliveryDespatchSite, new { id = "DeliveryDespatchSite" })
-            @Html.HiddenFor(m => m.thisCustomerDeliveryAddress.DeliveryAddressString, new { id = "DeliveryAddressString" })
-            @Html.HiddenFor(m => m.thisCustomerDeliveryAddress.DeliverySaveAddress, new { id = "DeliverySaveAddress" })*@
-
                 $('#DeliveryPostCode').val($('#PostCode').val().trim());
                 $('#DeliveryAddressLine1').val($('#AddressLine1').val().trim());
                 $('#DeliveryAddressLine2').val($('#AddressLine2').val().trim());
                 $('#DeliveryTownCity').val($('#TownCity').val().trim());
                 $('#DeliveryCounty').val($('#County').val().trim());
-                $('#DeliveryDespatchSite').val($('#DespatchSite').val().trim());         
-                $('#DeliverySaveAddress').val($('#SaveAddress').val().trim());
+                $('#DeliveryDespatchSite').val($('#DespatchSite').val().trim());  
+
+                if ($('#SaveAddress').is(":checked")) {
+                    $('#DeliverySaveAddress').val(true);
+                } else {
+                    $('#DeliverySaveAddress').val(false);
+                }
+
+                $('#DeliveryValidatedByGoogleAPI').val($('#ValidatedByGoogleAPI').val());
 
                 $('#DeliveryAddressString').val($('#AddressLine1').val() + ', ' + $('#AddressLine2').val() + ', ' + $('#TownCity').val() + ', ' + $('#County').val() + ', ' + $('#PostCode').val() + ', [' + $('#DespatchSite').val() +']');
 
-                $('#DeliveryAddressesSelect').append('<option selected="selected" value=' + $('#DeliveryAddressString').val() + '>' + $('#DeliveryAddressString').val() +'</option>')
+                $('#DeliveryAddressesSelect').append('<option selected="selected" value="' + $('#DeliveryAddressString').val() + '">' + $('#DeliveryAddressString').val() +'</option>')
 
 
+                $('#ShippingDateDiv').show();
 
                 // Hides the modal form
                 placeholderElement.find('.modal').modal('hide');

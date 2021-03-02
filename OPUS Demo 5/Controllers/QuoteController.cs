@@ -325,6 +325,31 @@ namespace OPUS_Demo_5.Controllers
                 
                 if (ModelState.IsValid)
                 {
+                    if(quoteViewModel.thisCustomerDeliveryAddress.DeliverySaveAddress == true)
+                    {
+                        // Save new delivery address to customer record.
+                        CustomerAddress newDeliveryAddress = new CustomerAddress();
+                        newDeliveryAddress.AddressLine1 = quoteViewModel.thisCustomerDeliveryAddress.DeliveryAddressLine1;
+                        newDeliveryAddress.AddressLine2 = quoteViewModel.thisCustomerDeliveryAddress.DeliveryAddressLine2;
+                        newDeliveryAddress.TownCity = quoteViewModel.thisCustomerDeliveryAddress.DeliveryTownCity;
+                        newDeliveryAddress.County = quoteViewModel.thisCustomerDeliveryAddress.DeliveryCounty;
+                        newDeliveryAddress.PostCode = quoteViewModel.thisCustomerDeliveryAddress.DeliveryPostCode;
+                        newDeliveryAddress.CreatedByUserId = HttpContext.Session.GetString("UserId");
+                        newDeliveryAddress.CreatedDateTime = DateTime.Now;
+                        newDeliveryAddress.CustomerId = quoteViewModel.thisQuote.CustomerId;
+                        newDeliveryAddress.DespatchSite = quoteViewModel.thisCustomerDeliveryAddress.DeliveryDespatchSite;
+
+                        newDeliveryAddress.Id = Guid.NewGuid().ToString();
+                        newDeliveryAddress.IsInvoiceAddress = false;
+
+                        newDeliveryAddress.IsPrimaryDeliveryAddress = false;
+                        newDeliveryAddress.ValidatedByGoogleAPI = quoteViewModel.thisCustomerDeliveryAddress.ValidatedByGoogleAPI;
+
+                        _context.CustomerAddresses.Add(newDeliveryAddress);
+                        _context.SaveChanges();
+                    }
+
+
 
                     _context.Quotes.Add(quoteViewModel.thisQuote);
                     _context.SaveChanges();

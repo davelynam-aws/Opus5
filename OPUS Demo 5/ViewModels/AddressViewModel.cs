@@ -41,6 +41,7 @@ namespace OPUS_Demo_5.ViewModels
         public string DeliveryDespatchSite { get; set; }
         public bool DeliverySaveAddress { get; set; }
         public string DeliveryAddressString { get; set; }
+        public bool ValidatedByGoogleAPI { get; set; }
 
 
 
