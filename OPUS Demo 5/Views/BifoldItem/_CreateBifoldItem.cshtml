@@ -38,23 +38,23 @@
                     @Html.HiddenFor(m => m.ProfileColourOptions)
                     @Html.HiddenFor(m => m.HardwareColourOptions)
 
-                    <div class="form-group col-md-6">
-                        <label asp-for="ProfileColourOptions" class="control-label">Outside Colour</label>
-                        <select asp-for="thisBifoldItem.ExternalColourId" class="form-control" asp-items="@(new SelectList(Model.ProfileColourOptions, "Id", "ColourName"))">
-                            <option value="" selected disabled>-- Select --</option>
-                        </select>
-                    </div>
+                    @*<div class="form-group col-md-6">
+            <label asp-for="ProfileColourOptions" class="control-label">Outside Colour</label>
+            <select asp-for="thisBifoldItem.ExternalColourId" class="form-control" asp-items="@(new SelectList(Model.ProfileColourOptions, "Id", "ColourName"))">
+                <option value="" selected disabled>-- Select --</option>
+            </select>
+        </div>
 
-                    <div class="form-group col-md-6">
-                        <label asp-for="ProfileColourOptions" class="control-label">Inside Colour</label>
-                        <select asp-for="thisBifoldItem.InternalColourId" class="form-control" asp-items="@(new SelectList(Model.ProfileColourOptions, "Id", "ColourName"))">
-                            <option value="" selected disabled>-- Select --</option>
-                        </select>
-                    </div>
+        <div class="form-group col-md-6">
+            <label asp-for="ProfileColourOptions" class="control-label">Inside Colour</label>
+            <select asp-for="thisBifoldItem.InternalColourId" class="form-control" asp-items="@(new SelectList(Model.ProfileColourOptions, "Id", "ColourName"))">
+                <option value="" selected disabled>-- Select --</option>
+            </select>
+        </div>*@
 
                     <div class="form-group col-md-4">
                         <label asp-for="DoorQuantityOptions" class="control-label">How Many Doors?</label>
-                        <select asp-for="SelectedDoorQuantity" class="form-control" asp-items="@Model.DoorQuantityOptions">
+                        <select asp-for="SelectedDoorQuantity" id="DoorQuantityOptions" class="form-control" asp-items="@Model.DoorQuantityOptions">
                             <option value="" selected disabled>-- Select --</option>
                         </select>
                     </div>
@@ -75,7 +75,8 @@
 
                     @Html.HiddenFor(m => m.SelectedBifoldStyleCode, new { @id = "SelectedBifoldStyle" })
 
-                    <div class=" form-group" id="OneDoorImages">
+                    <!--OneDoorImages-->
+                    <div class="form-group DoorImages" id="OneDoorImages" style="display:none">
                         <div class="row">
                             <div class="col-md-6">
                                 <div id="ThumbnailTL" class="thumbnail" style="cursor:pointer;">
@@ -102,28 +103,355 @@
                         </div>
                     </div>
 
-                    <script>
-                        // This toggles the selected thumbnail image class so that the selection is clear to the user.
-                        function toggleSelectedImageClass(thumbId) {   
-                            $('.thumbnail').removeClass('thumbnail-clicked');
-                            $(thumbId).addClass('thumbnail-clicked');
-                        };
-                    </script>
+                    <!--TwoDoorImages-->
+                    <div class="form-group DoorImages" id="TwoDoorImages" style="display:none;">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div id="ThumbnailTLMTR" class="thumbnail" style="cursor:pointer;">
+                                    <a class="BifoldStyleImages" onclick="$('#SelectedBifoldStyle').val('TLMTR'); toggleSelectedImageClass('#ThumbnailTLMTR');">
+                                        <!--Testing onclick event for image. Use this to register the selection and highlight the image-->
+                                        <img src="~/images/BifoldThumbnails/TLM-TR.png" style="height:auto; width:auto; max-height:100%; max-width:100%">
+                                        <div class="caption">
+                                            <p style="text-align:center;">OUTSIDE VIEW</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div id="ThumbnailTLTRM" class="thumbnail" style="cursor:pointer;">
+                                    <a class="BifoldStyleImages" onclick="$('#SelectedBifoldStyle').val('TLTRM'); toggleSelectedImageClass('#ThumbnailTLTRM');">
+                                        <!--Testing onclick event for image. Use this to register the selection and highlight the image-->
+                                        <img src="~/images/BifoldThumbnails/TL-TRM.png" style="height:auto; width:auto; max-height:100%; max-width:100%">
+                                        <div class="caption">
+                                            <p style="text-align:center;">OUTSIDE VIEW</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div id="ThumbnailSLSL" class="thumbnail" style="cursor:pointer;">
+                                    <a class="BifoldStyleImages" onclick="$('#SelectedBifoldStyle').val('SLSL'); toggleSelectedImageClass('#ThumbnailSLSL');">
+                                        <!--Testing onclick event for image. Use this to register the selection and highlight the image-->
+                                        <img src="~/images/BifoldThumbnails/SL-SL.png" style="height:auto; width:auto; max-height:100%; max-width:100%">
+                                        <div class="caption">
+                                            <p style="text-align:center;">OUTSIDE VIEW</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
 
-                    <div class="checkbox">
-                        <label asp-for="thisBifoldItem.IsMarineOrHazardousCoating">
-                            <input asp-for="thisBifoldItem.IsMarineOrHazardousCoating" /> @Html.DisplayNameFor(model => model.thisBifoldItem.IsMarineOrHazardousCoating)
-                        </label>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div id="ThumbnailSRSR" class="thumbnail" style="cursor:pointer;">
+                                    <a class="BifoldStyleImages" onclick="$('#SelectedBifoldStyle').val('SRSR'); toggleSelectedImageClass('#ThumbnailSRSR');">
+                                        <!--Testing onclick event for image. Use this to register the selection and highlight the image-->
+                                        <img src="~/images/BifoldThumbnails/SR-SR.png" style="height:auto; width:auto; max-height:100%; max-width:100%">
+                                        <div class="caption">
+                                            <p style="text-align:center;">OUTSIDE VIEW</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
+                    <!--ThreeDoorImages-->
+                    <div class="form-group DoorImages" id="ThreeDoorImages" style="display:none">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div id="ThumbnailTLMTR" class="thumbnail" style="cursor:pointer;">
+                                    <a class="BifoldStyleImages" onclick="$('#SelectedBifoldStyle').val('TRSRSR'); toggleSelectedImageClass('#ThumbnailTRSRSR');">
+                                        <!--Testing onclick event for image. Use this to register the selection and highlight the image-->
+                                        <img src="~/images/BifoldThumbnails/TR-SR-SR.png" style="height:auto; width:auto; max-height:100%; max-width:100%">
+                                        <div class="caption">
+                                            <p style="text-align:center;">OUTSIDE VIEW</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div id="ThumbnailSLSLTL" class="thumbnail" style="cursor:pointer;">
+                                    <a class="BifoldStyleImages" onclick="$('#SelectedBifoldStyle').val('SLSLTL'); toggleSelectedImageClass('#ThumbnailSLSLTL');">
+                                        <!--Testing onclick event for image. Use this to register the selection and highlight the image-->
+                                        <img src="~/images/BifoldThumbnails/SL-SL-TL.png" style="height:auto; width:auto; max-height:100%; max-width:100%">
+                                        <div class="caption">
+                                            <p style="text-align:center;">OUTSIDE VIEW</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div id="ThumbnailTLSRSR" class="thumbnail" style="cursor:pointer;">
+                                    <a class="BifoldStyleImages" onclick="$('#SelectedBifoldStyle').val('TLSRSR'); toggleSelectedImageClass('#ThumbnailTLSRSR');">
+                                        <!--Testing onclick event for image. Use this to register the selection and highlight the image-->
+                                        <img src="~/images/BifoldThumbnails/TL-SR-SR.png" style="height:auto; width:auto; max-height:100%; max-width:100%">
+                                        <div class="caption">
+                                            <p style="text-align:center;">OUTSIDE VIEW</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div id="ThumbnailSLSLTR" class="thumbnail" style="cursor:pointer;">
+                                    <a class="BifoldStyleImages" onclick="$('#SelectedBifoldStyle').val('SLSLTR'); toggleSelectedImageClass('#ThumbnailSLSLTR');">
+                                        <!--Testing onclick event for image. Use this to register the selection and highlight the image-->
+                                        <img src="~/images/BifoldThumbnails/SL-SL-TR.png" style="height:auto; width:auto; max-height:100%; max-width:100%">
+                                        <div class="caption">
+                                            <p style="text-align:center;">OUTSIDE VIEW</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!--FourDoorImages-->
+                    <div class="form-group DoorImages" id="FourDoorImages" style="display:none">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div id="ThumbnailTLMTRSRSR" class="thumbnail" style="cursor:pointer;">
+                                    <a class="BifoldStyleImages" onclick="$('#SelectedBifoldStyle').val('TLMTRSRSR'); toggleSelectedImageClass('#ThumbnailTLMTRSRSR');">
+                                        <!--Testing onclick event for image. Use this to register the selection and highlight the image-->
+                                        <img src="~/images/BifoldThumbnails/TLM-TR-SR-SR.png" style="height:auto; width:auto; max-height:100%; max-width:100%">
+                                        <div class="caption">
+                                            <p style="text-align:center;">OUTSIDE VIEW</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div id="ThumbnailSLSLTLTRM" class="thumbnail" style="cursor:pointer;">
+                                    <a class="BifoldStyleImages" onclick="$('#SelectedBifoldStyle').val('SLSLTLTRM'); toggleSelectedImageClass('#ThumbnailSLSLTLTRM');">
+                                        <!--Testing onclick event for image. Use this to register the selection and highlight the image-->
+                                        <img src="~/images/BifoldThumbnails/SL-SL-TL-TRM.png" style="height:auto; width:auto; max-height:100%; max-width:100%">
+                                        <div class="caption">
+                                            <p style="text-align:center;">OUTSIDE VIEW</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div id="ThumbnailTLTRMSRSR" class="thumbnail" style="cursor:pointer;">
+                                    <a class="BifoldStyleImages" onclick="$('#SelectedBifoldStyle').val('TLTRMSRSR'); toggleSelectedImageClass('#ThumbnailTLTRMSRSR');">
+                                        <!--Testing onclick event for image. Use this to register the selection and highlight the image-->
+                                        <img src="~/images/BifoldThumbnails/TL-TRM-SR-SR.png" style="height:auto; width:auto; max-height:100%; max-width:100%">
+                                        <div class="caption">
+                                            <p style="text-align:center;">OUTSIDE VIEW</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div id="ThumbnailSLSLTLMTR" class="thumbnail" style="cursor:pointer;">
+                                    <a class="BifoldStyleImages" onclick="$('#SelectedBifoldStyle').val('SLSLTLMTR'); toggleSelectedImageClass('#ThumbnailSLSLTLMTR');">
+                                        <!--Testing onclick event for image. Use this to register the selection and highlight the image-->
+                                        <img src="~/images/BifoldThumbnails/SL-SL-TLM-TR.png" style="height:auto; width:auto; max-height:100%; max-width:100%">
+                                        <div class="caption">
+                                            <p style="text-align:center;">OUTSIDE VIEW</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div id="ThumbnailSLSLSLSL" class="thumbnail" style="cursor:pointer;">
+                                    <a class="BifoldStyleImages" onclick="$('#SelectedBifoldStyle').val('SLSLSLSL'); toggleSelectedImageClass('#ThumbnailSLSLSLSL');">
+                                        <!--Testing onclick event for image. Use this to register the selection and highlight the image-->
+                                        <img src="~/images/BifoldThumbnails/SL-SL-SL-SL.png" style="height:auto; width:auto; max-height:100%; max-width:100%">
+                                        <div class="caption">
+                                            <p style="text-align:center;">OUTSIDE VIEW</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div id="ThumbnailSRSRSRSR" class="thumbnail" style="cursor:pointer;">
+                                    <a class="BifoldStyleImages" onclick="$('#SelectedBifoldStyle').val('SRSRSRSR'); toggleSelectedImageClass('#ThumbnailSRSRSRSR');">
+                                        <!--Testing onclick event for image. Use this to register the selection and highlight the image-->
+                                        <img src="~/images/BifoldThumbnails/SR-SR-SR-SR.png" style="height:auto; width:auto; max-height:100%; max-width:100%">
+                                        <div class="caption">
+                                            <p style="text-align:center;">OUTSIDE VIEW</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div id="ThumbnailSLSLSRSR" class="thumbnail" style="cursor:pointer;">
+                                    <a class="BifoldStyleImages" onclick="$('#SelectedBifoldStyle').val('SLSLSRSR'); toggleSelectedImageClass('#ThumbnailSLSLSRSR');">
+                                        <!--Testing onclick event for image. Use this to register the selection and highlight the image-->
+                                        <img src="~/images/BifoldThumbnails/SL-SL-SR-SR.png" style="height:auto; width:auto; max-height:100%; max-width:100%">
+                                        <div class="caption">
+                                            <p style="text-align:center;">OUTSIDE VIEW</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <!--FiveDoorImages-->
+                    <div class="form-group DoorImages" id="FiveDoorImages" style="display:none;">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div id="ThumbnailTRSRSRSRSR" class="thumbnail" style="cursor:pointer;">
+                                    <a class="BifoldStyleImages" onclick="$('#SelectedBifoldStyle').val('TRSRSRSRSR'); toggleSelectedImageClass('#ThumbnailTRSRSRSRSR');">
+                                        <!--Testing onclick event for image. Use this to register the selection and highlight the image-->
+                                        <img src="~/images/BifoldThumbnails/TR-SR-SR-SR-SR.png" style="height:auto; width:auto; max-height:100%; max-width:100%">
+                                        <div class="caption">
+                                            <p style="text-align:center;">OUTSIDE VIEW</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div id="ThumbnailSLSLSLSLTL" class="thumbnail" style="cursor:pointer;">
+                                    <a class="BifoldStyleImages" onclick="$('#SelectedBifoldStyle').val('SLSLSLSLTL'); toggleSelectedImageClass('#ThumbnailSLSLSLSLTL');">
+                                        <!--Testing onclick event for image. Use this to register the selection and highlight the image-->
+                                        <img src="~/images/BifoldThumbnails/SL-SL-SL-SL-TL.png" style="height:auto; width:auto; max-height:100%; max-width:100%">
+                                        <div class="caption">
+                                            <p style="text-align:center;">OUTSIDE VIEW</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div id="ThumbnailTLSRSRSRSR" class="thumbnail" style="cursor:pointer;">
+                                    <a class="BifoldStyleImages" onclick="$('#SelectedBifoldStyle').val('TLSRSRSRSR'); toggleSelectedImageClass('#ThumbnailTLSRSRSRSR');">
+                                        <!--Testing onclick event for image. Use this to register the selection and highlight the image-->
+                                        <img src="~/images/BifoldThumbnails/TL-SR-SR-SR-SR.png" style="height:auto; width:auto; max-height:100%; max-width:100%">
+                                        <div class="caption">
+                                            <p style="text-align:center;">OUTSIDE VIEW</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div id="ThumbnailSLSLSLSLTR" class="thumbnail" style="cursor:pointer;">
+                                    <a class="BifoldStyleImages" onclick="$('#SelectedBifoldStyle').val('SLSLSLSLTR'); toggleSelectedImageClass('#ThumbnailSLSLSLSLTR');">
+                                        <!--Testing onclick event for image. Use this to register the selection and highlight the image-->
+                                        <img src="~/images/BifoldThumbnails/SL-SL-SL-SL-TR.png" style="height:auto; width:auto; max-height:100%; max-width:100%">
+                                        <div class="caption">
+                                            <p style="text-align:center;">OUTSIDE VIEW</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div id="ThumbnailSLSLTLSRSR" class="thumbnail" style="cursor:pointer;">
+                                    <a class="BifoldStyleImages" onclick="$('#SelectedBifoldStyle').val('SLSLTLSRSR'); toggleSelectedImageClass('#ThumbnailSLSLTLSRSR');">
+                                        <!--Testing onclick event for image. Use this to register the selection and highlight the image-->
+                                        <img src="~/images/BifoldThumbnails/SL-SL-TL-SR-SR.png" style="height:auto; width:auto; max-height:100%; max-width:100%">
+                                        <div class="caption">
+                                            <p style="text-align:center;">OUTSIDE VIEW</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div id="ThumbnailSLSLTRSRSR" class="thumbnail" style="cursor:pointer;">
+                                    <a class="BifoldStyleImages" onclick="$('#SelectedBifoldStyle').val('SLSLTRSRSR'); toggleSelectedImageClass('#ThumbnailSLSLTRSRSR');">
+                                        <!--Testing onclick event for image. Use this to register the selection and highlight the image-->
+                                        <img src="~/images/BifoldThumbnails/SL-SL-TR-SR-SR.png" style="height:auto; width:auto; max-height:100%; max-width:100%">
+                                        <div class="caption">
+                                            <p style="text-align:center;">OUTSIDE VIEW</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!--SixDoorImages-->
+                    <div class="form-group DoorImages" id="SixDoorImages" style="display:none;">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div id="ThumbnailSLSLTLMTRSRSR" class="thumbnail" style="cursor:pointer;">
+                                    <a class="BifoldStyleImages" onclick="$('#SelectedBifoldStyle').val('SLSLTLMTRSRSR'); toggleSelectedImageClass('#ThumbnailSLSLTLMTRSRSR');">
+                                        <!--Testing onclick event for image. Use this to register the selection and highlight the image-->
+                                        <img src="~/images/BifoldThumbnails/SL-SL-TLM-TR-SR-SR.png" style="height:auto; width:auto; max-height:100%; max-width:100%">
+                                        <div class="caption">
+                                            <p style="text-align:center;">OUTSIDE VIEW</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div id="ThumbnailSLSLTLTRSRSR" class="thumbnail" style="cursor:pointer;">
+                                    <a class="BifoldStyleImages" onclick="$('#SelectedBifoldStyle').val('SLSLTLTRSRSR'); toggleSelectedImageClass('#ThumbnailSLSLTLTRSRSR');">
+                                        <!--Testing onclick event for image. Use this to register the selection and highlight the image-->
+                                        <img src="~/images/BifoldThumbnails/SL-SL-TL-TRM-SR-SR.png" style="height:auto; width:auto; max-height:100%; max-width:100%">
+                                        <div class="caption">
+                                            <p style="text-align:center;">OUTSIDE VIEW</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div id="ThumbnailSLSLSLSLSLSL" class="thumbnail" style="cursor:pointer;">
+                                    <a class="BifoldStyleImages" onclick="$('#SelectedBifoldStyle').val('SLSLSLSLSLSL'); toggleSelectedImageClass('#ThumbnailSLSLSLSLSLSL');">
+                                        <!--Testing onclick event for image. Use this to register the selection and highlight the image-->
+                                        <img src="~/images/BifoldThumbnails/SL-SL-SL-SL-SL-SL.png" style="height:auto; width:auto; max-height:100%; max-width:100%">
+                                        <div class="caption">
+                                            <p style="text-align:center;">OUTSIDE VIEW</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div id="ThumbnailSRSRSRSRSRSR" class="thumbnail" style="cursor:pointer;">
+                                    <a class="BifoldStyleImages" onclick="$('#SelectedBifoldStyle').val('SRSRSRSRSRSR'); toggleSelectedImageClass('#ThumbnailSRSRSRSRSRSR');">
+                                        <!--Testing onclick event for image. Use this to register the selection and highlight the image-->
+                                        <img src="~/images/BifoldThumbnails/SR-SR-SR-SR-SR-SR.png" style="height:auto; width:auto; max-height:100%; max-width:100%">
+                                        <div class="caption">
+                                            <p style="text-align:center;">OUTSIDE VIEW</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
 
                     <label asp-for="HardwareColourOptions" class="control-label">Hardware Colour</label>
                     <select asp-for="thisBifoldItem.HardwareColourId" class="form-control" asp-items="@(new SelectList(Model.HardwareColourOptions, "Id", "ColourName"))">
                         <option value="" selected disabled>-- Select --</option>
                     </select>
 
+
+
+
                     <label asp-for="thisBifoldItem.AdditionalNotes"></label>
                     <input asp-for="thisBifoldItem.AdditionalNotes" class="form-control" autocomplete="nay" />
                     <span asp-validation-for="thisBifoldItem.AdditionalNotes" class="text-danger"></span>
+
+
+                    <div class="checkbox">
+                        <label asp-for="thisBifoldItem.IsMarineOrHazardousCoating">
+                            <input asp-for="thisBifoldItem.IsMarineOrHazardousCoating" /> @Html.DisplayNameFor(model => model.thisBifoldItem.IsMarineOrHazardousCoating)
+                        </label>
+                    </div>
 
 
                     <div class="checkbox">
@@ -145,10 +473,10 @@
                         </label>
                     </div>
 
-
-
-
                 </form>
+
+
+
 
 
             </div>
@@ -160,3 +488,50 @@
         </div>
     </div>
 </div>
+
+
+
+
+<script>
+
+
+
+    $('#DoorQuantityOptions').on('change', function () {
+
+        $('.DoorImages').hide();
+        $('.thumbnail').removeClass('thumbnail-clicked');
+
+        if ($('#DoorQuantityOptions option').filter(':selected').text() == "1") {
+            $('#OneDoorImages').show();
+        }
+        if ($('#DoorQuantityOptions option').filter(':selected').text() == "2") {
+            $('#TwoDoorImages').show();
+        }
+        if ($('#DoorQuantityOptions option').filter(':selected').text() == "3") {
+            $('#ThreeDoorImages').show();
+        }
+        if ($('#DoorQuantityOptions option').filter(':selected').text() == "4") {
+            $('#FourDoorImages').show();
+        }
+        if ($('#DoorQuantityOptions option').filter(':selected').text() == "5") {
+            $('#FiveDoorImages').show();
+        }
+        if ($('#DoorQuantityOptions option').filter(':selected').text() == "6") {
+            $('#SixDoorImages').show();
+        }
+
+        //$('#ShippingOptions option').filter(':selected').text() == "AWS Vehicle Delivery"
+    });
+
+
+
+    // This toggles the selected thumbnail image class so that the selection is clear to the user.
+    function toggleSelectedImageClass(thumbId) {
+        $('.thumbnail').removeClass('thumbnail-clicked');
+        $(thumbId).addClass('thumbnail-clicked');
+        $('#SelectedBifoldStyle').val(thumbId);
+  
+    };
+
+
+</script>

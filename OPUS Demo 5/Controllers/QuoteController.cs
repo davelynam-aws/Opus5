@@ -168,7 +168,7 @@ namespace OPUS_Demo_5.Controllers
                 // Test debug
                 int i = 1;
 
-                i += 1; ;
+                i += 1; 
 
                 // Save et
             }
