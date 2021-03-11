@@ -56,3 +56,5 @@ C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\Raz
 C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\Razor\Views\Quote\_QuoteHeader.cshtml.g.cs
 C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_CreateCustomerModalOld.cshtml.g.cs
 C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_NewDeliveryAddress.cshtml.g.cs
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\Razor\Views\BifoldItem\_BifoldItemHeader.cshtml.g.cs
+C:\Users\dlynam\source\repos\OPUS Demo 5\OPUS Demo 5\obj\Debug\netcoreapp2.1\Razor\Views\BifoldItem\_TestModal.cshtml.g.cs

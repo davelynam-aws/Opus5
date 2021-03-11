@@ -16,22 +16,51 @@
             </div>
             <div class="modal-body">
                 @*add hidden input field to form to validate model state*@
-                <form asp-action="AddBifoldItem">
+                <form id="myForm" asp-action="AddBifoldItem">
                     <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
 
 
+                    @*<div class="input-group">
+            <span class="input-group-addon">
+                <label>Bifold Item @Model.thisBifoldItem.ItemNumber</label>
+                <input asp-for="ItemQuoteValue" class="form-control" />
+            </span>
 
-                    <h3>Bifold Item @Model.thisBifoldItem.ItemNumber</h3>
+        </div>*@
+                    <div class="row form-group">
+                        @*<div class="col-md-4">
+
+            </div>*@
+                        <div class="col-md-4">
+                            <h3>Bifold Item @Model.thisBifoldItem.ItemNumber</h3>
+                        </div>
+                        <div class="col-md-8 text-right">
+                            @*@if (Model.IsNewQuote == true)
+                {
+                    <h4>New Quote</h4>
+                }
+                else
+                {
+                    <h4>Quote #@Model.thisQuote.QuoteReferenceNumber</h4>
+                }*@
+
+
+                            <h3 id="ItemQuoteValue">£@Model.ItemQuoteValue + VAT</h3>
+
+
+                        </div>
+
+                    </div>
 
                     <div class="form-group col-md-6">
                         <label asp-for="thisBifoldItem.Width"></label>
-                        <input asp-for="thisBifoldItem.Width" class="form-control" autocomplete="nay" />
+                        <input id="width" asp-for="thisBifoldItem.Width" class="form-control" autocomplete="nay" />
                         <span asp-validation-for="thisBifoldItem.Width" class="text-danger"></span>
                     </div>
 
                     <div class="form-group col-md-6">
                         <label asp-for="thisBifoldItem.Height"></label>
-                        <input asp-for="thisBifoldItem.Height" class="form-control" autocomplete="nay" />
+                        <input id="height" asp-for="thisBifoldItem.Height" class="form-control" autocomplete="nay" />
                         <span asp-validation-for="thisBifoldItem.Height" class="text-danger"></span>
                     </div>
 
@@ -160,7 +189,7 @@
                     <div class="form-group DoorImages" id="ThreeDoorImages" style="display:none">
                         <div class="row">
                             <div class="col-md-4">
-                                <div id="ThumbnailTLMTR" class="thumbnail" style="cursor:pointer;">
+                                <div id="ThumbnailTRSRSR" class="thumbnail" style="cursor:pointer;">
                                     <a class="BifoldStyleImages" onclick="$('#SelectedBifoldStyle').val('TRSRSR'); toggleSelectedImageClass('#ThumbnailTRSRSR');">
                                         <!--Testing onclick event for image. Use this to register the selection and highlight the image-->
                                         <img src="~/images/BifoldThumbnails/TR-SR-SR.png" style="height:auto; width:auto; max-height:100%; max-width:100%">
@@ -433,18 +462,23 @@
                     </div>
 
 
-
-                    <label asp-for="HardwareColourOptions" class="control-label">Hardware Colour</label>
-                    <select asp-for="thisBifoldItem.HardwareColourId" class="form-control" asp-items="@(new SelectList(Model.HardwareColourOptions, "Id", "ColourName"))">
-                        <option value="" selected disabled>-- Select --</option>
-                    </select>
+                    <div class="form-group col-md-12">
+                        <label asp-for="HardwareColourOptions" class="control-label">Hardware Colour</label>
+                        <select asp-for="thisBifoldItem.HardwareColourId" class="form-control" asp-items="@(new SelectList(Model.HardwareColourOptions, "Id", "ColourName"))">
+                            <option value="" selected disabled>-- Select --</option>
+                        </select>
+                    </div>
 
 
 
 
                     <label asp-for="thisBifoldItem.AdditionalNotes"></label>
-                    <input asp-for="thisBifoldItem.AdditionalNotes" class="form-control" autocomplete="nay" />
+                    @*<input asp-for="thisBifoldItem.AdditionalNotes" class="form-control" autocomplete="nay" />*@
+                    <textarea asp-for="thisBifoldItem.AdditionalNotes" style="height:150px" class="form-control" text-wrap:normal" type="text" placeholder="Optional"></textarea>
                     <span asp-validation-for="thisBifoldItem.AdditionalNotes" class="text-danger"></span>
+
+
+
 
 
                     <div class="checkbox">
@@ -475,7 +509,7 @@
 
                 </form>
 
-
+                <button type="button" class="btn btn-primary">Cills and Add-Ons</button>
 
 
 
@@ -495,43 +529,107 @@
 <script>
 
 
-
-    $('#DoorQuantityOptions').on('change', function () {
-
-        $('.DoorImages').hide();
+    // This toggles the selected thumbnail image class so that the selection is clear to the user.
+    function toggleSelectedImageClass(thumbId) {
+        console.log('das')
         $('.thumbnail').removeClass('thumbnail-clicked');
+        $(thumbId).addClass('thumbnail-clicked');
+        $('#SelectedBifoldStyle').val(thumbId);
 
-        if ($('#DoorQuantityOptions option').filter(':selected').text() == "1") {
-            $('#OneDoorImages').show();
-        }
-        if ($('#DoorQuantityOptions option').filter(':selected').text() == "2") {
-            $('#TwoDoorImages').show();
-        }
-        if ($('#DoorQuantityOptions option').filter(':selected').text() == "3") {
-            $('#ThreeDoorImages').show();
-        }
-        if ($('#DoorQuantityOptions option').filter(':selected').text() == "4") {
-            $('#FourDoorImages').show();
-        }
-        if ($('#DoorQuantityOptions option').filter(':selected').text() == "5") {
-            $('#FiveDoorImages').show();
-        }
-        if ($('#DoorQuantityOptions option').filter(':selected').text() == "6") {
-            $('#SixDoorImages').show();
-        }
+    };
+    //int width, int height, int doorCount
+    $(function () {
+          function RefreshHeaderValue() {
 
-        //$('#ShippingOptions option').filter(':selected').text() == "AWS Vehicle Delivery"
+          $.ajax({
+                url: '@Url.Action("CalculateItemQuote", "Quote")',
+                type: 'POST',
+              data: $("#myForm").serialize(),
+              dataType: 'json',
+              traditional: true,
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                success: function (data) {
+                    $("#bifoldHeaderPartial").html(data);
+                    $('#bifoldHeaderPartial').show();
+                }
+            });
+        };
+
+
+          @*function RefreshHeaderValue() {
+
+              var formSer = $('#myForm').serialize;
+              console.log(formSer);
+          $.ajax({
+                url: '@Url.Action("CalculateItemQuote", "Quote")',
+                type: 'POST',
+                data: formSer,
+              dataType: 'json',
+                contentType: 'application/json',
+                success: function (data) {
+                    $("#bifoldHeaderPartial").html(data);
+                    $('#bifoldHeaderPartial').show();
+                }
+            });
+        };*@
+
+        //Sends form data
+         @*function RefreshHeaderValue() {
+             model_data = $("#myForm").serialize();
+             console.log(model_data);
+            $.ajax({
+                url: '@Url.Action("CalculateItemQuote", "Quote")',
+                type: 'POST',
+                //contentType: 'application/json',
+                data: { jsonString: JSON.stringify(model_data) },
+                dataType: 'json',
+                success: function (e) {
+                    // I know, you do not want Ajax, if you callback to page, you can refresh page here
+                    $("#bifoldHeaderPartial").html(data);
+                    $('#bifoldHeaderPartial').show();
+                }
+            });
+        }*@ 
+
+
+
+        $('#DoorQuantityOptions').on('change', function () {
+
+            $('.DoorImages').hide();
+            $('.thumbnail').removeClass('thumbnail-clicked');
+
+            if ($('#DoorQuantityOptions option').filter(':selected').text() == "1") {
+                $('#OneDoorImages').show();
+            }
+            if ($('#DoorQuantityOptions option').filter(':selected').text() == "2") {
+                $('#TwoDoorImages').show();
+            }
+            if ($('#DoorQuantityOptions option').filter(':selected').text() == "3") {
+                $('#ThreeDoorImages').show();
+            }
+            if ($('#DoorQuantityOptions option').filter(':selected').text() == "4") {
+                $('#FourDoorImages').show();
+            }
+            if ($('#DoorQuantityOptions option').filter(':selected').text() == "5") {
+                $('#FiveDoorImages').show();
+            }
+            if ($('#DoorQuantityOptions option').filter(':selected').text() == "6") {
+                $('#SixDoorImages').show();
+            }
+
+            RefreshHeaderValue();
+
+            //$('#ShippingOptions option').filter(':selected').text() == "AWS Vehicle Delivery"
+        });
+
+
+
     });
 
 
 
-    // This toggles the selected thumbnail image class so that the selection is clear to the user.
-    function toggleSelectedImageClass(thumbId) {
-        $('.thumbnail').removeClass('thumbnail-clicked');
-        $(thumbId).addClass('thumbnail-clicked');
-        $('#SelectedBifoldStyle').val(thumbId);
-  
-    };
+
+
 
 
 </script>

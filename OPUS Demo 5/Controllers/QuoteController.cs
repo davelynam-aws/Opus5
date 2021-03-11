@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using OPUS_Demo_5.Models;
 using OPUS_Demo_5.Models.CustomerManagement;
 using OPUS_Demo_5.Models.DataContexts;
+using OPUS_Demo_5.Models.QuoteMatrix;
 using OPUS_Demo_5.ViewModels;
 
 namespace OPUS_Demo_5.Controllers
@@ -140,17 +141,21 @@ namespace OPUS_Demo_5.Controllers
         }
 
         // GET
-        public IActionResult AddBifoldItem()
+        public IActionResult AddBifoldItem(string id)
         {
             BifoldItemViewModel bifoldItemViewModel = new BifoldItemViewModel();
 
             bifoldItemViewModel.thisBifoldItem = new BifoldItem();
 
+            int lastItemNumber = _context.BifoldItems.Where(b => b.QuoteId == id).Take(1).OrderByDescending(b => b.ItemNumber).Select(b => b.ItemNumber).FirstOrDefault();
+
             // Increment this from existing.
-            bifoldItemViewModel.thisBifoldItem.ItemNumber = 1;
+            bifoldItemViewModel.thisBifoldItem.ItemNumber = lastItemNumber += 1;
 
             bifoldItemViewModel.ProfileColourOptions = _context.ProfileColours.ToList();
             bifoldItemViewModel.HardwareColourOptions = _context.HardwareColours.ToList();
+
+            bifoldItemViewModel.PricingFactors = _context.PricingFactors.Where(p => p.Id == 1).Single();
 
             bifoldItemViewModel.SelectedBifoldStyleCode = "Default";
 
@@ -530,5 +535,121 @@ namespace OPUS_Demo_5.Controllers
         {
             return _context.Quotes.Any(e => e.Id == id);
         }
+
+
+
+        //[HttpPost]
+        //public ActionResult CalculateItemQuote(string jsonString)
+        //{
+        //    //Buggering around because I can't get the model to pass in with values!
+        //    //Splitting the json instead as a workaround. Figure out how to do this properly!
+
+        //    string[] splitArray = jsonString.Split('&');
+
+        //    BifoldItemViewModel bifoldItemViewModel = new BifoldItemViewModel();
+        //    bifoldItemViewModel.PricingFactors = _context.PricingFactors.Where(p => p.Id == 1).Single();
+
+
+        //    foreach (string str in splitArray)
+        //    {
+        //        if (str.Contains("thisBifoldItem.Width"))
+        //        {
+        //            bifoldItemViewModel.thisBifoldItem.Width = Convert.ToInt32(str.Replace("thisBifoldItem.Width=", "").Trim());
+        //        }
+        //        if (str.Contains("thisBifoldItem.Height"))
+        //        {
+        //            bifoldItemViewModel.thisBifoldItem.Width = Convert.ToInt32(str.Replace("thisBifoldItem.Width=", "").Trim());
+        //        }
+        //        if (str.Contains("SelectedDoorQuantity"))
+        //        {
+        //            bifoldItemViewModel.SelectedDoorQuantity = Convert.ToInt32(str.Replace("SelectedDoorQuantity=", "").Trim());
+        //        }
+        //        if (str.Contains("thisBifoldItem.IsMarineOrHazardousCoating"))
+        //        {
+        //            bifoldItemViewModel.thisBifoldItem.IsMarineOrHazardousCoating = Convert.ToBoolean(str.Replace("thisBifoldItem.IsMarineOrHazardousCoating=", "").Trim());
+        //        }
+        //    }
+
+        //    decimal baseBifoldPrice = 0.00M;
+
+        //    if ((bifoldItemViewModel.thisBifoldItem.Width / bifoldItemViewModel.SelectedDoorQuantity) < 1000)
+        //    {
+        //        baseBifoldPrice = bifoldItemViewModel.PricingFactors.MullionSplitsUnder1000MMSurcharge * bifoldItemViewModel.SelectedDoorQuantity;
+        //    }
+        //    else
+        //    {
+        //        baseBifoldPrice = bifoldItemViewModel.PricingFactors.MullionSplits1000MMAndOverSurcharge * bifoldItemViewModel.SelectedDoorQuantity;
+        //    }
+
+
+        //    if (bifoldItemViewModel.thisBifoldItem.Height > 2100)
+        //    {
+        //        // Increase by percent
+
+        //    }
+
+        //    if (bifoldItemViewModel.thisBifoldItem.IsMarineOrHazardousCoating == true)
+        //    {
+        //        // Increase by percent
+        //    }
+
+
+
+        //    //BifoldItemViewModel bifoldItemViewModel = JsonConvert.DeserializeObject<BifoldItemViewModel>(jsonString);
+
+        //   // var obj = JsonConvert.DeserializeObject<var>(jsonString);
+
+
+        //    return PartialView("~/Views/Shared/_BifoldItemHeader.cshtml", bifoldItemViewModel);
+        //}
+
+
+        //[HttpPost]
+        //public ActionResult CalculateItemQuote(int width, int height, int doorCount)
+        //{
+        //    //Buggering around because I can't get the model to pass in with values!
+        //    //Splitting the json instead as a workaround. Figure out how to do this properly!
+
+
+
+        //    BifoldItemViewModel bifoldItemViewModel = new BifoldItemViewModel();
+        //    bifoldItemViewModel.PricingFactors = _context.PricingFactors.Where(p => p.Id == 1).Single();
+
+
+
+
+
+
+        //    //BifoldItemViewModel bifoldItemViewModel = JsonConvert.DeserializeObject<BifoldItemViewModel>(jsonString);
+
+        //    // var obj = JsonConvert.DeserializeObject<var>(jsonString);
+
+
+        //    return PartialView("~/Views/Shared/_BifoldItemHeader.cshtml", bifoldItemViewModel);
+        //}
+
+        [HttpPost]
+        public ActionResult CalculateItemQuote(BifoldItemViewModel bifoldItemViewModel)
+        {
+            // This only bloody works now!!
+
+            bifoldItemViewModel.PricingFactors = _context.PricingFactors.Where(p => p.Id == 1).Single();
+
+
+
+
+
+
+            //BifoldItemViewModel bifoldItemViewModel = JsonConvert.DeserializeObject<BifoldItemViewModel>(jsonString);
+
+            // var obj = JsonConvert.DeserializeObject<var>(jsonString);
+
+
+            return PartialView("~/Views/Shared/_BifoldItemHeader.cshtml", bifoldItemViewModel);
+        }
+
+
+
+
     }
 }

@@ -12,9 +12,11 @@ namespace OPUS_Demo_5.ViewModels
     public class BifoldItemViewModel
     {
 
+        public PricingFactor PricingFactors { get; set; }
 
         public BifoldItem thisBifoldItem { get; set; }
 
+        public List<PeripheralItem> thisPeripheralItems { get; set; }
 
         public string SelectedBifoldStyleCode { get; set; }
 
@@ -28,8 +30,11 @@ namespace OPUS_Demo_5.ViewModels
 
         public string ExternalColourName { get; set; }
 
+        public decimal ItemQuoteValue { get; set; }
 
         public string SelectedOpeningOption { get; set; }
+
+
 
         [Display(Name ="Opening Option")]
         public List<SelectListItem> OpeningOptions = new List<SelectListItem>()

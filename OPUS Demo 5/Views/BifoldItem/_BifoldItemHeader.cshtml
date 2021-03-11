@@ -1,11 +1,11 @@
-﻿@model OPUS_Demo_5.ViewModels.QuoteViewModel 
+﻿@model OPUS_Demo_5.ViewModels.BifoldItemViewModel
 
 <div class="row form-group">
     @*<div class="col-md-4">
 
-    </div>*@
+        </div>*@
     <div class="col-md-4">
-        <h3>Quote #@Model.thisQuote.QuoteReferenceNumber</h3>
+        <h3>Bifold Item @Model.thisBifoldItem.ItemNumber</h3>
     </div>
     <div class="col-md-8 text-right">
         @*@if (Model.IsNewQuote == true)
@@ -17,14 +17,9 @@
                 <h4>Quote #@Model.thisQuote.QuoteReferenceNumber</h4>
             }*@
 
-        @if (Model.thisQuote.QuoteReferenceNumber == null)
-        {
-        <h3> </h3>
-        }
-        else
-        {
-        <h3 id="TotalQuoteValue">Total: £@Model.thisQuote.InvoiceAmountNet + VAT</h3>
- }
+
+            <h3 id="ItemQuoteValue">£@Model.ItemQuoteValue + VAT</h3>
+
 
     </div>
 
