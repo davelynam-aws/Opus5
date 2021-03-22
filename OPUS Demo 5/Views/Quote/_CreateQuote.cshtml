@@ -125,6 +125,13 @@
                         <option value="-1" selected disabled>-- Select Internal Colour --</option>
                     </select>
                 </div>
+
+                <div class="checkbox" id="MasterIsMarineGrade" style="margin-left:15px; display:none">
+                    <label asp-for="masterIsMarineCoating">
+                        <input asp-for="masterIsMarineCoating" /> @Html.DisplayNameFor(model => model.masterIsMarineCoating)
+                    </label>
+                </div>
+
             </div>
 
 
@@ -314,6 +321,7 @@
 
                 $('#MasterExternalColourDiv').show();
                 $('#MasterInternalColourDiv').show();
+                $('#MasterIsMarineGrade').show();
 
                 $('#CustomerReferenceDiv').show();
                 $('#DespatchNotesDiv').show();
@@ -414,6 +422,8 @@
 
             $('#MasterExternalColourDiv').show();
             $('#MasterInternalColourDiv').show();
+            $('#MasterIsMarineGrade').show();
+
 
     });
 

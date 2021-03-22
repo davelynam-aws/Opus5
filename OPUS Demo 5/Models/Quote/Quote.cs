@@ -37,6 +37,10 @@ namespace OPUS_Demo_5.Models
         [Required]
         public string MasterExternalColourId { get; set; }
 
+        [Column("IsMarineOrHazardousCoating")]
+        [Display(Name ="Marine/Hazardous Grade Coating")]
+        public bool IsMarineOrHazardousCoating { get; set; }
+
         [Display(Name ="Quote Reference")]
         [Column("QuoteReferenceNumber")]
         public string QuoteReferenceNumber { get; set; }

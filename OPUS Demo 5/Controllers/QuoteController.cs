@@ -143,6 +143,8 @@ namespace OPUS_Demo_5.Controllers
         // GET
         public IActionResult AddBifoldItem(string id)
         {
+            Quote parentQuote = _context.Quotes.Where(q => q.Id == id).FirstOrDefault();
+
             BifoldItemViewModel bifoldItemViewModel = new BifoldItemViewModel();
 
             bifoldItemViewModel.thisBifoldItem = new BifoldItem();
@@ -158,6 +160,8 @@ namespace OPUS_Demo_5.Controllers
             bifoldItemViewModel.PricingFactors = _context.PricingFactors.Where(p => p.Id == 1).Single();
 
             bifoldItemViewModel.SelectedBifoldStyleCode = "Default";
+
+            bifoldItemViewModel.thisBifoldItem.IsMarineOrHazardousCoating = parentQuote.IsMarineOrHazardousCoating;
 
             return PartialView("~/Views/BifoldItem/_CreateBifoldItem.cshtml", bifoldItemViewModel);
         }
@@ -416,6 +420,9 @@ namespace OPUS_Demo_5.Controllers
             {
                 // Edit Existing Quote
 
+
+
+
             }
 
 
@@ -538,114 +545,76 @@ namespace OPUS_Demo_5.Controllers
 
 
 
-        //[HttpPost]
-        //public ActionResult CalculateItemQuote(string jsonString)
-        //{
-        //    //Buggering around because I can't get the model to pass in with values!
-        //    //Splitting the json instead as a workaround. Figure out how to do this properly!
-
-        //    string[] splitArray = jsonString.Split('&');
-
-        //    BifoldItemViewModel bifoldItemViewModel = new BifoldItemViewModel();
-        //    bifoldItemViewModel.PricingFactors = _context.PricingFactors.Where(p => p.Id == 1).Single();
-
-
-        //    foreach (string str in splitArray)
-        //    {
-        //        if (str.Contains("thisBifoldItem.Width"))
-        //        {
-        //            bifoldItemViewModel.thisBifoldItem.Width = Convert.ToInt32(str.Replace("thisBifoldItem.Width=", "").Trim());
-        //        }
-        //        if (str.Contains("thisBifoldItem.Height"))
-        //        {
-        //            bifoldItemViewModel.thisBifoldItem.Width = Convert.ToInt32(str.Replace("thisBifoldItem.Width=", "").Trim());
-        //        }
-        //        if (str.Contains("SelectedDoorQuantity"))
-        //        {
-        //            bifoldItemViewModel.SelectedDoorQuantity = Convert.ToInt32(str.Replace("SelectedDoorQuantity=", "").Trim());
-        //        }
-        //        if (str.Contains("thisBifoldItem.IsMarineOrHazardousCoating"))
-        //        {
-        //            bifoldItemViewModel.thisBifoldItem.IsMarineOrHazardousCoating = Convert.ToBoolean(str.Replace("thisBifoldItem.IsMarineOrHazardousCoating=", "").Trim());
-        //        }
-        //    }
-
-        //    decimal baseBifoldPrice = 0.00M;
-
-        //    if ((bifoldItemViewModel.thisBifoldItem.Width / bifoldItemViewModel.SelectedDoorQuantity) < 1000)
-        //    {
-        //        baseBifoldPrice = bifoldItemViewModel.PricingFactors.MullionSplitsUnder1000MMSurcharge * bifoldItemViewModel.SelectedDoorQuantity;
-        //    }
-        //    else
-        //    {
-        //        baseBifoldPrice = bifoldItemViewModel.PricingFactors.MullionSplits1000MMAndOverSurcharge * bifoldItemViewModel.SelectedDoorQuantity;
-        //    }
-
-
-        //    if (bifoldItemViewModel.thisBifoldItem.Height > 2100)
-        //    {
-        //        // Increase by percent
-
-        //    }
-
-        //    if (bifoldItemViewModel.thisBifoldItem.IsMarineOrHazardousCoating == true)
-        //    {
-        //        // Increase by percent
-        //    }
-
-
-
-        //    //BifoldItemViewModel bifoldItemViewModel = JsonConvert.DeserializeObject<BifoldItemViewModel>(jsonString);
-
-        //   // var obj = JsonConvert.DeserializeObject<var>(jsonString);
-
-
-        //    return PartialView("~/Views/Shared/_BifoldItemHeader.cshtml", bifoldItemViewModel);
-        //}
-
-
-        //[HttpPost]
-        //public ActionResult CalculateItemQuote(int width, int height, int doorCount)
-        //{
-        //    //Buggering around because I can't get the model to pass in with values!
-        //    //Splitting the json instead as a workaround. Figure out how to do this properly!
-
-
-
-        //    BifoldItemViewModel bifoldItemViewModel = new BifoldItemViewModel();
-        //    bifoldItemViewModel.PricingFactors = _context.PricingFactors.Where(p => p.Id == 1).Single();
-
-
-
-
-
-
-        //    //BifoldItemViewModel bifoldItemViewModel = JsonConvert.DeserializeObject<BifoldItemViewModel>(jsonString);
-
-        //    // var obj = JsonConvert.DeserializeObject<var>(jsonString);
-
-
-        //    return PartialView("~/Views/Shared/_BifoldItemHeader.cshtml", bifoldItemViewModel);
-        //}
-
         [HttpPost]
         public ActionResult CalculateItemQuote(BifoldItemViewModel bifoldItemViewModel)
         {
-            // This only bloody works now!!
+            
+            // Add Validation to cancel calculation if missing values.
+
 
             bifoldItemViewModel.PricingFactors = _context.PricingFactors.Where(p => p.Id == 1).Single();
 
+          
+            
+
+            // Reset base to zero.
+            bifoldItemViewModel.ItemQuoteValue = 0.00M;
+
+            // Set base bifold cost depending on sash widths.
+            if ((bifoldItemViewModel.thisBifoldItem.Width / bifoldItemViewModel.SelectedDoorQuantity) < 1000)
+            {
+                bifoldItemViewModel.ItemQuoteValue = Math.Round(bifoldItemViewModel.PricingFactors.MullionSplitsUnder1000MMSurcharge * bifoldItemViewModel.SelectedDoorQuantity, 2);
+            }
+            else
+            {
+                bifoldItemViewModel.ItemQuoteValue = Math.Round(bifoldItemViewModel.PricingFactors.MullionSplits1000MMAndOverSurcharge * bifoldItemViewModel.SelectedDoorQuantity, 2);
+            }
+
+            // Add surcharge for sash height's over 2100mm.
+            if(bifoldItemViewModel.thisBifoldItem.Height > 2100)
+            {
+                bifoldItemViewModel.ItemQuoteValue = bifoldItemViewModel.ItemQuoteValue + (Math.Round((bifoldItemViewModel.ItemQuoteValue / 100) * bifoldItemViewModel.PricingFactors.SashHeightAbove2100MMSurcharge, 2));
+            }
+
+            // Add surcharge for Marine Grade Coating.
+            if (bifoldItemViewModel.thisBifoldItem.IsMarineOrHazardousCoating)
+            {
+                bifoldItemViewModel.ItemQuoteValue = bifoldItemViewModel.ItemQuoteValue + (Math.Round((bifoldItemViewModel.ItemQuoteValue / 100) * bifoldItemViewModel.PricingFactors.MarineHazardousCoatingSurcharge, 2));
+            }
+
+
+            ProfileColour internalColour = _context.ProfileColours.Where(p => p.Id == bifoldItemViewModel.thisBifoldItem.InternalColourId).FirstOrDefault();
+            ProfileColour externalColour = _context.ProfileColours.Where(p => p.Id == bifoldItemViewModel.thisBifoldItem.ExternalColourId).FirstOrDefault();
+
+
+            if (externalColour.IsSmartSensations == true|| internalColour.IsSmartSensations == true)
+            {
+                // Add surcharge for Sensations Coating
+                bifoldItemViewModel.ItemQuoteValue = bifoldItemViewModel.ItemQuoteValue + (Math.Round((bifoldItemViewModel.ItemQuoteValue / 100) * bifoldItemViewModel.PricingFactors.SmartSensationSurCharge, 2));
+            }
+            else if (externalColour.IsSmartAlchemy == true || internalColour.IsSmartAlchemy == true)
+            {
+                // Add surcharge for Alchemy Coating
+                bifoldItemViewModel.ItemQuoteValue = bifoldItemViewModel.ItemQuoteValue + (Math.Round((bifoldItemViewModel.ItemQuoteValue / 100) * bifoldItemViewModel.PricingFactors.SmartAlchemySurcharge, 2));
+            }
+            else if (internalColour.IsAffordableStockColour == false || externalColour.IsAffordableStockColour == false)
+            {
+                if (externalColour.Id == internalColour.Id)
+                {
+                    // Add Surcharge for Non stock single RAL colour
+                    bifoldItemViewModel.ItemQuoteValue = bifoldItemViewModel.ItemQuoteValue + (Math.Round((bifoldItemViewModel.ItemQuoteValue / 100) * bifoldItemViewModel.PricingFactors.NonStockSingleColourSurCharge, 2));
+                }
+                else
+                {
+                    // Add surcharge for non stock dual RAL colour
+                    bifoldItemViewModel.ItemQuoteValue = bifoldItemViewModel.ItemQuoteValue + (Math.Round((bifoldItemViewModel.ItemQuoteValue / 100) * bifoldItemViewModel.PricingFactors.NonStockDualColourSurCharge, 2));
+                }
+
+            }
 
 
 
-
-
-            //BifoldItemViewModel bifoldItemViewModel = JsonConvert.DeserializeObject<BifoldItemViewModel>(jsonString);
-
-            // var obj = JsonConvert.DeserializeObject<var>(jsonString);
-
-
-            return PartialView("~/Views/Shared/_BifoldItemHeader.cshtml", bifoldItemViewModel);
+            return PartialView("~/Views/BifoldItem/_BifoldItemHeader.cshtml", bifoldItemViewModel);
         }
 
 

@@ -16,7 +16,14 @@
             {
                 <h4>Quote #@Model.thisQuote.QuoteReferenceNumber</h4>
             }*@
-
+        @if(Model == null)
+        {
+            int x = 0;
+        }
+        else
+        {
+            int y = 0;
+        }
 
             <h3 id="ItemQuoteValue">£@Model.ItemQuoteValue + VAT</h3>
 

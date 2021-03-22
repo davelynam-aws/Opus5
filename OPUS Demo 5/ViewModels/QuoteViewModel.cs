@@ -20,6 +20,8 @@ namespace OPUS_Demo_5.ViewModels
 
         public List<BifoldItemViewModel> thisBifoldItemViewModels { get; set; }
 
+        [Display(Name = "Hazardous/Marine Grade Coating")]
+        public bool masterIsMarineCoating { get; set; }
 
         public List<ExtraItem> thisExtraItems { get; set; }
         public List<GlassItem> thisGlassItems { get; set; }

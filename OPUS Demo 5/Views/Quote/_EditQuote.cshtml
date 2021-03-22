@@ -31,7 +31,7 @@
 
             <div class="form-group" style="margin-top:15px;">
 
- 
+
 
                 <label asp-for="thisCustomer.CustomerName" class="control-label"></label>
 
@@ -112,55 +112,62 @@
                         <option value="-1" selected disabled>-- Select Internal Colour --</option>
                     </select>
                 </div>
-            </div>
 
 
-
-
-
-
-            <div class="form-group" id="CustomerReferenceDiv">
-                <label asp-for="thisQuote.CustomerReference" class="control-label"></label>
-                <input asp-for="thisQuote.CustomerReference" class="form-control" />
-                <span asp-validation-for="thisQuote.CustomerReference" class="text-danger"></span>
-            </div>
-
-
-            <div class="form-group" id="DespatchNotesDiv" style="display:none">
-                <label asp-for="thisQuote.DespatchNotes" class="control-label"></label>
-                @*<input asp-for="thisQuote.DespatchNotes" class="form-control" />*@
-                <textarea asp-for="thisQuote.DespatchNotes" style="height:150px" class="form-control" text-wrap:normal" type="text" placeholder="Optional"></textarea>
-                <span asp-validation-for="thisQuote.DespatchNotes" class="text-danger"></span>
-            </div>
-            <div class="form-group" id="AdditionalNotesDiv" style="display:none">
-                <label asp-for="thisQuote.AdditionalNotes" class="control-label"></label>
-                @*<input asp-for="thisQuote.AdditionalNotes" class="form-control" />*@
-                <textarea asp-for="thisQuote.AdditionalNotes" style="height:150px" class="form-control" text-wrap:normal" type="text" placeholder="Optional"></textarea>
-                <span asp-validation-for="thisQuote.AdditionalNotes" class="text-danger"></span>
-            </div>
-
-
-            <div class="row">
-                <div class="form-group col-md-4" id="DepositAmountDiv" style="display:none">
-                    <label asp-for="thisQuote.DepositAmount" class="control-label"></label>
-                    <div class="input-group">
-                        <div class="input-group-addon">
-                            <div class="input-group-text">
-                                <i class="fas fa-pound-sign"></i>
-                            </div>
-                        </div>
-                        <input asp-for="thisQuote.DepositAmount" placeholder="Optional" class="form-control" />
-                    </div>
-
-                    <span asp-validation-for="thisQuote.DepositAmount" class="text-danger"></span>
+                <div class="checkbox" id="MasterIsMarineGrade" style="margin-left:15px;">
+                    <label asp-for="masterIsMarineCoating">
+                        <input asp-for="masterIsMarineCoating" /> @Html.DisplayNameFor(model => model.masterIsMarineCoating)
+                    </label>
                 </div>
             </div>
 
 
 
-            <div class="form-group" id="SubmitDiv">
-                <input type="submit" value="Update Main Details" class="btn btn-success pull-right" data-url="@Url.Action("Edit", "Quote")" />
-            </div>
+
+
+
+                <div class="form-group" id="CustomerReferenceDiv">
+                    <label asp-for="thisQuote.CustomerReference" class="control-label"></label>
+                    <input asp-for="thisQuote.CustomerReference" class="form-control" />
+                    <span asp-validation-for="thisQuote.CustomerReference" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-group" id="DespatchNotesDiv" style="display:none">
+                    <label asp-for="thisQuote.DespatchNotes" class="control-label"></label>
+                    @*<input asp-for="thisQuote.DespatchNotes" class="form-control" />*@
+                    <textarea asp-for="thisQuote.DespatchNotes" style="height:150px" class="form-control" text-wrap:normal" type="text" placeholder="Optional"></textarea>
+                    <span asp-validation-for="thisQuote.DespatchNotes" class="text-danger"></span>
+                </div>
+                <div class="form-group" id="AdditionalNotesDiv" style="display:none">
+                    <label asp-for="thisQuote.AdditionalNotes" class="control-label"></label>
+                    @*<input asp-for="thisQuote.AdditionalNotes" class="form-control" />*@
+                    <textarea asp-for="thisQuote.AdditionalNotes" style="height:150px" class="form-control" text-wrap:normal" type="text" placeholder="Optional"></textarea>
+                    <span asp-validation-for="thisQuote.AdditionalNotes" class="text-danger"></span>
+                </div>
+
+
+                <div class="row">
+                    <div class="form-group col-md-4" id="DepositAmountDiv" style="display:none">
+                        <label asp-for="thisQuote.DepositAmount" class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <div class="input-group-text">
+                                    <i class="fas fa-pound-sign"></i>
+                                </div>
+                            </div>
+                            <input asp-for="thisQuote.DepositAmount" placeholder="Optional" class="form-control" />
+                        </div>
+
+                        <span asp-validation-for="thisQuote.DepositAmount" class="text-danger"></span>
+                    </div>
+                </div>
+
+
+
+                <div class="form-group" id="SubmitDiv">
+                    <input type="submit" value="Update Main Details" class="btn btn-success pull-right" data-url="@Url.Action("Edit", "Quote")" />
+                </div>
         </form>
     </div>
 
