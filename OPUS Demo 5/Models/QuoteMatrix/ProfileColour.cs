@@ -29,5 +29,11 @@ namespace OPUS_Demo_5.Models.QuoteMatrix
         public decimal Surcharge { get; set; }
         [Column("IsEnabled")]
         public bool IsEnabled { get; set; }
+
+        [NotMapped]
+        public string ColourDisplayName { get; set; }
+
+
+
     }
 }

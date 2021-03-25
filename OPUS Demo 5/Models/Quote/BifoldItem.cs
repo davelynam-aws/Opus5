@@ -63,6 +63,12 @@ namespace OPUS_Demo_5.Models
         [Column("IsKitForm")]
         public bool IsKitForm { get; set; }
 
+        [Column("IsDocumentQ")]
+        public bool IsDocumentQ { get; set; }
+
+        [Column("IsFaceDrained")]
+        public bool IsFaceDrained { get; set; }
+
         [Column("Location")]
         public string Location { get; set; }
 

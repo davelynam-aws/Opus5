@@ -11,6 +11,7 @@ namespace OPUS_Demo_5.ViewModels
 {
     public class BifoldItemViewModel
     {
+        public Quote ParentQuote { get; set; }
 
         public PricingFactor PricingFactors { get; set; }
 

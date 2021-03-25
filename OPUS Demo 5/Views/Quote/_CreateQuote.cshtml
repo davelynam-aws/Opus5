@@ -110,28 +110,65 @@
                 </div>
             </div>
 
+            <div class="input-group" id="ColourButtons" style="display:none">
 
+                <span>
+                    <input type="button" id="StockColours" value="Stock Colours" class="btn btn-primary" />
+
+
+
+                    <input type="button" id="NonStockColours" value="Non-Stock Colours" class="btn btn-primary" />
+                </span>
+
+
+
+
+            </div>
+
+
+            <!--Stock Colours-->
             <div class="row">
-                <div class="form-group col-md-6" style="display:none" id="MasterExternalColourDiv">
+                <div class="form-group col-md-6" style="display:none" id="MasterExternalStockColourDiv">
                     <label asp-for="thisQuote.MasterExternalColourId" class="control-label">External Colour</label>
-                    <select class="form-control" id="MasterExternalColour" asp-for="thisQuote.MasterExternalColourId" asp-items="@(new SelectList(Model.ProfileColours, "Id", "ColourName"))">
+                    <select class="form-control" id="MasterExternalStockColour" asp-for="thisQuote.MasterExternalColourId" asp-items="@(new SelectList(Model.StockProfileColours, "Id", "ColourDisplayName"))">
                         <option value="-1" selected disabled>-- Select External Colour --</option>
                     </select>
                 </div>
 
-                <div class="form-group col-md-6" style="display:none" id="MasterInternalColourDiv">
+                <div class="form-group col-md-6" style="display:none" id="MasterInternalStockColourDiv">
                     <label asp-for="thisQuote.MasterInternalColourId" class="control-label">Internal Colour</label>
-                    <select class="form-control" id="MasterInternalColour" asp-for="thisQuote.MasterInternalColourId" asp-items="@(new SelectList(Model.ProfileColours, "Id", "ColourName"))">
+                    <select class="form-control" id="MasterInternalStockColour" asp-for="thisQuote.MasterInternalColourId" asp-items="@(new SelectList(Model.StockProfileColours, "Id", "ColourDisplayName"))">
                         <option value="-1" selected disabled>-- Select Internal Colour --</option>
                     </select>
                 </div>
 
-                <div class="checkbox" id="MasterIsMarineGrade" style="margin-left:15px; display:none">
-                    <label asp-for="masterIsMarineCoating">
-                        <input asp-for="masterIsMarineCoating" /> @Html.DisplayNameFor(model => model.masterIsMarineCoating)
-                    </label>
+            </div>
+
+
+            <!--Non-Stock Colours-->
+            <div class="row">
+                <div class="form-group col-md-6" style="display:none" id="MasterExternalNonStockColourDiv">
+                    <label asp-for="thisQuote.MasterExternalColourId" class="control-label">External Colour</label>
+                    <select class="form-control" id="MasterExternalNonStockColour" asp-for="thisQuote.MasterExternalColourId" asp-items="@(new SelectList(Model.NonStockProfileColours, "Id", "ColourDisplayName"))">
+                        <option value="-1" selected disabled>-- Select External Colour --</option>
+                    </select>
                 </div>
 
+                <div class="form-group col-md-6" style="display:none" id="MasterInternalNonStockColourDiv">
+                    <label asp-for="thisQuote.MasterInternalColourId" class="control-label">Internal Colour</label>
+                    <select class="form-control" id="MasterInternalNonStockColour" asp-for="thisQuote.MasterInternalColourId" asp-items="@(new SelectList(Model.NonStockProfileColours, "Id", "ColourDisplayName"))">
+                        <option value="-1" selected disabled>-- Select Internal Colour --</option>
+                    </select>
+                </div>
+
+            </div>
+
+
+
+            <div class="checkbox" id="MasterIsMarineGrade" style="margin-top:0px; display:none;">
+                <label asp-for="masterIsMarineCoating">
+                    <input asp-for="masterIsMarineCoating" /> @Html.DisplayNameFor(model => model.masterIsMarineCoating)
+                </label>
             </div>
 
 
@@ -146,13 +183,13 @@
             <div class="form-group" id="DespatchNotesDiv" style="display:none">
                 <label asp-for="thisQuote.DespatchNotes" class="control-label"></label>
                 @*<input asp-for="thisQuote.DespatchNotes" class="form-control" />*@
-                <textarea asp-for="thisQuote.DespatchNotes" style="height:150px" class="form-control" text-wrap:normal" type="text" placeholder="Optional"></textarea>
+                <textarea asp-for="thisQuote.DespatchNotes" style="height:120px" class="form-control" text-wrap:normal" type="text" placeholder="Optional"></textarea>
                 <span asp-validation-for="thisQuote.DespatchNotes" class="text-danger"></span>
             </div>
             <div class="form-group" id="AdditionalNotesDiv" style="display:none">
                 <label asp-for="thisQuote.AdditionalNotes" class="control-label"></label>
                 @*<input asp-for="thisQuote.AdditionalNotes" class="form-control" />*@
-                <textarea asp-for="thisQuote.AdditionalNotes" style="height:150px" class="form-control" text-wrap:normal" type="text" placeholder="Optional"></textarea>
+                <textarea asp-for="thisQuote.AdditionalNotes" style="height:120px" class="form-control" text-wrap:normal" type="text" placeholder="Optional"></textarea>
                 <span asp-validation-for="thisQuote.AdditionalNotes" class="text-danger"></span>
             </div>
 
@@ -283,6 +320,42 @@
 
     });
 
+
+    $(document).on('click', '#StockColours', function (event) {
+
+        $('#MasterExternalStockColourDiv').show();
+        $('#MasterInternalStockColourDiv').show();
+        $('#MasterIsMarineGrade').show();
+
+
+        $('#MasterExternalNonStockColourDiv').hide();
+        $('#MasterInternalNonStockColourDiv').hide();
+
+        $("#MasterExternalStockColour").val('-1');
+        $("#MasterInternalStockColour").val('-1');
+        $("#MasterExternalNonStockColour").val('-1');
+        $("#MasterinternalNonStockColour").val('-1');
+
+    });
+
+
+    $(document).on('click', '#NonStockColours', function (event) {
+
+        $('#MasterExternalStockColourDiv').hide();
+        $('#MasterInternalStockColourDiv').hide();
+        $('#MasterIsMarineGrade').show();
+
+        $('#MasterExternalNonStockColourDiv').show();
+        $('#MasterInternalNonStockColourDiv').show();
+        $('#MasterIsMarineGrade').show();
+
+        $("#MasterExternalStockColour").val('-1');
+        $("#MasterInternalStockColour").val('-1');
+        $("#MasterExternalNonStockColour").val('-1');
+        $("#MasterInternalNonStockColour").val('-1');
+
+    });
+
     $(function () {
 
 
@@ -318,10 +391,8 @@
                     $('#CollectionAddressesDiv').show();
                 }
 
-
-                $('#MasterExternalColourDiv').show();
-                $('#MasterInternalColourDiv').show();
-                $('#MasterIsMarineGrade').show();
+                //
+                $('#ColourButtons').show();
 
                 $('#CustomerReferenceDiv').show();
                 $('#DespatchNotesDiv').show();
@@ -420,15 +491,16 @@
 
         $('#ShippingDateInput').on('input', function () {
 
-            $('#MasterExternalColourDiv').show();
-            $('#MasterInternalColourDiv').show();
-            $('#MasterIsMarineGrade').show();
-
+            //$('#MasterExternalColourDiv').show();
+            //$('#MasterInternalColourDiv').show();
+            //$('#MasterIsMarineGrade').show();
+           
+            $('#ColourButtons').show();
 
     });
 
 
-        $('#MasterExternalColour').change(function () {
+        $('#MasterExternalStockColour').change(function () {
 
             if ($('#MasterInternalColour').find(":selected").val() != -1) {
                 $('#CustomerReferenceDiv').show();
@@ -439,7 +511,7 @@
             }
         })
 
-        $('#MasterInternalColour').change(function () {
+        $('#MasterInternalStockColour').change(function () {
             if ($('#MasterExternalColour').find(":selected").val() != -1) {
                 $('#CustomerReferenceDiv').show();
                 $('#DespatchNotesDiv').show();
@@ -448,5 +520,26 @@
                 $('#SubmitDiv').show();
             }
         })
+
+    $('#MasterExternalNonStockColour').change(function () {
+
+        if ($('#MasterInternalColour').find(":selected").val() != -1) {
+            $('#CustomerReferenceDiv').show();
+            $('#DespatchNotesDiv').show();
+            $('#AdditionalNotesDiv').show();
+            $('#DepositAmountDiv').show();
+            $('#SubmitDiv').show();
+        }
+    })
+
+    $('#MasterInternalNonStockColour').change(function () {
+        if ($('#MasterExternalColour').find(":selected").val() != -1) {
+            $('#CustomerReferenceDiv').show();
+            $('#DespatchNotesDiv').show();
+            $('#AdditionalNotesDiv').show();
+            $('#DepositAmountDiv').show();
+            $('#SubmitDiv').show();
+        }
+    })
 
 </script>

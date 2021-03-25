@@ -5,6 +5,8 @@
     Layout = null;
 
 }
+<div class="form-group">
+
 
     <div class="row" style="margin: 5px 5px 15px 5px; border-radius:5px; background-color:whitesmoke;">
         <div id="BifoldItem" class="col-md-9">
@@ -45,47 +47,17 @@
 
             </div>
 
-            @*<div class="row">
-                <div class="form-group col-md-8">
-                    <div class="input-group">
-                        <div class="input-group-addon">
-                            <div class="input-group-text">
-                                External Colour
-                            </div>
-                        </div>
-                        <input asp-for="@Model.ExternalColourName" disabled class="form-control" style="background-color:white; cursor:pointer" />
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="form-group col-md-8">
-                    <div class="input-group">
-                        <div class="input-group-addon">
-                            <div class="input-group-text">
-                                External Colour
-                            </div>
-                        </div>
-                        <input asp-for="@Model.InternalColourName" disabled class="form-control" style="background-color:white; cursor:pointer" />
-                    </div>
-                </div>
-            </div>*@
 
 
+            @*@if(Model == null)
+                {
+                    int i = 0;
+                }
+                else
+                {
 
-
-
-
-
-
-
-            @*<h4>Item - @Model.ItemNumber</h4>
-        <h4>Location - @Model.Location</h4>
-        <h4>Width - @Model.Width</h4>
-        <h4>Height - @Model.Height</h4>
-        <h4>Outside - Colour1</h4>
-        <h4>Inside - Colour2</h4>*@
-
+                    int y = 0;
+                }*@
 
 
 
@@ -94,7 +66,114 @@
         <div class="row">
             <div id="Image" class="col-md-3" style="margin-top: 30px; margin-right: 0px;">
                 <div style="height: 100px;">
-                    <img src="~/images/Asset 1.png" class="img-responsive center-block" style="height:auto; width:auto; max-height:100%; max-width:100%;" />
+                    @if (Model.thisBifoldItem.StyleId == 1 || Model.thisBifoldItem.StyleId == 2)
+                    {
+                        <img src="~/images/BifoldThumbnails/TL.png" class="img-responsive center-block" style="height:auto; width:auto; max-height:100%; max-width:100%;" />
+                    }
+                    else if (Model.thisBifoldItem.StyleId == 3 || Model.thisBifoldItem.StyleId == 4)
+                    {
+                        <img src="~/images/BifoldThumbnails/TLM-TR.png" class="img-responsive center-block" style="height:auto; width:auto; max-height:100%; max-width:100%;" />
+                    }
+                    else if (Model.thisBifoldItem.StyleId == 5 || Model.thisBifoldItem.StyleId == 6)
+                    {
+                        <img src="~/images/BifoldThumbnails/SL-SL.png" class="img-responsive center-block" style="height:auto; width:auto; max-height:100%; max-width:100%;" />
+                    }
+                    else if (Model.thisBifoldItem.StyleId == 7 || Model.thisBifoldItem.StyleId == 8)
+                    {
+                        <img src="~/images/BifoldThumbnails/TL-TRM.png" class="img-responsive center-block" style="height:auto; width:auto; max-height:100%; max-width:100%;" />
+                    }
+                    else if (Model.thisBifoldItem.StyleId == 9 || Model.thisBifoldItem.StyleId == 10)
+                    {
+                        <img src="~/images/BifoldThumbnails/SR-SR.png" class="img-responsive center-block" style="height:auto; width:auto; max-height:100%; max-width:100%;" />
+                    }
+                    else if (Model.thisBifoldItem.StyleId == 11 || Model.thisBifoldItem.StyleId == 12)
+                    {
+                        <img src="~/images/BifoldThumbnails/TL-SR-SR.png" class="img-responsive center-block" style="height:auto; width:auto; max-height:100%; max-width:100%;" />
+                    }
+                    else if (Model.thisBifoldItem.StyleId == 13 || Model.thisBifoldItem.StyleId == 14)
+                    {
+                        <img src="~/images/BifoldThumbnails/SL-SL-TR.png" class="img-responsive center-block" style="height:auto; width:auto; max-height:100%; max-width:100%;" />
+                    }
+                    else if (Model.thisBifoldItem.StyleId == 15 || Model.thisBifoldItem.StyleId == 16)
+                    {
+                        <img src="~/images/BifoldThumbnails/TR-SR-SR.png" class="img-responsive center-block" style="height:auto; width:auto; max-height:100%; max-width:100%;" />
+                    }
+                    else if (Model.thisBifoldItem.StyleId == 17 || Model.thisBifoldItem.StyleId == 18)
+                    {
+                        <img src="~/images/BifoldThumbnails/SL-SL-TL.png" class="img-responsive center-block" style="height:auto; width:auto; max-height:100%; max-width:100%;" />
+                    }
+                    else if (Model.thisBifoldItem.StyleId == 19 || Model.thisBifoldItem.StyleId == 20)
+                    {
+                        <img src="~/images/BifoldThumbnails/SL-SL-SR-SR.png" class="img-responsive center-block" style="height:auto; width:auto; max-height:100%; max-width:100%;" />
+                    }
+                    else if (Model.thisBifoldItem.StyleId == 21 || Model.thisBifoldItem.StyleId == 22)
+                    {
+                        <img src="~/images/BifoldThumbnails/TLM-TR-SR-SR.png" class="img-responsive center-block" style="height:auto; width:auto; max-height:100%; max-width:100%;" />
+                    }
+                    else if (Model.thisBifoldItem.StyleId == 23 || Model.thisBifoldItem.StyleId == 24)
+                    {
+                        <img src="~/images/BifoldThumbnails/TL-TRM-SR-SR.png" class="img-responsive center-block" style="height:auto; width:auto; max-height:100%; max-width:100%;" />
+                    }
+                    else if (Model.thisBifoldItem.StyleId == 25 || Model.thisBifoldItem.StyleId == 26)
+                    {
+                        <img src="~/images/BifoldThumbnails/SL-SL-TLM-TR.png" class="img-responsive center-block" style="height:auto; width:auto; max-height:100%; max-width:100%;" />
+                    }
+                    else if (Model.thisBifoldItem.StyleId == 27 || Model.thisBifoldItem.StyleId == 28)
+                    {
+                        <img src="~/images/BifoldThumbnails/SL-SL-TL-TRM.png" class="img-responsive center-block" style="height:auto; width:auto; max-height:100%; max-width:100%;" />
+                    }
+                    else if (Model.thisBifoldItem.StyleId == 29 || Model.thisBifoldItem.StyleId == 30)
+                    {
+                        <img src="~/images/BifoldThumbnails/SR-SR-SR-SR.png" class="img-responsive center-block" style="height:auto; width:auto; max-height:100%; max-width:100%;" />
+                    }
+                    else if (Model.thisBifoldItem.StyleId == 31 || Model.thisBifoldItem.StyleId == 32)
+                    {
+                        <img src="~/images/BifoldThumbnails/SL-SL-SL-SL.png" class="img-responsive center-block" style="height:auto; width:auto; max-height:100%; max-width:100%;" />
+                    }
+                    else if (Model.thisBifoldItem.StyleId == 33 || Model.thisBifoldItem.StyleId == 34)
+                    {
+                        <img src="~/images/BifoldThumbnails/TL-SR-SR-SR-SR.png" class="img-responsive center-block" style="height:auto; width:auto; max-height:100%; max-width:100%;" />
+                    }
+                    else if (Model.thisBifoldItem.StyleId == 35 || Model.thisBifoldItem.StyleId == 36)
+                    {
+                        <img src="~/images/BifoldThumbnails/SL-SL-SL-SL-TR.png" class="img-responsive center-block" style="height:auto; width:auto; max-height:100%; max-width:100%;" />
+                    }
+                    else if (Model.thisBifoldItem.StyleId == 37 || Model.thisBifoldItem.StyleId == 38)
+                    {
+                        <img src="~/images/BifoldThumbnails/TR-SR-SR-SR-SR.png" class="img-responsive center-block" style="height:auto; width:auto; max-height:100%; max-width:100%;" />
+                    }
+                    else if (Model.thisBifoldItem.StyleId == 39 || Model.thisBifoldItem.StyleId == 40)
+                    {
+                        <img src="~/images/BifoldThumbnails/SL-SL-SL-SL-TL.png" class="img-responsive center-block" style="height:auto; width:auto; max-height:100%; max-width:100%;" />
+                    }
+                    else if (Model.thisBifoldItem.StyleId == 41 || Model.thisBifoldItem.StyleId == 42)
+                    {
+                        <img src="~/images/BifoldThumbnails/SL-SL-TL-SR-SR.png" class="img-responsive center-block" style="height:auto; width:auto; max-height:100%; max-width:100%;" />
+                    }
+                    else if (Model.thisBifoldItem.StyleId == 43 || Model.thisBifoldItem.StyleId == 44)
+                    {
+                        <img src="~/images/BifoldThumbnails/SL-SL-TR-SR-SR.png" class="img-responsive center-block" style="height:auto; width:auto; max-height:100%; max-width:100%;" />
+                    }
+                    else if (Model.thisBifoldItem.StyleId == 45 || Model.thisBifoldItem.StyleId == 46)
+                    {
+                        <img src="~/images/BifoldThumbnails/SL-SL-TL-TRM-SR-SR.png" class="img-responsive center-block" style="height:auto; width:auto; max-height:100%; max-width:100%;" />
+                    }
+                    else if (Model.thisBifoldItem.StyleId == 47 || Model.thisBifoldItem.StyleId == 48)
+                    {
+                        <img src="~/images/BifoldThumbnails/SL-SL-TLM-TR-SR-SR.png" class="img-responsive center-block" style="height:auto; width:auto; max-height:100%; max-width:100%;" />
+                    }
+                    else if (Model.thisBifoldItem.StyleId == 49 || Model.thisBifoldItem.StyleId == 50)
+                    {
+                        <img src="~/images/BifoldThumbnails/SR-SR-SR-SR-SR-SR.png" class="img-responsive center-block" style="height:auto; width:auto; max-height:100%; max-width:100%;" />
+                    }
+                    else if (Model.thisBifoldItem.StyleId == 51 || Model.thisBifoldItem.StyleId == 52)
+                    {
+                        <img src="~/images/BifoldThumbnails/SL-SL-SL-SL-SL-SL.png" class="img-responsive center-block" style="height:auto; width:auto; max-height:100%; max-width:100%;" />
+                    }
+                    else if (Model.thisBifoldItem.StyleId == 53 || Model.thisBifoldItem.StyleId == 54)
+                    {
+                        <img src="~/images/BifoldThumbnails/TR.png" class="img-responsive center-block" style="height:auto; width:auto; max-height:100%; max-width:100%;" />
+                    }
                 </div>
                 <div>
                     <h4 class="text-center">OUTSIDE VIEW</h4>
@@ -109,4 +188,4 @@
     </div>
 
 
-
+</div>

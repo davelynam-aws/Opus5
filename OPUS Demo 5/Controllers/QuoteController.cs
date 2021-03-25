@@ -143,9 +143,10 @@ namespace OPUS_Demo_5.Controllers
         // GET
         public IActionResult AddBifoldItem(string id)
         {
-            Quote parentQuote = _context.Quotes.Where(q => q.Id == id).FirstOrDefault();
 
             BifoldItemViewModel bifoldItemViewModel = new BifoldItemViewModel();
+
+            bifoldItemViewModel.ParentQuote = _context.Quotes.Where(q => q.Id == id).FirstOrDefault();
 
             bifoldItemViewModel.thisBifoldItem = new BifoldItem();
 
@@ -161,7 +162,9 @@ namespace OPUS_Demo_5.Controllers
 
             bifoldItemViewModel.SelectedBifoldStyleCode = "Default";
 
-            bifoldItemViewModel.thisBifoldItem.IsMarineOrHazardousCoating = parentQuote.IsMarineOrHazardousCoating;
+            bifoldItemViewModel.thisBifoldItem.IsMarineOrHazardousCoating = bifoldItemViewModel.ParentQuote.IsMarineOrHazardousCoating;
+            bifoldItemViewModel.thisBifoldItem.InternalColourId = bifoldItemViewModel.ParentQuote.MasterInternalColourId;
+            bifoldItemViewModel.thisBifoldItem.ExternalColourId = bifoldItemViewModel.ParentQuote.MasterExternalColourId;
 
             return PartialView("~/Views/BifoldItem/_CreateBifoldItem.cshtml", bifoldItemViewModel);
         }
@@ -279,7 +282,23 @@ namespace OPUS_Demo_5.Controllers
             ViewBag.ActiveCustomers = quoteViewModel.ActiveCustomers;
 
 
-            quoteViewModel.ProfileColours = _context.ProfileColours.ToList();
+            //quoteViewModel.StockProfileColours = _context.ProfileColours.Where(p => p.IsAffordableStockColour == true && p.IsEnabled == true).OrderBy(p => p.ColourCode).ToList();
+
+
+            quoteViewModel.StockProfileColours = _context.ProfileColours.Where(p => p.IsAffordableStockColour == true && p.IsEnabled == true).OrderBy(p => p.ColourCode).ToList();
+
+            quoteViewModel.NonStockProfileColours = _context.ProfileColours.Where(p => p.IsAffordableStockColour == false && p.IsEnabled == true).OrderBy(p => p.ColourCode).ToList();
+
+            foreach (ProfileColour col in quoteViewModel.StockProfileColours)
+            {
+                col.ColourDisplayName = $"{col.ColourCode} {col.ColourName} {col.ColourFinish}";
+            }
+
+            foreach (ProfileColour col in quoteViewModel.NonStockProfileColours)
+            {
+                col.ColourDisplayName = $"{col.ColourCode} {col.ColourName} {col.ColourFinish}";
+            }
+
 
             return View(quoteViewModel);
         }
@@ -405,7 +424,7 @@ namespace OPUS_Demo_5.Controllers
 
                     quoteViewModel.DeliveryAddresses = stringAddresses;
 
-                    quoteViewModel.ProfileColours = _context.ProfileColours.ToList();
+                    quoteViewModel.StockProfileColours = _context.ProfileColours.Where(p => p.IsAffordableStockColour == true && p.IsEnabled == true).OrderBy(p => p.ColourCode).ToList();
                     quoteViewModel.thisBifoldItems = new List<BifoldItem>();
                     quoteViewModel.thisExtraItems = new List<ExtraItem>();
                     quoteViewModel.thisGlassItems = new List<GlassItem>();
@@ -554,8 +573,6 @@ namespace OPUS_Demo_5.Controllers
 
             bifoldItemViewModel.PricingFactors = _context.PricingFactors.Where(p => p.Id == 1).Single();
 
-          
-            
 
             // Reset base to zero.
             bifoldItemViewModel.ItemQuoteValue = 0.00M;

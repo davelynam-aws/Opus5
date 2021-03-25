@@ -77,9 +77,11 @@ namespace OPUS_Demo_5.ViewModels
         [Display(Name = "Delivery Address")]
         public List<SelectListItem> DeliveryAddresses = new List<SelectListItem>();
 
-        [Display(Name ="Profile Colours")]
-        public List<ProfileColour> ProfileColours = new List<ProfileColour>();
+        [Display(Name ="Stock Profile Colours")]
+        public List<ProfileColour> StockProfileColours = new List<ProfileColour>();
 
+        [Display(Name = "Non Stock Profile Colours")]
+        public List<ProfileColour> NonStockProfileColours = new List<ProfileColour>();
 
     }
 }
