@@ -110,7 +110,7 @@
                 </div>
             </div>
 
-            <div class="input-group" id="ColourButtons" style="display:none">
+            <div class="input-group form-group" id="ColourButtons" style="display:none">
 
                 <span>
                     <input type="button" id="StockColours" value="Stock Colours" class="btn btn-primary" />
@@ -502,7 +502,7 @@
 
         $('#MasterExternalStockColour').change(function () {
 
-            if ($('#MasterInternalColour').find(":selected").val() != -1) {
+            if ($('#MasterInternalStockColour').find(":selected").val() != -1) {
                 $('#CustomerReferenceDiv').show();
                 $('#DespatchNotesDiv').show();
                 $('#AdditionalNotesDiv').show();
@@ -512,7 +512,7 @@
         })
 
         $('#MasterInternalStockColour').change(function () {
-            if ($('#MasterExternalColour').find(":selected").val() != -1) {
+            if ($('#MasterExternalStockColour').find(":selected").val() != -1) {
                 $('#CustomerReferenceDiv').show();
                 $('#DespatchNotesDiv').show();
                 $('#AdditionalNotesDiv').show();
@@ -523,7 +523,7 @@
 
     $('#MasterExternalNonStockColour').change(function () {
 
-        if ($('#MasterInternalColour').find(":selected").val() != -1) {
+        if ($('#MasterInternalNonColour').find(":selected").val() != -1) {
             $('#CustomerReferenceDiv').show();
             $('#DespatchNotesDiv').show();
             $('#AdditionalNotesDiv').show();
@@ -533,7 +533,7 @@
     })
 
     $('#MasterInternalNonStockColour').change(function () {
-        if ($('#MasterExternalColour').find(":selected").val() != -1) {
+        if ($('#MasterExternalNonColour').find(":selected").val() != -1) {
             $('#CustomerReferenceDiv').show();
             $('#DespatchNotesDiv').show();
             $('#AdditionalNotesDiv').show();

@@ -266,8 +266,20 @@ namespace OPUS_Demo_5.Controllers
                     {
                         bifoldItemViewModel = new BifoldItemViewModel();
                         bifoldItemViewModel.thisBifoldItem = bifoldItem;
-                        bifoldItemViewModel.InternalColourName = _context.ProfileColours.Where(c => c.Id == bifoldItem.InternalColourId).Select(c => c.ColourName).Single();
-                        bifoldItemViewModel.ExternalColourName = _context.ProfileColours.Where(c => c.Id == bifoldItem.ExternalColourId).Select(c => c.ColourName).Single();
+                        // bifoldItemViewModel.InternalColourName = _context.ProfileColours.Where(c => c.Id == bifoldItem.InternalColourId).Select(c => c.ColourName).Single();
+                        //bifoldItemViewModel.ExternalColourName = _context.ProfileColours.Where(c => c.Id == bifoldItem.ExternalColourId).Select(c => c.ColourName).Single();
+
+                        ProfileColour internalColour = _context.ProfileColours.Where(p => p.Id == bifoldItem.InternalColourId).Single();
+
+                        if (internalColour.IsAffordableStockColour == true)
+                        {
+                            quoteViewModel.IsStockColourChosen = true;
+                        }
+                        else
+                        {
+                            quoteViewModel.IsStockColourChosen = false;
+                        }
+
 
                         quoteViewModel.thisBifoldItemViewModels.Add(bifoldItemViewModel);
                     }

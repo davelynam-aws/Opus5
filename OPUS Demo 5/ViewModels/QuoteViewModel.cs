@@ -83,5 +83,8 @@ namespace OPUS_Demo_5.ViewModels
         [Display(Name = "Non Stock Profile Colours")]
         public List<ProfileColour> NonStockProfileColours = new List<ProfileColour>();
 
+
+        public bool IsStockColourChosen { get; set; }
+
     }
 }

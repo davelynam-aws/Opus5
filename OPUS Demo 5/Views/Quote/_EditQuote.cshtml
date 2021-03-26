@@ -98,24 +98,117 @@
                 <span asp-validation-for="thisQuote.RequestedDeliveryDate" class="text-danger"></span>
             </div>
 
-            <div class="row">
-                <div class="form-group col-md-6" id="MasterExternalColourDiv">
-                    <label asp-for="thisQuote.MasterExternalColourId" class="control-label">External Colour</label>
-                    <select class="form-control" id="MasterExternalColour" asp-for="thisQuote.MasterExternalColourId" asp-items="@(new SelectList(Model.StockProfileColours, "Id", "ColourName"))">
-                        <option value="-1" selected disabled>-- Select External Colour --</option>
-                    </select>
-                </div>
+            @*<div class="row">
+            <div class="form-group col-md-6" id="MasterExternalColourDiv">
+                <label asp-for="thisQuote.MasterExternalColourId" class="control-label">External Colour</label>
+                <select class="form-control" id="MasterExternalColour" asp-for="thisQuote.MasterExternalColourId" asp-items="@(new SelectList(Model.StockProfileColours, "Id", "ColourName"))">
+                    <option value="-1" selected disabled>-- Select External Colour --</option>
+                </select>
+            </div>
 
-                <div class="form-group col-md-6" id="MasterInternalColourDiv">
-                    <label asp-for="thisQuote.MasterInternalColourId" class="control-label">Internal Colour</label>
-                    <select class="form-control" id="MasterInternalColour" asp-for="thisQuote.MasterInternalColourId" asp-items="@(new SelectList(Model.StockProfileColours, "Id", "ColourName"))">
-                        <option value="-1" selected disabled>-- Select Internal Colour --</option>
-                    </select>
-                </div>
+            <div class="form-group col-md-6" id="MasterInternalColourDiv">
+                <label asp-for="thisQuote.MasterInternalColourId" class="control-label">Internal Colour</label>
+                <select class="form-control" id="MasterInternalColour" asp-for="thisQuote.MasterInternalColourId" asp-items="@(new SelectList(Model.StockProfileColours, "Id", "ColourName"))">
+                    <option value="-1" selected disabled>-- Select Internal Colour --</option>
+                </select>
+            </div>
 
 
+
+        </div>*@
+
+            <div class="input-group form-group" id="ColourButtons">
+
+                <span>
+                    <input type="button" id="StockColours" value="Stock Colours" class="btn btn-primary" />
+
+
+
+                    <input type="button" id="NonStockColours" value="Non-Stock Colours" class="btn btn-primary" />
+                </span>
 
             </div>
+
+            @if (Model.IsStockColourChosen)
+            {
+                <!--Stock Colours-->
+                <div class="row">
+                    <div class="form-group col-md-6" id="MasterExternalStockColourDiv">
+                        <label asp-for="thisQuote.MasterExternalColourId" class="control-label">External Colour</label>
+                        <select class="form-control" id="MasterExternalStockColour" asp-for="thisQuote.MasterExternalColourId" asp-items="@(new SelectList(Model.StockProfileColours, "Id", "ColourDisplayName"))">
+                            <option value="-1" selected disabled>-- Select External Colour --</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-6" id="MasterInternalStockColourDiv">
+                        <label asp-for="thisQuote.MasterInternalColourId" class="control-label">Internal Colour</label>
+                        <select class="form-control" id="MasterInternalStockColour" asp-for="thisQuote.MasterInternalColourId" asp-items="@(new SelectList(Model.StockProfileColours, "Id", "ColourDisplayName"))">
+                            <option value="-1" selected disabled>-- Select Internal Colour --</option>
+                        </select>
+                    </div>
+
+                </div>
+
+
+                <!--Non-Stock Colours-->
+                <div class="row">
+                    <div class="form-group col-md-6" style="display:none" id="MasterExternalNonStockColourDiv">
+                        <label asp-for="thisQuote.MasterExternalColourId" class="control-label">External Colour</label>
+                        <select class="form-control" id="MasterExternalNonStockColour" asp-for="thisQuote.MasterExternalColourId" asp-items="@(new SelectList(Model.NonStockProfileColours, "Id", "ColourDisplayName"))">
+                            <option value="-1" selected disabled>-- Select External Colour --</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-6" style="display:none" id="MasterInternalNonStockColourDiv">
+                        <label asp-for="thisQuote.MasterInternalColourId" class="control-label">Internal Colour</label>
+                        <select class="form-control" id="MasterInternalNonStockColour" asp-for="thisQuote.MasterInternalColourId" asp-items="@(new SelectList(Model.NonStockProfileColours, "Id", "ColourDisplayName"))">
+                            <option value="-1" selected disabled>-- Select Internal Colour --</option>
+                        </select>
+                    </div>
+
+                </div>
+            }
+            else
+            {
+                <!--Stock Colours-->
+                <div class="row">
+                    <div class="form-group col-md-6" style="display:none" id="MasterExternalStockColourDiv">
+                        <label asp-for="thisQuote.MasterExternalColourId" class="control-label">External Colour</label>
+                        <select class="form-control" id="MasterExternalStockColour" asp-for="thisQuote.MasterExternalColourId" asp-items="@(new SelectList(Model.StockProfileColours, "Id", "ColourDisplayName"))">
+                            <option value="-1" selected disabled>-- Select External Colour --</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-6" style="display:none" id="MasterInternalStockColourDiv">
+                        <label asp-for="thisQuote.MasterInternalColourId" class="control-label">Internal Colour</label>
+                        <select class="form-control" id="MasterInternalStockColour" asp-for="thisQuote.MasterInternalColourId" asp-items="@(new SelectList(Model.StockProfileColours, "Id", "ColourDisplayName"))">
+                            <option value="-1" selected disabled>-- Select Internal Colour --</option>
+                        </select>
+                    </div>
+
+                </div>
+
+
+                <!--Non-Stock Colours-->
+                <div class="row">
+                    <div class="form-group col-md-6" id="MasterExternalNonStockColourDiv">
+                        <label asp-for="thisQuote.MasterExternalColourId" class="control-label">External Colour</label>
+                        <select class="form-control" id="MasterExternalNonStockColour" asp-for="thisQuote.MasterExternalColourId" asp-items="@(new SelectList(Model.NonStockProfileColours, "Id", "ColourDisplayName"))">
+                            <option value="-1" selected disabled>-- Select External Colour --</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-6" id="MasterInternalNonStockColourDiv">
+                        <label asp-for="thisQuote.MasterInternalColourId" class="control-label">Internal Colour</label>
+                        <select class="form-control" id="MasterInternalNonStockColour" asp-for="thisQuote.MasterInternalColourId" asp-items="@(new SelectList(Model.NonStockProfileColours, "Id", "ColourDisplayName"))">
+                            <option value="-1" selected disabled>-- Select Internal Colour --</option>
+                        </select>
+                    </div>
+
+                </div>
+            }
+
+
 
             <div class="checkbox" id="MasterIsMarineGrade" style="margin-top:0px;">
                 <label asp-for="masterIsMarineCoating">
@@ -427,6 +520,41 @@
 
             $('#ShippingOptionsDiv').show();
         });
+
+    $(document).on('click', '#StockColours', function (event) {
+
+        $('#MasterExternalStockColourDiv').show();
+        $('#MasterInternalStockColourDiv').show();
+        $('#MasterIsMarineGrade').show();
+
+
+        $('#MasterExternalNonStockColourDiv').hide();
+        $('#MasterInternalNonStockColourDiv').hide();
+
+        $("#MasterExternalStockColour").val('-1');
+        $("#MasterInternalStockColour").val('-1');
+        $("#MasterExternalNonStockColour").val('-1');
+        $("#MasterinternalNonStockColour").val('-1');
+
+    });
+
+
+    $(document).on('click', '#NonStockColours', function (event) {
+
+        $('#MasterExternalStockColourDiv').hide();
+        $('#MasterInternalStockColourDiv').hide();
+        $('#MasterIsMarineGrade').show();
+
+        $('#MasterExternalNonStockColourDiv').show();
+        $('#MasterInternalNonStockColourDiv').show();
+        $('#MasterIsMarineGrade').show();
+
+        $("#MasterExternalStockColour").val('-1');
+        $("#MasterInternalStockColour").val('-1');
+        $("#MasterExternalNonStockColour").val('-1');
+        $("#MasterInternalNonStockColour").val('-1');
+
+    });
 
     // Toggles the text of delivery/collection labels depending on the shipping option selection.
     $('#ShippingOptions').change(function () {
