@@ -31,7 +31,13 @@
 
             <div class="form-group" style="margin-top:15px;">
 
-
+                @Html.HiddenFor(m => m.thisQuote.Id)
+                @Html.HiddenFor(m => m.thisQuote.CreatedByUserId)
+                @Html.HiddenFor(m => m.thisQuote.CreatedDateTime)
+                @Html.HiddenFor(m => m.thisQuote.DeliveryAddress)
+                @Html.HiddenFor(m => m.thisQuote.LastModifiedByUserId)
+                @Html.HiddenFor(m => m.thisQuote.LastModifiedDateTime)
+                @Html.HiddenFor(m => m.thisQuote.QuoteReferenceNumber)
 
                 <label asp-for="thisCustomer.CustomerName" class="control-label"></label>
 
@@ -138,6 +144,7 @@
                         <select class="form-control" id="MasterExternalStockColour" asp-for="thisQuote.MasterExternalColourId" asp-items="@(new SelectList(Model.StockProfileColours, "Id", "ColourDisplayName"))">
                             <option value="-1" selected disabled>-- Select External Colour --</option>
                         </select>
+                        <span asp-validation-for="thisQuote.MasterExternalColourId" class="text-danger"></span>
                     </div>
 
                     <div class="form-group col-md-6" id="MasterInternalStockColourDiv">
@@ -145,6 +152,7 @@
                         <select class="form-control" id="MasterInternalStockColour" asp-for="thisQuote.MasterInternalColourId" asp-items="@(new SelectList(Model.StockProfileColours, "Id", "ColourDisplayName"))">
                             <option value="-1" selected disabled>-- Select Internal Colour --</option>
                         </select>
+                        <span asp-validation-for="thisQuote.MasterInternalColourId" class="text-danger"></span>
                     </div>
 
                 </div>
@@ -157,6 +165,7 @@
                         <select class="form-control" id="MasterExternalNonStockColour" asp-for="thisQuote.MasterExternalColourId" asp-items="@(new SelectList(Model.NonStockProfileColours, "Id", "ColourDisplayName"))">
                             <option value="-1" selected disabled>-- Select External Colour --</option>
                         </select>
+                        <span asp-validation-for="thisQuote.MasterExternalColourId" class="text-danger"></span>
                     </div>
 
                     <div class="form-group col-md-6" style="display:none" id="MasterInternalNonStockColourDiv">
@@ -164,6 +173,7 @@
                         <select class="form-control" id="MasterInternalNonStockColour" asp-for="thisQuote.MasterInternalColourId" asp-items="@(new SelectList(Model.NonStockProfileColours, "Id", "ColourDisplayName"))">
                             <option value="-1" selected disabled>-- Select Internal Colour --</option>
                         </select>
+                        <span asp-validation-for="thisQuote.MasterInternalColourId" class="text-danger"></span>
                     </div>
 
                 </div>
@@ -177,6 +187,7 @@
                         <select class="form-control" id="MasterExternalStockColour" asp-for="thisQuote.MasterExternalColourId" asp-items="@(new SelectList(Model.StockProfileColours, "Id", "ColourDisplayName"))">
                             <option value="-1" selected disabled>-- Select External Colour --</option>
                         </select>
+                        <span asp-validation-for="thisQuote.MasterExternalColourId" class="text-danger"></span>
                     </div>
 
                     <div class="form-group col-md-6" style="display:none" id="MasterInternalStockColourDiv">
@@ -184,6 +195,7 @@
                         <select class="form-control" id="MasterInternalStockColour" asp-for="thisQuote.MasterInternalColourId" asp-items="@(new SelectList(Model.StockProfileColours, "Id", "ColourDisplayName"))">
                             <option value="-1" selected disabled>-- Select Internal Colour --</option>
                         </select>
+                        <span asp-validation-for="thisQuote.MasterInternalColourId" class="text-danger"></span>
                     </div>
 
                 </div>
@@ -196,6 +208,7 @@
                         <select class="form-control" id="MasterExternalNonStockColour" asp-for="thisQuote.MasterExternalColourId" asp-items="@(new SelectList(Model.NonStockProfileColours, "Id", "ColourDisplayName"))">
                             <option value="-1" selected disabled>-- Select External Colour --</option>
                         </select>
+                        <span asp-validation-for="thisQuote.MasterExternalColourId" class="text-danger"></span>
                     </div>
 
                     <div class="form-group col-md-6" id="MasterInternalNonStockColourDiv">
@@ -203,6 +216,7 @@
                         <select class="form-control" id="MasterInternalNonStockColour" asp-for="thisQuote.MasterInternalColourId" asp-items="@(new SelectList(Model.NonStockProfileColours, "Id", "ColourDisplayName"))">
                             <option value="-1" selected disabled>-- Select Internal Colour --</option>
                         </select>
+                        <span asp-validation-for="thisQuote.MasterInternalColourId" class="text-danger"></span>
                     </div>
 
                 </div>
@@ -258,8 +272,12 @@
 
 
 
-            <div class="form-group" id="SubmitDiv">
-                <input type="submit" value="Update Main Details" class="btn btn-success pull-right" data-url="@Url.Action("Edit", "Quote")" />
+            @*<div class="form-group" id="SubmitDiv">
+            <input type="submit" value="Update Main Details" class="btn btn-success pull-right" data-url="@Url.Action("CreateOrEdit", "Quote")" />
+        </div>*@
+
+            <div class="form-group" id="SubmitDiv" style="display:none">
+                <input asp-action="CreateOrEdit" type="submit" value="Update Main Details" class="btn btn-success pull-right" />
             </div>
         </form>
     </div>

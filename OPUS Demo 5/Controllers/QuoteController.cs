@@ -452,13 +452,25 @@ namespace OPUS_Demo_5.Controllers
                 // Edit Existing Quote
 
 
+                if (ModelState.IsValid)
+                {
+
+                    return RedirectToAction("CreateOrEdit", new { id = quoteViewModel.thisQuote.Id });
+                }
+                else
+                {
+
+                    // Find a way to get validation to show on edit
+                    return RedirectToAction("CreateOrEdit", new { id = quoteViewModel.thisQuote.Id });
+                }
+
 
 
             }
 
 
 
-            return View(quoteViewModel);
+           
         }
 
 
