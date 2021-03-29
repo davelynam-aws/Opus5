@@ -341,7 +341,7 @@ namespace OPUS_Demo_5.Controllers
                     quoteViewModel.thisQuote.DespatchSite =
     quoteViewModel.thisQuote.DeliveryAddress.Substring(quoteViewModel.thisQuote.DeliveryAddress.IndexOf("[")).Replace("[", "").Replace("]", "").TrimEnd();
                 }
-
+  
 
                 // Establish next quote ref
                 string lastRef = "";
@@ -437,6 +437,20 @@ namespace OPUS_Demo_5.Controllers
                     quoteViewModel.DeliveryAddresses = stringAddresses;
 
                     quoteViewModel.StockProfileColours = _context.ProfileColours.Where(p => p.IsAffordableStockColour == true && p.IsEnabled == true).OrderBy(p => p.ColourCode).ToList();
+
+                    quoteViewModel.NonStockProfileColours = _context.ProfileColours.Where(p => p.IsAffordableStockColour == false && p.IsEnabled == true).OrderBy(p => p.ColourCode).ToList();
+
+                    foreach (ProfileColour col in quoteViewModel.StockProfileColours)
+                    {
+                        col.ColourDisplayName = $"{col.ColourCode} {col.ColourName} {col.ColourFinish}";
+                    }
+
+                    foreach (ProfileColour col in quoteViewModel.NonStockProfileColours)
+                    {
+                        col.ColourDisplayName = $"{col.ColourCode} {col.ColourName} {col.ColourFinish}";
+                    }
+
+
                     quoteViewModel.thisBifoldItems = new List<BifoldItem>();
                     quoteViewModel.thisExtraItems = new List<ExtraItem>();
                     quoteViewModel.thisGlassItems = new List<GlassItem>();
@@ -454,14 +468,132 @@ namespace OPUS_Demo_5.Controllers
 
                 if (ModelState.IsValid)
                 {
+                    //Save edit details
+
+                    quoteViewModel.thisQuote.LastModifiedByUserId = HttpContext.Session.GetString("UserId");
+                    quoteViewModel.thisQuote.LastModifiedDateTime = DateTime.Now;
+
+                    bool updateBifoldItem = false;
+
+                    foreach (BifoldItemViewModel bifoldItemViewModel in quoteViewModel.thisBifoldItemViewModels)
+                    {
+                        if(bifoldItemViewModel.thisBifoldItem.InternalColourId != quoteViewModel.thisQuote.MasterInternalColourId)
+                        {
+                            bifoldItemViewModel.thisBifoldItem.InternalColourId = quoteViewModel.thisQuote.MasterInternalColourId;
+                            updateBifoldItem = true;
+                        }
+
+                        if (bifoldItemViewModel.thisBifoldItem.ExternalColourId != quoteViewModel.thisQuote.MasterExternalColourId)
+                        {
+                            bifoldItemViewModel.thisBifoldItem.ExternalColourId = quoteViewModel.thisQuote.MasterExternalColourId;
+                            updateBifoldItem = true;
+                        }
+
+                        if (bifoldItemViewModel.thisBifoldItem.IsMarineOrHazardousCoating != quoteViewModel.thisQuote.IsMarineOrHazardousCoating)
+                        {
+                            bifoldItemViewModel.thisBifoldItem.IsMarineOrHazardousCoating = quoteViewModel.thisQuote.IsMarineOrHazardousCoating;
+                            updateBifoldItem = true;
+                        }
+
+            
+
+                        //Update Bifold Item
+
+                        updateBifoldItem = false;
+                        
+                    }
+
 
                     return RedirectToAction("CreateOrEdit", new { id = quoteViewModel.thisQuote.Id });
                 }
                 else
                 {
+                  
 
-                    // Find a way to get validation to show on edit
-                    return RedirectToAction("CreateOrEdit", new { id = quoteViewModel.thisQuote.Id });
+
+                    // Populate collections etc so validation form is populated with options.
+                    quoteViewModel.ActiveCustomers = _context.Customers.ToList();
+                    ViewBag.ActiveCustomers = quoteViewModel.ActiveCustomers;
+
+                    List<CustomerAddress> customerAddresses = new List<CustomerAddress>();
+                    customerAddresses = _context.CustomerAddresses.Where(c => c.CustomerId == quoteViewModel.thisQuote.CustomerId).ToList();
+
+                    List<SelectListItem> stringAddresses = new List<SelectListItem>();
+
+                    if (customerAddresses.Count > 0)
+                    {
+
+
+
+                        //'<option selected="selected" selected disabled value="-1">-- Select Delivery Address --</option>'
+                        if (quoteViewModel.thisQuote.DeliveryAddress == null)
+                        {
+                            stringAddresses.Add(new SelectListItem { Selected = true, Disabled = true, Value = "-1", Text = "-- Select Delivery Address --" });
+                        }
+                        else
+                        {
+                            stringAddresses.Add(new SelectListItem { Disabled = true, Value = "-1", Text = "-- Select Delivery Address --" });
+                        }
+
+
+                        foreach (CustomerAddress address in customerAddresses)
+                        {
+
+                            stringAddresses.Add(new SelectListItem
+                            {
+                                Value = $"{address.AddressLine1}, {address.AddressLine2}, {address.TownCity}, {address.County}, {address.PostCode}, [{address.DespatchSite}]",
+                                Text = $"{address.AddressLine1}, {address.AddressLine2}, {address.TownCity}, {address.County}, {address.PostCode}, [{address.DespatchSite}]"
+                            });
+
+                        }
+                    }
+
+                    quoteViewModel.DeliveryAddresses = stringAddresses;
+
+                    quoteViewModel.StockProfileColours = _context.ProfileColours.Where(p => p.IsAffordableStockColour == true && p.IsEnabled == true).OrderBy(p => p.ColourCode).ToList();
+
+
+                    quoteViewModel.thisBifoldItems = _context.BifoldItems.Where(b => b.QuoteId == quoteViewModel.thisQuote.Id).OrderBy(b => b.ItemNumber).ToList();
+
+                    quoteViewModel.thisBifoldItemViewModels = new List<BifoldItemViewModel>();
+                    BifoldItemViewModel bifoldItemViewModel;
+
+                    if (quoteViewModel.thisBifoldItems.Count > 0)
+                    {
+                        foreach (BifoldItem bifoldItem in quoteViewModel.thisBifoldItems)
+                        {
+                            bifoldItemViewModel = new BifoldItemViewModel();
+                            bifoldItemViewModel.thisBifoldItem = bifoldItem;
+                            // bifoldItemViewModel.InternalColourName = _context.ProfileColours.Where(c => c.Id == bifoldItem.InternalColourId).Select(c => c.ColourName).Single();
+                            //bifoldItemViewModel.ExternalColourName = _context.ProfileColours.Where(c => c.Id == bifoldItem.ExternalColourId).Select(c => c.ColourName).Single();
+
+                            ProfileColour internalColour = _context.ProfileColours.Where(p => p.Id == bifoldItem.InternalColourId).Single();
+
+                            if (internalColour.IsAffordableStockColour == true)
+                            {
+                                quoteViewModel.IsStockColourChosen = true;
+                            }
+                            else
+                            {
+                                quoteViewModel.IsStockColourChosen = false;
+                            }
+
+
+                            quoteViewModel.thisBifoldItemViewModels.Add(bifoldItemViewModel);
+                        }
+                    }
+
+
+                    quoteViewModel.thisExtraItems = new List<ExtraItem>();
+                    quoteViewModel.thisGlassItems = new List<GlassItem>();
+                    quoteViewModel.thisPeripheralItems = new List<PeripheralItem>();
+                    quoteViewModel.IsNewQuote = false;
+
+                    
+
+
+
+                    return View("CreateOrEdit", quoteViewModel);
                 }
 
 

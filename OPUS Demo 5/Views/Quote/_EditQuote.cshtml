@@ -21,293 +21,296 @@
 
 }
 
+@if (!ViewData.ModelState.IsValid)
+{
+    <script>alert('The quote could not be updated, please check the required fields.');</script>
+}
 
 
-<div class="row">
+    <div class="row">
 
-    <div class="col-md-5">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="col-md-5">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="form-group" style="margin-top:15px;">
+                <div class="form-group" style="margin-top:15px;">
 
-                @Html.HiddenFor(m => m.thisQuote.Id)
-                @Html.HiddenFor(m => m.thisQuote.CreatedByUserId)
-                @Html.HiddenFor(m => m.thisQuote.CreatedDateTime)
-                @Html.HiddenFor(m => m.thisQuote.DeliveryAddress)
-                @Html.HiddenFor(m => m.thisQuote.LastModifiedByUserId)
-                @Html.HiddenFor(m => m.thisQuote.LastModifiedDateTime)
-                @Html.HiddenFor(m => m.thisQuote.QuoteReferenceNumber)
+                    @Html.HiddenFor(m => m.thisQuote.Id)
+                    @Html.HiddenFor(m => m.thisQuote.CreatedByUserId)
+                    @Html.HiddenFor(m => m.thisQuote.CreatedDateTime)
+                    @Html.HiddenFor(m => m.thisQuote.DeliveryAddress)
+                    @Html.HiddenFor(m => m.thisQuote.LastModifiedByUserId)
+                    @Html.HiddenFor(m => m.thisQuote.LastModifiedDateTime)
+                    @Html.HiddenFor(m => m.thisQuote.QuoteReferenceNumber)
 
-                <label asp-for="thisCustomer.CustomerName" class="control-label"></label>
+                    <label asp-for="thisCustomer.CustomerName" class="control-label"></label>
 
-                <div class="input-group">
+                    <div class="input-group">
 
-                    <select asp-for="thisQuote.CustomerId" class="form-control" id="CustomerId" asp-items="@(new SelectList(ViewBag.ActiveCustomers, "Id", "CustomerName"))">
-                        <option value="-1" selected disabled>-- Select Customer Name --</option>
+                        <select asp-for="thisQuote.CustomerId" class="form-control" id="CustomerId" asp-items="@(new SelectList(ViewBag.ActiveCustomers, "Id", "CustomerName"))">
+                            <option value="-1" selected disabled>-- Select Customer Name --</option>
+                        </select>
+
+                        <span class="input-group-btn">
+
+                            @*<a style="margin-left: 5px" onclick="showInPopup('@Url.Action("AddOrEdit", "Transaction", null,Context.Request.Scheme)', 'New Transaction')" class="btn btn-success text-white"><i class="fas fa-plus"></i></a>*@
+                            @*Test opening a new view first then change to modal partial*@
+
+                            <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#add-customer" data-url="@Url.Action("Create", "Customer")">
+                                New Customer
+                            </button>
+
+                            @*<a  onclick="showInPopup('@Url.Action("Create", "Customer", null,Context.Request.Scheme)', 'New Customer')" style="margin-left: 5px" class="btn btn-success text-white"><i class="fas fa-plus"></i></a>*@
+
+                        </span>
+                    </div>
+
+                    <span asp-validation-for="thisCustomer.CustomerName" class="text-danger"></span>
+
+                </div>
+
+
+
+
+
+                <div class="form-group" id="ShippingOptionsDiv">
+                    <label asp-for="ShippingOptions" class="control-label">Shipping Options</label>
+
+                    <select asp-for="thisQuote.DeliveryMethod" class="form-control" id="ShippingOptions" asp-items="Model.ShippingOptions">
+                        <option value="-1" selected disabled>-- Select Shipping Option --</option>
                     </select>
 
-                    <span class="input-group-btn">
-
-                        @*<a style="margin-left: 5px" onclick="showInPopup('@Url.Action("AddOrEdit", "Transaction", null,Context.Request.Scheme)', 'New Transaction')" class="btn btn-success text-white"><i class="fas fa-plus"></i></a>*@
-                        @*Test opening a new view first then change to modal partial*@
-
-                        <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#add-customer" data-url="@Url.Action("Create", "Customer")">
-                            New Customer
-                        </button>
-
-                        @*<a  onclick="showInPopup('@Url.Action("Create", "Customer", null,Context.Request.Scheme)', 'New Customer')" style="margin-left: 5px" class="btn btn-success text-white"><i class="fas fa-plus"></i></a>*@
-
-                    </span>
-                </div>
-
-                <span asp-validation-for="thisCustomer.CustomerName" class="text-danger"></span>
-
-            </div>
-
-
-
-
-
-            <div class="form-group" id="ShippingOptionsDiv">
-                <label asp-for="ShippingOptions" class="control-label">Shipping Options</label>
-
-                <select asp-for="thisQuote.DeliveryMethod" class="form-control" id="ShippingOptions" asp-items="Model.ShippingOptions">
-                    <option value="-1" selected disabled>-- Select Shipping Option --</option>
-                </select>
-
-                <span asp-validation-for="ShippingOptions" class="text-danger"></span>
-            </div>
-
-
-            <!--Toggle visibility on selection-->
-            <div class="form-group" id="CollectionAddressesDiv" style="display:none">
-                <label asp-for="CollectionAddresses" class="control-label">Collection Address</label>
-                <select asp-for="thisQuote.DeliveryAddress" class="form-control" id="CollectionAddressesSelect" asp-items="Model.CollectionAddresses">
-                    <option value="-1" selected disabled>-- Select Collection Address --</option>
-                </select>
-                <span asp-validation-for="CollectionAddresses" class="text-danger"></span>
-            </div>
-
-
-            <!--Toggle visibility on selection-->
-            <div class="form-group" id="DeliveryAddressesDiv" style="display:none">
-                <label asp-for="DeliveryAddresses" class="control-label">Delivery Address</label>
-                <select asp-for="thisQuote.DeliveryAddress" class="form-control" id="DeliveryAddressesSelect" asp-items="Model.DeliveryAddresses">
-                </select>
-                <span asp-validation-for="DeliveryAddresses" class="text-danger"></span>
-            </div>
-
-            <div class="form-group" id="ShippingDateDiv">
-                <label id="ShippingDate" asp-for="thisQuote.RequestedDeliveryDate" class="control-label"></label>
-                <input id="ShippingDateInput" asp-for="thisQuote.RequestedDeliveryDate" class="form-control" />
-                <span asp-validation-for="thisQuote.RequestedDeliveryDate" class="text-danger"></span>
-            </div>
-
-            @*<div class="row">
-            <div class="form-group col-md-6" id="MasterExternalColourDiv">
-                <label asp-for="thisQuote.MasterExternalColourId" class="control-label">External Colour</label>
-                <select class="form-control" id="MasterExternalColour" asp-for="thisQuote.MasterExternalColourId" asp-items="@(new SelectList(Model.StockProfileColours, "Id", "ColourName"))">
-                    <option value="-1" selected disabled>-- Select External Colour --</option>
-                </select>
-            </div>
-
-            <div class="form-group col-md-6" id="MasterInternalColourDiv">
-                <label asp-for="thisQuote.MasterInternalColourId" class="control-label">Internal Colour</label>
-                <select class="form-control" id="MasterInternalColour" asp-for="thisQuote.MasterInternalColourId" asp-items="@(new SelectList(Model.StockProfileColours, "Id", "ColourName"))">
-                    <option value="-1" selected disabled>-- Select Internal Colour --</option>
-                </select>
-            </div>
-
-
-
-        </div>*@
-
-            <div class="input-group form-group" id="ColourButtons">
-
-                <span>
-                    <input type="button" id="StockColours" value="Stock Colours" class="btn btn-primary" />
-
-
-
-                    <input type="button" id="NonStockColours" value="Non-Stock Colours" class="btn btn-primary" />
-                </span>
-
-            </div>
-
-            @if (Model.IsStockColourChosen)
-            {
-                <!--Stock Colours-->
-                <div class="row">
-                    <div class="form-group col-md-6" id="MasterExternalStockColourDiv">
-                        <label asp-for="thisQuote.MasterExternalColourId" class="control-label">External Colour</label>
-                        <select class="form-control" id="MasterExternalStockColour" asp-for="thisQuote.MasterExternalColourId" asp-items="@(new SelectList(Model.StockProfileColours, "Id", "ColourDisplayName"))">
-                            <option value="-1" selected disabled>-- Select External Colour --</option>
-                        </select>
-                        <span asp-validation-for="thisQuote.MasterExternalColourId" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group col-md-6" id="MasterInternalStockColourDiv">
-                        <label asp-for="thisQuote.MasterInternalColourId" class="control-label">Internal Colour</label>
-                        <select class="form-control" id="MasterInternalStockColour" asp-for="thisQuote.MasterInternalColourId" asp-items="@(new SelectList(Model.StockProfileColours, "Id", "ColourDisplayName"))">
-                            <option value="-1" selected disabled>-- Select Internal Colour --</option>
-                        </select>
-                        <span asp-validation-for="thisQuote.MasterInternalColourId" class="text-danger"></span>
-                    </div>
-
+                    <span asp-validation-for="ShippingOptions" class="text-danger"></span>
                 </div>
 
 
-                <!--Non-Stock Colours-->
-                <div class="row">
-                    <div class="form-group col-md-6" style="display:none" id="MasterExternalNonStockColourDiv">
-                        <label asp-for="thisQuote.MasterExternalColourId" class="control-label">External Colour</label>
-                        <select class="form-control" id="MasterExternalNonStockColour" asp-for="thisQuote.MasterExternalColourId" asp-items="@(new SelectList(Model.NonStockProfileColours, "Id", "ColourDisplayName"))">
-                            <option value="-1" selected disabled>-- Select External Colour --</option>
-                        </select>
-                        <span asp-validation-for="thisQuote.MasterExternalColourId" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group col-md-6" style="display:none" id="MasterInternalNonStockColourDiv">
-                        <label asp-for="thisQuote.MasterInternalColourId" class="control-label">Internal Colour</label>
-                        <select class="form-control" id="MasterInternalNonStockColour" asp-for="thisQuote.MasterInternalColourId" asp-items="@(new SelectList(Model.NonStockProfileColours, "Id", "ColourDisplayName"))">
-                            <option value="-1" selected disabled>-- Select Internal Colour --</option>
-                        </select>
-                        <span asp-validation-for="thisQuote.MasterInternalColourId" class="text-danger"></span>
-                    </div>
-
-                </div>
-            }
-            else
-            {
-                <!--Stock Colours-->
-                <div class="row">
-                    <div class="form-group col-md-6" style="display:none" id="MasterExternalStockColourDiv">
-                        <label asp-for="thisQuote.MasterExternalColourId" class="control-label">External Colour</label>
-                        <select class="form-control" id="MasterExternalStockColour" asp-for="thisQuote.MasterExternalColourId" asp-items="@(new SelectList(Model.StockProfileColours, "Id", "ColourDisplayName"))">
-                            <option value="-1" selected disabled>-- Select External Colour --</option>
-                        </select>
-                        <span asp-validation-for="thisQuote.MasterExternalColourId" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group col-md-6" style="display:none" id="MasterInternalStockColourDiv">
-                        <label asp-for="thisQuote.MasterInternalColourId" class="control-label">Internal Colour</label>
-                        <select class="form-control" id="MasterInternalStockColour" asp-for="thisQuote.MasterInternalColourId" asp-items="@(new SelectList(Model.StockProfileColours, "Id", "ColourDisplayName"))">
-                            <option value="-1" selected disabled>-- Select Internal Colour --</option>
-                        </select>
-                        <span asp-validation-for="thisQuote.MasterInternalColourId" class="text-danger"></span>
-                    </div>
-
+                <!--Toggle visibility on selection-->
+                <div class="form-group" id="CollectionAddressesDiv" style="display:none">
+                    <label asp-for="CollectionAddresses" class="control-label">Collection Address</label>
+                    <select asp-for="thisQuote.DeliveryAddress" class="form-control" id="CollectionAddressesSelect" asp-items="Model.CollectionAddresses">
+                        <option value="-1" selected disabled>-- Select Collection Address --</option>
+                    </select>
+                    <span asp-validation-for="CollectionAddresses" class="text-danger"></span>
                 </div>
 
 
-                <!--Non-Stock Colours-->
-                <div class="row">
-                    <div class="form-group col-md-6" id="MasterExternalNonStockColourDiv">
-                        <label asp-for="thisQuote.MasterExternalColourId" class="control-label">External Colour</label>
-                        <select class="form-control" id="MasterExternalNonStockColour" asp-for="thisQuote.MasterExternalColourId" asp-items="@(new SelectList(Model.NonStockProfileColours, "Id", "ColourDisplayName"))">
-                            <option value="-1" selected disabled>-- Select External Colour --</option>
-                        </select>
-                        <span asp-validation-for="thisQuote.MasterExternalColourId" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group col-md-6" id="MasterInternalNonStockColourDiv">
-                        <label asp-for="thisQuote.MasterInternalColourId" class="control-label">Internal Colour</label>
-                        <select class="form-control" id="MasterInternalNonStockColour" asp-for="thisQuote.MasterInternalColourId" asp-items="@(new SelectList(Model.NonStockProfileColours, "Id", "ColourDisplayName"))">
-                            <option value="-1" selected disabled>-- Select Internal Colour --</option>
-                        </select>
-                        <span asp-validation-for="thisQuote.MasterInternalColourId" class="text-danger"></span>
-                    </div>
-
+                <!--Toggle visibility on selection-->
+                <div class="form-group" id="DeliveryAddressesDiv" style="display:none">
+                    <label asp-for="DeliveryAddresses" class="control-label">Delivery Address</label>
+                    <select asp-for="thisQuote.DeliveryAddress" class="form-control" id="DeliveryAddressesSelect" asp-items="Model.DeliveryAddresses">
+                    </select>
+                    <span asp-validation-for="DeliveryAddresses" class="text-danger"></span>
                 </div>
-            }
 
+                <div class="form-group" id="ShippingDateDiv">
+                    <label id="ShippingDate" asp-for="thisQuote.RequestedDeliveryDate" class="control-label"></label>
+                    <input id="ShippingDateInput" asp-for="thisQuote.RequestedDeliveryDate" class="form-control" />
+                    <span asp-validation-for="thisQuote.RequestedDeliveryDate" class="text-danger"></span>
+                </div>
 
-
-            <div class="checkbox" id="MasterIsMarineGrade" style="margin-top:0px;">
-                <label asp-for="masterIsMarineCoating">
-                    <input asp-for="masterIsMarineCoating" /> @Html.DisplayNameFor(model => model.masterIsMarineCoating)
-                </label>
-            </div>
-
-
-
-
-            <div class="form-group" id="CustomerReferenceDiv">
-                <label asp-for="thisQuote.CustomerReference" class="control-label"></label>
-                <input asp-for="thisQuote.CustomerReference" class="form-control" />
-                <span asp-validation-for="thisQuote.CustomerReference" class="text-danger"></span>
-            </div>
-
-
-            <div class="form-group" id="DespatchNotesDiv" style="display:none">
-                <label asp-for="thisQuote.DespatchNotes" class="control-label"></label>
-                @*<input asp-for="thisQuote.DespatchNotes" class="form-control" />*@
-                <textarea asp-for="thisQuote.DespatchNotes" style="height:150px" class="form-control" text-wrap:normal" type="text" placeholder="Optional"></textarea>
-                <span asp-validation-for="thisQuote.DespatchNotes" class="text-danger"></span>
-            </div>
-            <div class="form-group" id="AdditionalNotesDiv" style="display:none">
-                <label asp-for="thisQuote.AdditionalNotes" class="control-label"></label>
-                @*<input asp-for="thisQuote.AdditionalNotes" class="form-control" />*@
-                <textarea asp-for="thisQuote.AdditionalNotes" style="height:150px" class="form-control" text-wrap:normal" type="text" placeholder="Optional"></textarea>
-                <span asp-validation-for="thisQuote.AdditionalNotes" class="text-danger"></span>
-            </div>
-
-
-            <div class="row">
-                <div class="form-group col-md-4" id="DepositAmountDiv" style="display:none">
-                    <label asp-for="thisQuote.DepositAmount" class="control-label"></label>
-                    <div class="input-group">
-                        <div class="input-group-addon">
-                            <div class="input-group-text">
-                                <i class="fas fa-pound-sign"></i>
-                            </div>
+                @*<div class="row">
+                        <div class="form-group col-md-6" id="MasterExternalColourDiv">
+                            <label asp-for="thisQuote.MasterExternalColourId" class="control-label">External Colour</label>
+                            <select class="form-control" id="MasterExternalColour" asp-for="thisQuote.MasterExternalColourId" asp-items="@(new SelectList(Model.StockProfileColours, "Id", "ColourName"))">
+                                <option value="-1" selected disabled>-- Select External Colour --</option>
+                            </select>
                         </div>
-                        <input asp-for="thisQuote.DepositAmount" placeholder="Optional" class="form-control" />
+
+                        <div class="form-group col-md-6" id="MasterInternalColourDiv">
+                            <label asp-for="thisQuote.MasterInternalColourId" class="control-label">Internal Colour</label>
+                            <select class="form-control" id="MasterInternalColour" asp-for="thisQuote.MasterInternalColourId" asp-items="@(new SelectList(Model.StockProfileColours, "Id", "ColourName"))">
+                                <option value="-1" selected disabled>-- Select Internal Colour --</option>
+                            </select>
+                        </div>
+
+
+
+                    </div>*@
+
+                <div class="input-group form-group" id="ColourButtons">
+                    <span>
+                        <input type="button" id="StockColours" value="Stock Colours" class="btn btn-primary" />
+
+
+
+                        <input type="button" id="NonStockColours" value="Non-Stock Colours" class="btn btn-primary" />
+                    </span>
+
+                </div>
+
+                @if (Model.IsStockColourChosen)
+                {
+                    <!--Stock Colours-->
+                    <div class="row">
+                        <div class="form-group col-md-6" id="MasterExternalStockColourDiv">
+                            <label asp-for="thisQuote.MasterExternalColourId" class="control-label">External Colour</label>
+                            <select class="form-control" id="MasterExternalStockColour" asp-for="thisQuote.MasterExternalColourId" asp-items="@(new SelectList(Model.StockProfileColours, "Id", "ColourDisplayName"))">
+                                <option value="-1" selected disabled>-- Select External Colour --</option>
+                            </select>
+                            <span asp-validation-for="thisQuote.MasterExternalColourId" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group col-md-6" id="MasterInternalStockColourDiv">
+                            <label asp-for="thisQuote.MasterInternalColourId" class="control-label">Internal Colour</label>
+                            <select class="form-control" id="MasterInternalStockColour" asp-for="thisQuote.MasterInternalColourId" asp-items="@(new SelectList(Model.StockProfileColours, "Id", "ColourDisplayName"))">
+                                <option value="-1" selected disabled>-- Select Internal Colour --</option>
+                            </select>
+                            <span asp-validation-for="thisQuote.MasterInternalColourId" class="text-danger"></span>
+                        </div>
+
                     </div>
 
-                    <span asp-validation-for="thisQuote.DepositAmount" class="text-danger"></span>
+
+                    <!--Non-Stock Colours-->
+                    <div class="row">
+                        <div class="form-group col-md-6" style="display:none" id="MasterExternalNonStockColourDiv">
+                            <label asp-for="thisQuote.MasterExternalColourId" class="control-label">External Colour</label>
+                            <select class="form-control" id="MasterExternalNonStockColour" asp-for="thisQuote.MasterExternalColourId" asp-items="@(new SelectList(Model.NonStockProfileColours, "Id", "ColourDisplayName"))">
+                                <option value="-1" selected disabled>-- Select External Colour --</option>
+                            </select>
+                            <span asp-validation-for="thisQuote.MasterExternalColourId" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group col-md-6" style="display:none" id="MasterInternalNonStockColourDiv">
+                            <label asp-for="thisQuote.MasterInternalColourId" class="control-label">Internal Colour</label>
+                            <select class="form-control" id="MasterInternalNonStockColour" asp-for="thisQuote.MasterInternalColourId" asp-items="@(new SelectList(Model.NonStockProfileColours, "Id", "ColourDisplayName"))">
+                                <option value="-1" selected disabled>-- Select Internal Colour --</option>
+                            </select>
+                            <span asp-validation-for="thisQuote.MasterInternalColourId" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                }
+                else
+                {
+                    <!--Stock Colours-->
+                    <div class="row">
+                        <div class="form-group col-md-6" style="display:none" id="MasterExternalStockColourDiv">
+                            <label asp-for="thisQuote.MasterExternalColourId" class="control-label">External Colour</label>
+                            <select class="form-control" id="MasterExternalStockColour" asp-for="thisQuote.MasterExternalColourId" asp-items="@(new SelectList(Model.StockProfileColours, "Id", "ColourDisplayName"))">
+                                <option value="-1" selected disabled>-- Select External Colour --</option>
+                            </select>
+                            <span asp-validation-for="thisQuote.MasterExternalColourId" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group col-md-6" style="display:none" id="MasterInternalStockColourDiv">
+                            <label asp-for="thisQuote.MasterInternalColourId" class="control-label">Internal Colour</label>
+                            <select class="form-control" id="MasterInternalStockColour" asp-for="thisQuote.MasterInternalColourId" asp-items="@(new SelectList(Model.StockProfileColours, "Id", "ColourDisplayName"))">
+                                <option value="-1" selected disabled>-- Select Internal Colour --</option>
+                            </select>
+                            <span asp-validation-for="thisQuote.MasterInternalColourId" class="text-danger"></span>
+                        </div>
+
+                    </div>
+
+
+                    <!--Non-Stock Colours-->
+                    <div class="row">
+                        <div class="form-group col-md-6" id="MasterExternalNonStockColourDiv">
+                            <label asp-for="thisQuote.MasterExternalColourId" class="control-label">External Colour</label>
+                            <select class="form-control" id="MasterExternalNonStockColour" asp-for="thisQuote.MasterExternalColourId" asp-items="@(new SelectList(Model.NonStockProfileColours, "Id", "ColourDisplayName"))">
+                                <option value="-1" selected disabled>-- Select External Colour --</option>
+                            </select>
+                            <span asp-validation-for="thisQuote.MasterExternalColourId" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group col-md-6" id="MasterInternalNonStockColourDiv">
+                            <label asp-for="thisQuote.MasterInternalColourId" class="control-label">Internal Colour</label>
+                            <select class="form-control" id="MasterInternalNonStockColour" asp-for="thisQuote.MasterInternalColourId" asp-items="@(new SelectList(Model.NonStockProfileColours, "Id", "ColourDisplayName"))">
+                                <option value="-1" selected disabled>-- Select Internal Colour --</option>
+                            </select>
+                            <span asp-validation-for="thisQuote.MasterInternalColourId" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                }
+
+
+
+                <div class="checkbox" id="MasterIsMarineGrade" style="margin-top:0px;">
+                    <label asp-for="masterIsMarineCoating">
+                        <input asp-for="masterIsMarineCoating" /> @Html.DisplayNameFor(model => model.masterIsMarineCoating)
+                    </label>
                 </div>
+
+
+
+
+                <div class="form-group" id="CustomerReferenceDiv">
+                    <label asp-for="thisQuote.CustomerReference" class="control-label"></label>
+                    <input asp-for="thisQuote.CustomerReference" class="form-control" />
+                    <span asp-validation-for="thisQuote.CustomerReference" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-group" id="DespatchNotesDiv" style="display:none">
+                    <label asp-for="thisQuote.DespatchNotes" class="control-label"></label>
+                    @*<input asp-for="thisQuote.DespatchNotes" class="form-control" />*@
+                    <textarea asp-for="thisQuote.DespatchNotes" style="height:150px" class="form-control" text-wrap:normal" type="text" placeholder="Optional"></textarea>
+                    <span asp-validation-for="thisQuote.DespatchNotes" class="text-danger"></span>
+                </div>
+                <div class="form-group" id="AdditionalNotesDiv" style="display:none">
+                    <label asp-for="thisQuote.AdditionalNotes" class="control-label"></label>
+                    @*<input asp-for="thisQuote.AdditionalNotes" class="form-control" />*@
+                    <textarea asp-for="thisQuote.AdditionalNotes" style="height:150px" class="form-control" text-wrap:normal" type="text" placeholder="Optional"></textarea>
+                    <span asp-validation-for="thisQuote.AdditionalNotes" class="text-danger"></span>
+                </div>
+
+
+                <div class="row">
+                    <div class="form-group col-md-4" id="DepositAmountDiv" style="display:none">
+                        <label asp-for="thisQuote.DepositAmount" class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <div class="input-group-text">
+                                    <i class="fas fa-pound-sign"></i>
+                                </div>
+                            </div>
+                            <input asp-for="thisQuote.DepositAmount" placeholder="Optional" class="form-control" />
+                        </div>
+
+                        <span asp-validation-for="thisQuote.DepositAmount" class="text-danger"></span>
+                    </div>
+                </div>
+
+
+
+                @*<div class="form-group" id="SubmitDiv">
+                        <input type="submit" value="Update Main Details" class="btn btn-success pull-right" data-url="@Url.Action("CreateOrEdit", "Quote")" />
+                    </div>*@
+
+                <div class="form-group" id="SubmitDiv" style="display:none">
+                    <input asp-action="CreateOrEdit" type="submit" value="Update Main Details" class="btn btn-success pull-right" />
+                </div>
+            </form>
+        </div>
+
+        <div class="col-md-7">
+
+            <div id="quoteHeaderPartial">
+
+            </div>
+
+            @*<div id="mypartial">
+
+                </div>*@
+
+
+
+            <div id="partial-BifoldItem1">
+                <partial name="~/Views/BifoldItem/_BifoldItemsView.cshtml" model=@Model />
             </div>
 
 
-
-            @*<div class="form-group" id="SubmitDiv">
-            <input type="submit" value="Update Main Details" class="btn btn-success pull-right" data-url="@Url.Action("CreateOrEdit", "Quote")" />
-        </div>*@
-
-            <div class="form-group" id="SubmitDiv" style="display:none">
-                <input asp-action="CreateOrEdit" type="submit" value="Update Main Details" class="btn btn-success pull-right" />
-            </div>
-        </form>
-    </div>
-
-    <div class="col-md-7">
-
-        <div id="quoteHeaderPartial">
-
         </div>
-
-        @*<div id="mypartial">
-
-        </div>*@
-
-
-
-        <div id="partial-BifoldItem1">
-            <partial name="~/Views/BifoldItem/_BifoldItemsView.cshtml" model=@Model />
-        </div>
-
 
     </div>
 
-</div>
 
 
 
 
-
-@*Can't use @script section in partial views. Also, not using _Layout so need to specify jQuery here.*@
+    @*Can't use @script section in partial views. Also, not using _Layout so need to specify jQuery here.*@
 <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
         asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
         asp-fallback-test="window.jQuery"
