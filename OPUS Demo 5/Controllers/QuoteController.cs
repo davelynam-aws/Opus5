@@ -458,6 +458,10 @@ namespace OPUS_Demo_5.Controllers
                     }
 
 
+
+
+
+
                     quoteViewModel.thisBifoldItems = new List<BifoldItem>();
                     quoteViewModel.thisExtraItems = new List<ExtraItem>();
                     quoteViewModel.thisGlassItems = new List<GlassItem>();
@@ -631,11 +635,22 @@ namespace OPUS_Demo_5.Controllers
 
                     quoteViewModel.StockProfileColours = _context.ProfileColours.Where(p => p.IsAffordableStockColour == true && p.IsEnabled == true).OrderBy(p => p.ColourCode).ToList();
 
+                    quoteViewModel.NonStockProfileColours = _context.ProfileColours.Where(p => p.IsAffordableStockColour == false && p.IsEnabled == true).OrderBy(p => p.ColourCode).ToList();
 
-                    quoteViewModel.thisBifoldItems = _context.BifoldItems.Where(b => b.QuoteId == quoteViewModel.thisQuote.Id).OrderBy(b => b.ItemNumber).ToList();
+                    foreach (ProfileColour col in quoteViewModel.StockProfileColours)
+                    {
+                        col.ColourDisplayName = $"{col.ColourCode} {col.ColourName} {col.ColourFinish}";
+                    }
+
+                    foreach (ProfileColour col in quoteViewModel.NonStockProfileColours)
+                    {
+                        col.ColourDisplayName = $"{col.ColourCode} {col.ColourName} {col.ColourFinish}";
+                    }
 
                     quoteViewModel.thisBifoldItemViewModels = new List<BifoldItemViewModel>();
                     BifoldItemViewModel bifoldItemViewModel;
+
+                    quoteViewModel.thisBifoldItems = _context.BifoldItems.Where(b => b.QuoteId == quoteViewModel.thisQuote.Id).OrderBy(b => b.ItemNumber).ToList();
 
                     if (quoteViewModel.thisBifoldItems.Count > 0)
                     {
