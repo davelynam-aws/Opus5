@@ -38,7 +38,7 @@
                     @Html.HiddenFor(m => m.thisQuote.Id)
                     @Html.HiddenFor(m => m.thisQuote.CreatedByUserId)
                     @Html.HiddenFor(m => m.thisQuote.CreatedDateTime)
-                    @Html.HiddenFor(m => m.thisQuote.DeliveryAddress)
+                    @Html.HiddenFor(m => m.thisQuote.DeliveryAddress, new { @id = "hiddenDeliveryAddress" })
                     @Html.HiddenFor(m => m.thisQuote.LastModifiedByUserId)
                     @Html.HiddenFor(m => m.thisQuote.LastModifiedDateTime)
                     @Html.HiddenFor(m => m.thisQuote.QuoteReferenceNumber)
@@ -90,7 +90,7 @@
                     <select asp-for="thisQuote.DeliveryAddress" class="form-control" id="CollectionAddressesSelect" asp-items="Model.CollectionAddresses">
                         <option value="-1" selected disabled>-- Select Collection Address --</option>
                     </select>
-                    <span asp-validation-for="CollectionAddresses" class="text-danger"></span>
+                    <span asp-validation-for="thisQuote.DeliveryAddress" class="text-danger"></span>
                 </div>
 
 
@@ -99,7 +99,7 @@
                     <label asp-for="DeliveryAddresses" class="control-label">Delivery Address</label>
                     <select asp-for="thisQuote.DeliveryAddress" class="form-control" id="DeliveryAddressesSelect" asp-items="Model.DeliveryAddresses">
                     </select>
-                    <span asp-validation-for="DeliveryAddresses" class="text-danger"></span>
+                    <span asp-validation-for="thisQuote.DeliveryAddress" class="text-danger"></span>
                 </div>
 
 
@@ -419,8 +419,11 @@
                 deliveryAddresses.empty().append('<option selected="selected" value="-1">-- Select Delivery Address --</option>');
                 $.each(response, function () {
 
+                    //debug
+                    //console.log("Selected Address on load" + selectedDeliveryAddress);
 
-                    if (this.text == selectedDeliveryAddress) {
+
+                    if (this.text != selectedDeliveryAddress) {
                         deliveryAddresses.append($("<option />").val(this['Value']).text(this['text']));
                     } else {
                         deliveryAddresses.append($("<option selected=\"selected\" />").val(this['Value']).text(this['text']));
@@ -540,6 +543,8 @@
 
                     });
 
+                    // Clear Hidden delivery address so validation will work if none selected.
+                    $('#hiddenDeliveryAddress').val(null);
                 },
                 failure: function (response) {
                     alert(response.responseText);
@@ -571,6 +576,15 @@
 
     });
 
+    $('#DeliveryAddressesSelect').on('change', function () {
+        //console.log($('#DeliveryAddressesSelect').find(":selected").text())
+        $('#hiddenDeliveryAddress').val($('#CollectionAddressesSelect').find(":selected").text());
+    });
+
+    $('#CollectionAddressesSelect').on('change', function () {
+        //console.log($('#DeliveryAddressesSelect').find(":selected").text())
+        $('#hiddenDeliveryAddress').val($('#CollectionAddressesSelect').find(":selected").text());
+    });
 
     $(document).on('click', '#NonStockColours', function (event) {
 
