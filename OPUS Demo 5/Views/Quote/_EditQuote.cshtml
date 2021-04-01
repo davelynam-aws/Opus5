@@ -102,6 +102,18 @@
                     <span asp-validation-for="DeliveryAddresses" class="text-danger"></span>
                 </div>
 
+
+                @Html.HiddenFor(m => m.thisCustomerDeliveryAddress.DeliveryPostCode, new { id = "DeliveryPostCode" })
+                @Html.HiddenFor(m => m.thisCustomerDeliveryAddress.DeliveryAddressLine1, new { id = "DeliveryAddressLine1" })
+                @Html.HiddenFor(m => m.thisCustomerDeliveryAddress.DeliveryAddressLine2, new { id = "DeliveryAddressLine2" })
+                @Html.HiddenFor(m => m.thisCustomerDeliveryAddress.DeliveryTownCity, new { id = "DeliveryTownCity" })
+                @Html.HiddenFor(m => m.thisCustomerDeliveryAddress.DeliveryCounty, new { id = "DeliveryCounty" })
+                @Html.HiddenFor(m => m.thisCustomerDeliveryAddress.DeliveryDespatchSite, new { id = "DeliveryDespatchSite" })
+                @Html.HiddenFor(m => m.thisCustomerDeliveryAddress.DeliveryAddressString, new { id = "DeliveryAddressString" })
+                @Html.HiddenFor(m => m.thisCustomerDeliveryAddress.DeliverySaveAddress, new { id = "DeliverySaveAddress" })
+                @Html.HiddenFor(m => m.thisCustomerDeliveryAddress.ValidatedByGoogleAPI, new { id = "DeliveryValidatedByGoogleAPI" })
+
+
                 <div class="form-group" id="ShippingDateDiv">
                     <label id="ShippingDate" asp-for="thisQuote.RequestedDeliveryDate" class="control-label"></label>
                     <input id="ShippingDateInput" asp-for="thisQuote.RequestedDeliveryDate" class="form-control" />
@@ -109,23 +121,23 @@
                 </div>
 
                 @*<div class="row">
-                        <div class="form-group col-md-6" id="MasterExternalColourDiv">
-                            <label asp-for="thisQuote.MasterExternalColourId" class="control-label">External Colour</label>
-                            <select class="form-control" id="MasterExternalColour" asp-for="thisQuote.MasterExternalColourId" asp-items="@(new SelectList(Model.StockProfileColours, "Id", "ColourName"))">
-                                <option value="-1" selected disabled>-- Select External Colour --</option>
-                            </select>
-                        </div>
+            <div class="form-group col-md-6" id="MasterExternalColourDiv">
+                <label asp-for="thisQuote.MasterExternalColourId" class="control-label">External Colour</label>
+                <select class="form-control" id="MasterExternalColour" asp-for="thisQuote.MasterExternalColourId" asp-items="@(new SelectList(Model.StockProfileColours, "Id", "ColourName"))">
+                    <option value="-1" selected disabled>-- Select External Colour --</option>
+                </select>
+            </div>
 
-                        <div class="form-group col-md-6" id="MasterInternalColourDiv">
-                            <label asp-for="thisQuote.MasterInternalColourId" class="control-label">Internal Colour</label>
-                            <select class="form-control" id="MasterInternalColour" asp-for="thisQuote.MasterInternalColourId" asp-items="@(new SelectList(Model.StockProfileColours, "Id", "ColourName"))">
-                                <option value="-1" selected disabled>-- Select Internal Colour --</option>
-                            </select>
-                        </div>
+            <div class="form-group col-md-6" id="MasterInternalColourDiv">
+                <label asp-for="thisQuote.MasterInternalColourId" class="control-label">Internal Colour</label>
+                <select class="form-control" id="MasterInternalColour" asp-for="thisQuote.MasterInternalColourId" asp-items="@(new SelectList(Model.StockProfileColours, "Id", "ColourName"))">
+                    <option value="-1" selected disabled>-- Select Internal Colour --</option>
+                </select>
+            </div>
 
 
 
-                    </div>*@
+        </div>*@
 
                 <div class="input-group form-group" id="ColourButtons">
                     <span>
@@ -228,8 +240,8 @@
 
 
                 <div class="checkbox" id="MasterIsMarineGrade" style="margin-top:0px;">
-                    <label asp-for="masterIsMarineCoating">
-                        <input asp-for="masterIsMarineCoating" /> @Html.DisplayNameFor(model => model.masterIsMarineCoating)
+                    <label asp-for="thisQuote.IsMarineOrHazardousCoating">
+                        <input asp-for="thisQuote.IsMarineOrHazardousCoating" /> @Html.DisplayNameFor(model => model.masterIsMarineCoating)
                     </label>
                 </div>
 
@@ -276,8 +288,8 @@
 
 
                 @*<div class="form-group" id="SubmitDiv">
-                        <input type="submit" value="Update Main Details" class="btn btn-success pull-right" data-url="@Url.Action("CreateOrEdit", "Quote")" />
-                    </div>*@
+            <input type="submit" value="Update Main Details" class="btn btn-success pull-right" data-url="@Url.Action("CreateOrEdit", "Quote")" />
+        </div>*@
 
                 <div class="form-group" id="SubmitDiv" style="display:none">
                     <input asp-action="CreateOrEdit" type="submit" value="Update Main Details" class="btn btn-success pull-right" />

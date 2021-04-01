@@ -257,6 +257,13 @@ namespace OPUS_Demo_5.Controllers
                 quoteViewModel.thisQuote = _context.Quotes.Where(q => q.Id == Id).Single();
                 quoteViewModel.thisBifoldItems = _context.BifoldItems.Where(b => b.QuoteId == Id).OrderBy(b => b.ItemNumber).ToList();
 
+                quoteViewModel.thisCustomerInvoiceAddress = _context.CustomerAddresses.Where(a => a.CustomerId == quoteViewModel.thisQuote.CustomerId && a.IsInvoiceAddress == true).Single();
+
+                // Created to handle a newly added customer address.
+                quoteViewModel.thisCustomerDeliveryAddress = new AddressViewModel();
+                quoteViewModel.thisCustomerDeliveryAddress.thisAddress = new CustomerAddress();
+                quoteViewModel.thisCustomerDeliveryAddress.thisAddress.SaveToCustomerAddresses = false;
+
                 quoteViewModel.thisBifoldItemViewModels = new List<BifoldItemViewModel>();
                 BifoldItemViewModel bifoldItemViewModel;
 
@@ -475,33 +482,105 @@ namespace OPUS_Demo_5.Controllers
 
                     bool updateBifoldItem = false;
 
-                    foreach (BifoldItemViewModel bifoldItemViewModel in quoteViewModel.thisBifoldItemViewModels)
+                    quoteViewModel.thisBifoldItems = _context.BifoldItems.Where(b => b.QuoteId == quoteViewModel.thisQuote.Id).OrderBy(b => b.ItemNumber).ToList();
+
+                    quoteViewModel.thisBifoldItemViewModels = new List<BifoldItemViewModel>();
+                    BifoldItemViewModel bifoldItemViewModel;
+
+                    if (quoteViewModel.thisBifoldItems.Count > 0)
                     {
-                        if(bifoldItemViewModel.thisBifoldItem.InternalColourId != quoteViewModel.thisQuote.MasterInternalColourId)
+                        foreach (BifoldItem bifoldItem in quoteViewModel.thisBifoldItems)
                         {
-                            bifoldItemViewModel.thisBifoldItem.InternalColourId = quoteViewModel.thisQuote.MasterInternalColourId;
+                            bifoldItemViewModel = new BifoldItemViewModel();
+                            bifoldItemViewModel.thisBifoldItem = bifoldItem;
+                            // bifoldItemViewModel.InternalColourName = _context.ProfileColours.Where(c => c.Id == bifoldItem.InternalColourId).Select(c => c.ColourName).Single();
+                            //bifoldItemViewModel.ExternalColourName = _context.ProfileColours.Where(c => c.Id == bifoldItem.ExternalColourId).Select(c => c.ColourName).Single();
+
+                            ProfileColour internalColour = _context.ProfileColours.Where(p => p.Id == bifoldItem.InternalColourId).Single();
+
+                            if (internalColour.IsAffordableStockColour == true)
+                            {
+                                quoteViewModel.IsStockColourChosen = true;
+                            }
+                            else
+                            {
+                                quoteViewModel.IsStockColourChosen = false;
+                            }
+
+
+                            quoteViewModel.thisBifoldItemViewModels.Add(bifoldItemViewModel);
+                        }
+                    }
+
+                    foreach (BifoldItemViewModel bifold in quoteViewModel.thisBifoldItemViewModels)
+                    {
+                        if(bifold.thisBifoldItem.InternalColourId != quoteViewModel.thisQuote.MasterInternalColourId)
+                        {
+                            bifold.thisBifoldItem.InternalColourId = quoteViewModel.thisQuote.MasterInternalColourId;
                             updateBifoldItem = true;
                         }
 
-                        if (bifoldItemViewModel.thisBifoldItem.ExternalColourId != quoteViewModel.thisQuote.MasterExternalColourId)
+                        if (bifold.thisBifoldItem.ExternalColourId != quoteViewModel.thisQuote.MasterExternalColourId)
                         {
-                            bifoldItemViewModel.thisBifoldItem.ExternalColourId = quoteViewModel.thisQuote.MasterExternalColourId;
+                            bifold.thisBifoldItem.ExternalColourId = quoteViewModel.thisQuote.MasterExternalColourId;
                             updateBifoldItem = true;
                         }
 
-                        if (bifoldItemViewModel.thisBifoldItem.IsMarineOrHazardousCoating != quoteViewModel.thisQuote.IsMarineOrHazardousCoating)
+                        if (bifold.thisBifoldItem.IsMarineOrHazardousCoating != quoteViewModel.thisQuote.IsMarineOrHazardousCoating)
                         {
-                            bifoldItemViewModel.thisBifoldItem.IsMarineOrHazardousCoating = quoteViewModel.thisQuote.IsMarineOrHazardousCoating;
+                            bifold.thisBifoldItem.IsMarineOrHazardousCoating = quoteViewModel.thisQuote.IsMarineOrHazardousCoating;
                             updateBifoldItem = true;
                         }
 
-            
 
-                        //Update Bifold Item
+
+                        if (updateBifoldItem == true)
+                        {
+                            //Update Bifold Item
+                            _context.Entry(bifold.thisBifoldItem).State = EntityState.Modified;
+                            _context.SaveChanges();
+                        }
+  
 
                         updateBifoldItem = false;
                         
                     }
+
+                    //Update the rest of the quote
+
+                    if (quoteViewModel.thisQuote.DeliveryAddress != null)
+                    {
+                        quoteViewModel.thisQuote.DespatchSite =
+        quoteViewModel.thisQuote.DeliveryAddress.Substring(quoteViewModel.thisQuote.DeliveryAddress.IndexOf("[")).Replace("[", "").Replace("]", "").TrimEnd();
+                    }
+
+
+                    if (quoteViewModel.thisCustomerDeliveryAddress.DeliverySaveAddress == true)
+                    {
+                        // Save new delivery address to customer record.
+                        CustomerAddress newDeliveryAddress = new CustomerAddress();
+                        newDeliveryAddress.AddressLine1 = quoteViewModel.thisCustomerDeliveryAddress.DeliveryAddressLine1;
+                        newDeliveryAddress.AddressLine2 = quoteViewModel.thisCustomerDeliveryAddress.DeliveryAddressLine2;
+                        newDeliveryAddress.TownCity = quoteViewModel.thisCustomerDeliveryAddress.DeliveryTownCity;
+                        newDeliveryAddress.County = quoteViewModel.thisCustomerDeliveryAddress.DeliveryCounty;
+                        newDeliveryAddress.PostCode = quoteViewModel.thisCustomerDeliveryAddress.DeliveryPostCode;
+                        newDeliveryAddress.CreatedByUserId = HttpContext.Session.GetString("UserId");
+                        newDeliveryAddress.CreatedDateTime = DateTime.Now;
+                        newDeliveryAddress.CustomerId = quoteViewModel.thisQuote.CustomerId;
+                        newDeliveryAddress.DespatchSite = quoteViewModel.thisCustomerDeliveryAddress.DeliveryDespatchSite;
+
+                        newDeliveryAddress.Id = Guid.NewGuid().ToString();
+                        newDeliveryAddress.IsInvoiceAddress = false;
+
+                        newDeliveryAddress.IsPrimaryDeliveryAddress = false;
+                        newDeliveryAddress.ValidatedByGoogleAPI = quoteViewModel.thisCustomerDeliveryAddress.ValidatedByGoogleAPI;
+
+                        _context.CustomerAddresses.Add(newDeliveryAddress);
+                        _context.SaveChanges();
+                    }
+
+                    _context.Entry(quoteViewModel.thisQuote).State = EntityState.Modified;
+                    _context.SaveChanges();
 
 
                     return RedirectToAction("CreateOrEdit", new { id = quoteViewModel.thisQuote.Id });
