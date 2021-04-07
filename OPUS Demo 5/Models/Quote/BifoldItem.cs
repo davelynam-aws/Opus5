@@ -87,5 +87,10 @@ namespace OPUS_Demo_5.Models
         //[Required(ErrorMessage = "Please select a hardware colour")]
         [Column("HardwareColourId")]
         public int HardwareColourId { get; set; }
+
+        [Column("InvoiceAmountNet")]
+        public decimal InvoiceAmountNet { get; set; }
+
+
     }
 }
